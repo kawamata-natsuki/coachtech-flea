@@ -1,0 +1,121 @@
+.register-form {
+  display: flex;
+  justify-content: center;
+  padding: 16px 16px;
+}
+
+.register-form__container {
+  width: 100%;
+  max-width: 680px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.register-form__heading {
+  padding-bottom: 50px;
+}
+
+.register-form__content {
+  width: 100%;
+  max-width: 680px;
+}
+
+.register-form__form {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 680px;
+  gap: 6px;
+}
+
+.register-form__group {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 680px;
+  gap: 6px;
+}
+
+.register-form__button {
+  width: 100%;
+  margin-top: 40px;
+}
+
+.register-form__button-submit {
+  width: 100%;
+  height: 65px;
+  background-color: #FF5555;
+  color: #FFF;
+  font-family: Inter;
+  font-weight: 700;
+  font-size: 26px;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.register-form__link {
+  text-align: center;
+  margin-top: 40px;
+}
+
+.register-form__link--login {
+  font-family: Inter;
+  font-weight: 400;
+  font-size: 20px;
+  color: #0073CC;
+}
+
+/* ===============================
+      タブレット（768〜850px）対応
+   =============================== */
+
+@media screen and (min-width: 768px) and (max-width: 850px) {
+  .register-form {
+    padding: 8px 16px;
+  }
+
+  .register-form__heading {
+    font-size: 24px;
+    padding-bottom: 32px;
+  }
+
+  .register-form__content {
+    max-width: 480px;
+  }
+
+  .register-form__form,
+  .register-form__group {
+    max-width: 480px;
+    gap: 6px;
+  }
+
+  .register-form__label {
+    font-size: 16px;
+  }
+
+  .register-form__input {
+    height: 40px;
+  }
+
+  .register-form__input::placeholder {
+    font-size: 12px;
+  }
+
+  .register-form__button {
+    margin-top: 20px;
+  }
+
+  .register-form__button-submit {
+    height: 50px;
+    font-size: 20px;
+  }
+
+  .register-form__link {
+    margin-top: 30px;
+  }
+
+  .register-form__link--login {
+    font-size: 16px;
+  }
+}

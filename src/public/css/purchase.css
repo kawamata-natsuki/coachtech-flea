@@ -1,0 +1,158 @@
+.item-purchase {
+  display: flex;
+  justify-content: center;
+  padding: 32px 16px;
+  margin-bottom: 100px;
+}
+
+.item-purchase__container {
+  width: 100%;
+  max-width: 1300px;
+  margin: 0 auto;
+}
+
+.item-purchase__wrapper {
+  display: flex;
+  gap: 30px;
+}
+
+.item-purchase__image {
+  flex: 1;
+  min-width: 100px;
+  max-width: 180px;
+  padding: 5px;
+}
+
+/* 左カラム */
+.item-purchase__left {
+  flex: 1 1 60%;
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
+.item-purchase__item-info {
+  display: flex;
+  padding-bottom: 60px;
+  gap: 60px;
+  border-bottom: 1px solid #000000;
+}
+
+.item-purchase__name {
+  font-family: Inter;
+  font-weight: 700;
+  font-size: 30px;
+}
+
+.item-purchase__price {
+  font-family: Inter;
+  font-weight: 400;
+  font-size: 32px;
+}
+
+.item-purchase__price-unit {
+  font-family: Inter;
+  font-weight: 400;
+  font-size: 27px;
+}
+
+.item-purchase__payment-form {
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  gap: 16px;
+  border-bottom: 1px solid #000000;
+}
+
+.item-purchase__section-title {
+  font-family: Inter;
+  font-weight: 700;
+  font-size: 20px;
+  color: #000000;
+}
+
+.item-purchase__select {
+  width: 265px;
+  height: 30px;
+  margin: 20px 50px;
+  padding: 0 8px;
+  border: 1px solid #5F5F5F;
+  border-radius: 4px;
+  color: #5F5F5F;
+}
+
+.placeholder-option {
+  display: none;
+}
+
+.item-purchase__address {
+  border-bottom: 1px solid #000000;
+  padding: 20px;
+}
+
+.item-purchase__address-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.item-purchase__address-body {
+  margin: 20px 70px;
+  font-family: Inter;
+  font-weight: 600;
+  font-size: 20px;
+  gap: 20px;
+}
+
+.item-purchase__link {
+  color: #0073CC;
+  font-family: Inter;
+  font-weight: 400;
+  font-size: 20px;
+}
+
+/* 右カラム */
+.item-purchase__right {
+  flex: 1 1 35%;
+  padding: 24px;
+}
+
+.item-purchase__confirm {
+  border: 1px solid #000000;
+  overflow: hidden;
+}
+
+.item-purchase__block {
+  display: flex;
+  align-items: center;
+  border-bottom: 1px solid #000000;
+  padding: 40px 40px;
+}
+
+.item-purchase__block:last-child {
+  border-bottom: none;
+}
+
+.item-purchase__confirm-price,
+.item-purchase__confirm-value {
+  flex: 1;
+  font-family: Inter;
+  font-weight: 400;
+  font-size: 20px;
+}
+
+.item-purchase__button-wrapper {
+  width: 100%;
+  background-color: #FF5555;
+  border-radius: 5px;
+  text-align: center;
+  padding: 16px;
+  margin-top: 80px;
+}
+
+.purchase-button {
+  color: #FFFFFF;
+  font-family: Inter;
+  font-weight: 700;
+  font-size: 26px;
+}

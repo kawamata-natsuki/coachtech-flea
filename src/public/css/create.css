@@ -1,0 +1,203 @@
+.create-page {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 5px 65px 100px 65px;
+}
+
+.create-page__container {
+  max-width: 680px;
+  width: 100%;
+}
+
+.create-page__heading {
+  font-family: Inter;
+  font-weight: 700;
+  font-size: 36px;
+  color: black;
+  margin-bottom: 40px;
+}
+
+.create-page__content {
+  width: 100%;
+}
+
+.create-form__form {
+  width: 100%;
+}
+
+.create-page__field {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+}
+
+.create-page__label {
+  font-family: Inter;
+  font-weight: 700;
+  font-size: 24px;
+  color: black;
+  margin-top: 24px;
+}
+
+.create-page__upload-area {
+  border: 1px dashed #5F5F5F;
+  border-radius: 4px;
+  padding: 40px 20px;
+  text-align: center;
+  cursor: pointer;
+  width: 100%;
+  min-height: 200px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.create-page__upload-button {
+  display: inline-block;
+  padding: 10px 20px;
+  color: #FF5655;
+  border: 2px solid #FF5555;
+  border-radius: 10px;
+  background-color: transparent;
+  font-family: Inter;
+  font-weight: 700;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.create-page__file-input {
+  display: none;
+}
+
+.create-page__section {
+  width: 100%;
+  color: #5F5F5F;
+}
+
+.create-page__section-title {
+  border-bottom: 1px solid #5F5F5F;
+  padding-bottom: 8px;
+  margin: 24px 0;
+  font-family: Inter;
+  font-weight: 700;
+  font-size: 30px;
+}
+
+.create-page__tag-checkbox {
+  display: none;
+}
+
+/* タグのデザイン */
+.create-page__tag {
+  display: inline-block;
+  padding: 8px 16px;
+  margin: 8px 5px;
+  border: 2px solid #FF5655;
+  border-radius: 20px;
+  background-color: white;
+  color: #FF5655;
+  font-weight: 500;
+  font-size: 15px;
+}
+
+/* チェックされているinputに隣接するlabelだけスタイル変える */
+.create-page__tag-checkbox:checked+.create-page__tag {
+  background-color: #FF5655;
+  color: white;
+}
+
+.create-page__select-wrapper {
+  position: relative;
+  width: 100%;
+}
+
+.create-page__select {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  width: 100%;
+  padding: 8px 30px 8px 12px;
+  border: 1px solid #5F5F5F;
+  border-radius: 4px;
+  font-family: Inter;
+  font-weight: 700;
+  font-size: 16px;
+  color: #5F5F5F;
+}
+
+.create-page__select-wrapper::after {
+  content: '';
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-150%);
+  width: 18px;
+  height: 20px;
+  background: url('/images/select-icon.png') no-repeat center center;
+  background-size: contain;
+  pointer-events: none;
+}
+
+.create-page__input {
+  width: 100%;
+  border: 1px solid #5F5F5F;
+  border-radius: 4px;
+  font-family: Inter;
+  font-weight: 700;
+  font-size: 16px;
+  color: #333;
+  padding: 8px 12px;
+}
+
+.create-page__textarea {
+  width: 100%;
+  height: 125px;
+  border: 1px solid #5F5F5F;
+  border-radius: 4px;
+  font-family: Inter;
+  font-weight: 700;
+  font-size: 16px;
+  color: #333;
+  padding: 8px 12px;
+}
+
+.create-page__input-wrapper {
+  position: relative;
+  width: 100%;
+}
+
+.create-page__input-prefix {
+  position: absolute;
+  top: 50%;
+  left: 12px;
+  transform: translateY(-50%);
+  font-family: Inter;
+  font-weight: 700;
+  font-size: 16px;
+  pointer-events: none;
+  color: #000000;
+}
+
+.create-page__input--price {
+  padding-left: 40px;
+}
+
+.item-create__button-wrapper {
+  display: flex;
+  justify-content: center;
+  margin-top: 50px;
+}
+
+.create-button {
+  width: 100%;
+  padding: 12px;
+  background-color: #FF5555;
+  color: #FFFFFF;
+  border-radius: 5px;
+  font-family: Inter;
+  font-weight: 700;
+  font-size: 26px;
+}

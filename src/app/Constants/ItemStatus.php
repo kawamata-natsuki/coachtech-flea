@@ -1,0 +1,24 @@
+<?php
+
+namespace App\Constants;
+
+class ItemStatus
+{
+  public const ON_SALE = 'on_sale';
+  public const SOLD_OUT = 'sold_out';
+
+  public const LABELS = [
+    self::ON_SALE => '出品中',
+    self::SOLD_OUT => '売り切れ',
+  ];
+
+  public static function label(string $status): string
+  {
+    return self::LABELS[$status] ?? '';
+  }
+
+  public static function all(): array
+  {
+    return array_keys(self::LABELS);
+  }
+}
