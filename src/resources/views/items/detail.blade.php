@@ -26,7 +26,11 @@
           @if (!empty($item->brand))
           <p class="item-detail__brand">{{ $item->brand }}</p>
           @endif
-          <p class="item-detail__price">¥{{ number_format($item->price) }}(税込)</p>
+          <p class="item-detail__price">
+            <span class="item-detail__price-sub">¥</span>
+            {{ number_format($item->price) }}
+            <span class="item-detail__price-sub">(税込)</span>
+          </p>
         </div>
 
         <div class="item-detail__actions">
@@ -90,7 +94,7 @@
 
         <!-- コメント表示 -->
         <div class="item-comment__form">
-          <h2 class="item-comment__heading">コメント（{{ $item->comments->count() }}）</h2>
+          <h2 class="item-comment__heading">コメント({{ $item->comments->count() }})</h2>
           @foreach ($item->comments as $comment)
           <div class="comment">
             <div class="comment__header">
@@ -107,7 +111,7 @@
 
             <p class="comment__content">{!! nl2br(e($comment->content)) !!}</p>
 
-            <div class="comnment__footer">
+            <div class="comment__footer">
               <span class="comment__date">{{ $comment->created_at->format('Y/m/d H:i') }}</span>
             </div>
           </div>
