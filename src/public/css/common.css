@@ -319,13 +319,14 @@ ul {
     max-width: 100%;
     height: auto;
     margin: 0 auto;
+    padding: 0 16px;
     display: grid;
     grid-template-columns: 1fr 3fr;
     align-items: center;
   }
 
   .header-logo {
-    max-width: 100%;
+    max-width: 150px;
     height: auto;
   }
 
@@ -389,15 +390,15 @@ ul {
      ===============================*/
 
   .item-card__sold-label {
-    border-top: 60px solid red;
-    border-right: 60px solid transparent;
+    border-top: 75px solid red;
+    border-right: 75px solid transparent;
   }
 
   .item-card__sold-label::after {
     width: 100px;
     height: 24px;
-    font-size: 12px;
-    margin-top: -15px;
-    margin-left: -25px;
+    font-size: 16px;
+    margin-top: -22px;
+    margin-left: -18px;
   }
 }
