@@ -19,6 +19,8 @@
 }
 
 .item-card__image {
+  position: relative;
+  overflow: hidden;
   aspect-ratio: 1 / 1;
   background-color: #f8f8f8;
   display: flex;
@@ -27,21 +29,21 @@
 }
 
 .item-detail .item-card__sold-label {
-  border-top: 150px solid red;
-  border-right: 150px solid transparent;
+  border-top: 190px solid red;
+  border-right: 190px solid transparent;
 }
 
 .item-detail .item-card__sold-label::after {
-  width: 141px;
-  height: 30px;
-  font-size: 26px;
-  margin-top: -60px;
-  margin-left: -15px;
+  width: 180px;
+  height: 36px;
+  font-size: 32px;
+  margin-top: -75px;
+  margin-left: -10px;
 }
 
 .item-card__img {
   max-width: 100%;
-  height: auto;
+  max-height: 100%;
   object-fit: contain;
   display: block;
 }
@@ -242,6 +244,13 @@
 .user-icon {
   width: 70px;
   height: 70px;
+  border-radius: 50%;
+  overflow: hidden;
+  border: 1px solid #ccc;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  object-fit: cover;
 }
 
 .comment__user {
@@ -266,6 +275,7 @@
 
 .comment__footer {
   text-align: right;
+  font-size: 16px;
 }
 
 .comment-form__heading {
@@ -349,9 +359,11 @@
   }
 
   .item-detail .item-card__sold-label::after {
+    width: 100px;
+    height: 0px;
     font-size: 20px;
-    margin-top: -25px;
-    margin-left: -25px;
+    margin-top: -30px;
+    margin-left: 0px;
   }
 
   .item-card__img {
@@ -459,7 +471,7 @@
   }
 
   .item-comment__heading {
-    font-size: 24px;
+    font-size: 20px;
     margin-top: 16px;
     margin-bottom: 8px;
   }
@@ -475,13 +487,17 @@
   }
 
   .comment__user {
-    font-size: 19px;
+    font-size: 16px;
     font-weight: 400;
   }
 
   .comment__content {
-    font-size: 16px;
+    font-size: 12px;
     padding: 12px;
+  }
+
+  .comment__footer {
+    font-size: 12px;
   }
 
   .comment-form__heading {
@@ -493,7 +509,7 @@
     width: 100%;
     min-height: 200px;
     padding: 12px;
-    font-size: 16px;
+    font-size: 14px;
   }
 
   .comment-button {
