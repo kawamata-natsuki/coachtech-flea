@@ -26,7 +26,6 @@
   flex-direction: column;
   width: 100%;
   max-width: 680px;
-  gap: 8px;
 }
 
 .login-form__group {
@@ -71,9 +70,6 @@
    =============================== */
 
 @media screen and (min-width: 768px) and (max-width: 850px) {
-  .login-form {
-    padding: 8px 16px;
-  }
 
   .login-form__heading {
     font-size: 24px;
@@ -82,12 +78,6 @@
 
   .login-form__content {
     max-width: 480px;
-  }
-
-  .login-form__form,
-  .login-form__group {
-    max-width: 480px;
-    gap: 6px;
   }
 
   .login-form__label {
@@ -107,7 +97,7 @@
   }
 
   .login-form__button-submit {
-    height: 50px;
+    height: 40px;
     font-size: 20px;
   }
 
@@ -118,4 +108,5 @@
   .login-form__link--register {
     font-size: 16px;
   }
+
 }

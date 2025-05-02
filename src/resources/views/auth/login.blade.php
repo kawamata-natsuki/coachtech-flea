@@ -15,7 +15,9 @@
       <form class="login-form__form" action="/login" method="post" novalidate>
         @csrf
         <!-- バリデーションエラー（ログイン失敗） -->
-        <x-error-message field="login" class="error-message" />
+        <div class="login-form__group">
+          <x-error-message field="login" class="error-message {{ $errors->has('login') ? 'has-error' : 'no-error' }}" />
+        </div>
 
         <!-- メールアドレス -->
         <div class="login-form__group">
@@ -24,6 +26,7 @@
             placeholder="例：user@example.com">
         </div>
         <x-error-message field="email" class="error-message {{ $errors->has('email') ? 'has-error' : 'no-error' }}" />
+
 
         <!-- パスワード -->
         <div class="login-form__group">
