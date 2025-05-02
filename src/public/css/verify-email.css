@@ -1,0 +1,31 @@
+.verify-email {
+  max-width: 720px;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  text-align: center;
+  margin: 0 auto;
+  padding-top: 20vh;
+}
+
+.verify-email__message {
+  margin-bottom: 8px;
+  font-family: Inter;
+  font-weight: 700;
+  font-size: 24px;
+  text-align: center;
+  color: #000000;
+  white-space: nowrap;
+}
+
+.verify-email__resend-button {
+  font-family: Inter;
+  font-weight: 400;
+  font-size: 20px;
+  text-align: center;
+  vertical-align: middle;
+  color: #0073CC;
+  margin-top: 60px;
+}
