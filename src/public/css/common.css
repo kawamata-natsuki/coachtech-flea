@@ -3,6 +3,7 @@ html,
 body {
   width: 100%;
   min-height: 100vh;
+  font-family: Inter;
 }
 
 *,
@@ -293,12 +294,16 @@ ul {
 }
 
 .header-nav__item--sell {
-  max-width: 100px;
-  max-height: 50px;
-  padding: 4px 24px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 40px;
+  padding: 0 24px;
   background-color: #FFF;
   color: #000;
   border-radius: 4px;
+  font-weight: 400;
+  line-height: 1;
 }
 
 /* ===============================
@@ -342,8 +347,9 @@ ul {
   }
 
   .header-nav__item--sell {
-    padding: 4px 16px;
-    margin-right: 8px;
+    height: 32px;
+    padding: 0 12px;
+    font-size: 16px;
   }
 
   /* ===============================
