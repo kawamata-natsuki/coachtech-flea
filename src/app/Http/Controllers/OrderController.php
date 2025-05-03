@@ -8,6 +8,7 @@ use App\Models\Order;
 use App\Models\PaymentMethod;
 use App\Constants\PaymentMethod as PaymentMethodConst;
 use App\Constants\ItemStatus;
+use App\Http\Requests\PurchaseRequest;
 use Stripe\Stripe;
 use Stripe\Checkout\Session;
 
@@ -24,10 +25,13 @@ class OrderController extends Controller
         return view('items.purchase', compact('item', 'paymentMethods', 'user', 'selectedPaymentMethod'));
     }
 
-    public function store(Request $request, $item_id)
+    public function store(PurchaseRequest $request, $item_id)
     {
         $request->validate([
-            'payment_method' => 'required|string|in:credit_card,convenience_store',
+            'payment_method' => ['required', 'string', 'in:credit_card,convenience_store'],
+            'postal_code' => ['required', 'string'],
+            'address' => ['required', 'string'],
+            'building' => ['nullable', 'string'],
         ]);
 
         $item = Item::findOrFail($item_id);
