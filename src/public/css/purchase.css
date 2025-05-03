@@ -195,13 +195,15 @@
   background-color: #FF5555;
   border-radius: 5px;
   text-align: center;
-  padding: 16px;
   margin-top: 80px;
 }
 
 .purchase-button {
+  display: block;
+  width: 100%;
+  padding: 16px;
+  cursor: pointer;
   color: #FFFFFF;
-  font-family: Inter;
   font-weight: 700;
   font-size: 26px;
 }
@@ -317,13 +319,13 @@
   }
 
   .item-purchase__button-wrapper {
-    padding: 12px;
     margin-top: 50px;
   }
 
   .purchase-button {
     font-weight: 600;
     font-size: 20px;
+    padding: 12px;
   }
 
 }
