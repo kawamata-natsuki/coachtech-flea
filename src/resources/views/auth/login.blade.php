@@ -24,8 +24,8 @@
           <label class="login-form__label form__label" for="email">メールアドレス</label>
           <input class="login-form__input form__input" type="email" name="email" id="email" value="{{ old('email') }}"
             placeholder="例：user@example.com">
+          <x-error-message field="email" class="error-message {{ $errors->has('email') ? 'has-error' : 'no-error' }}" />
         </div>
-        <x-error-message field="email" class="error-message {{ $errors->has('email') ? 'has-error' : 'no-error' }}" />
 
 
         <!-- パスワード -->
@@ -33,9 +33,9 @@
           <label class="login-form__label form__label" for="password">パスワード</label>
           <input class="login-form__input form__input" type="password" name="password" id="password"
             placeholder="8文字以上のパスワードを入力">
+          <x-error-message field="password"
+            class="error-message {{ $errors->has('password') ? 'has-error' : 'no-error' }}" />
         </div>
-        <x-error-message field="password"
-          class="error-message {{ $errors->has('password') ? 'has-error' : 'no-error' }}" />
 
 
         <!-- 送信ボタン -->

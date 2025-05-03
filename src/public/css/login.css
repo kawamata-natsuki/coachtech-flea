@@ -13,7 +13,8 @@
 }
 
 .login-form__heading {
-  padding-bottom: 24px;
+  padding-top: 30px;
+  padding-bottom: 50px;
 }
 
 .login-form__content {
@@ -33,12 +34,12 @@
   flex-direction: column;
   width: 100%;
   max-width: 680px;
-  gap: 6px;
+  margin-bottom: 12px;
 }
 
 .login-form__button {
   width: 100%;
-  margin-top: 20px;
+  margin-top: 60px;
 }
 
 .login-form__button-submit {
@@ -47,10 +48,10 @@
   background-color: #FF5555;
   color: #FFF;
   border-radius: 5px;
-  font-family: Inter;
   font-weight: 700;
   font-size: 26px;
   cursor: pointer;
+  border-radius: 5px;
 }
 
 .login-form__link {
@@ -59,7 +60,6 @@
 }
 
 .login-form__link--register {
-  font-family: Inter;
   font-weight: 400;
   font-size: 20px;
   color: #0073CC;
@@ -73,7 +73,8 @@
 
   .login-form__heading {
     font-size: 24px;
-    padding-bottom: 16px;
+    padding-top: 20px;
+    padding-bottom: 12px;
   }
 
   .login-form__content {
@@ -93,12 +94,13 @@
   }
 
   .login-form__button {
-    margin-top: 10px;
+    margin-top: 20px;
   }
 
   .login-form__button-submit {
     height: 40px;
-    font-size: 20px;
+    font-size: 16px;
+    font-weight: 600;
   }
 
   .login-form__link {
@@ -106,7 +108,7 @@
   }
 
   .login-form__link--register {
-    font-size: 16px;
+    font-size: 14px;
   }
 
 }
