@@ -6,7 +6,6 @@
 @endsection
 
 @section('content')
-<h1 class="sr-only">{{ $item->name }} の購入</h1>
 <div class="item-purchase">
   <x-error-message class="error-message" field="item" />
   <div class="item-purchase__container">
@@ -31,17 +30,19 @@
         <!-- 支払方法選択 -->
         <div class="item-purchase__payment-form">
           <p class="item-purchase__section-title">支払方法</p>
-          <select class="item-purchase__select" name="payment_method" id="payment_method"
-            onchange="updatePaymentMethod()">
-            <option class="placeholder-option" value="" disabled selected hidden>選択してください</option>
-            @foreach ($paymentMethods as $code => $label)
-            <option value="{{ $code }}" {{ (old('payment_method') ?? $selectedPaymentMethod)===$code ? 'selected' : ''
-              }}>
-              {{ $label }}
-            </option>
-            @endforeach
-          </select>
-          <x-error-message class="error-message" field="payment_method" />
+          <div class="item-purchase__select-wrapper">
+            <select class="item-purchase__select" name="payment_method" id="payment_method"
+              onchange="updatePaymentMethod()">
+              <option class="placeholder-option" value="" disabled selected hidden>選択してください</option>
+              @foreach ($paymentMethods as $code => $label)
+              <option value="{{ $code }}" {{ (old('payment_method') ?? $selectedPaymentMethod)===$code ? 'selected' : ''
+                }}>
+                {{ $label }}
+              </option>
+              @endforeach
+            </select>
+            <x-error-message class="error-message" field="payment_method" />
+          </div>
         </div>
 
         <!-- 住所 -->
@@ -85,6 +86,11 @@
           @csrf
           <input type="hidden" name="payment_method" id="hidden_payment_method"
             value="{{ old('payment_method') ?? $selectedPaymentMethod }}">
+          <input type="hidden" name="postal_code" value="{{ $user->postal_code }}">
+          <input type="hidden" name="address" value="{{ $user->address }}">
+          @if ($user->building)
+          <input type="hidden" name="building" value="{{ $user->building }}">
+          @endif
           <div class="item-purchase__button-wrapper">
             <button class="purchase-button" type="submit">購入する</button>
           </div>
@@ -94,48 +100,48 @@
           <!-- READMEに記述しておく -->
         </form>
       </div>
-
     </div>
   </div>
-  @endsection
+</div>
+@endsection
 
-  <!-- JavaSacript -->
-  @section('js')
-  <script>
-    function updatePaymentMethod() {
-      const select = document.getElementById('payment_method');
-      const display = document.getElementById('selected-method');
-      const hidden = document.getElementById('hidden_payment_method');
+<!-- JavaSacript -->
+@section('js')
+<script>
+  function updatePaymentMethod() {
+    const select = document.getElementById('payment_method');
+    const display = document.getElementById('selected-method');
+    const hidden = document.getElementById('hidden_payment_method');
 
-      // 表示用
-      const selectedIndex = select.selectedIndex;
-      if (selectedIndex >= 0 && select.options[selectedIndex]) {
-        const selectedText = select.options[selectedIndex].text;
-        display.textContent = selectedText;
-      }
-
-      // 送信用
-      hidden.value = select.value;
+    // 表示用
+    const selectedIndex = select.selectedIndex;
+    if (selectedIndex >= 0 && select.options[selectedIndex]) {
+      const selectedText = select.options[selectedIndex].text;
+      display.textContent = selectedText;
     }
 
-    window.addEventListener('DOMContentLoaded', function () {
-      const select = document.getElementById('payment_method');
-      const display = document.getElementById('selected-method');
-      const hidden = document.getElementById('hidden_payment_method');
+    // 送信用
+    hidden.value = select.value;
+  }
 
-      const hiddenValue = hidden.value; // ← hiddenの値を見る！
+  window.addEventListener('DOMContentLoaded', function () {
+    const select = document.getElementById('payment_method');
+    const display = document.getElementById('selected-method');
+    const hidden = document.getElementById('hidden_payment_method');
 
-      if (hiddenValue) {
-        for (let i = 0; i < select.options.length; i++) {
-          if (select.options[i].value === hiddenValue) {
-            select.options[i].selected = true; // セレクトボックスを選択状態にする
-            display.textContent = select.options[i].text; // 右側に支払方法名を表示する
-            break;
-          }
+    const hiddenValue = hidden.value; // ← hiddenの値を見る！
+
+    if (hiddenValue) {
+      for (let i = 0; i < select.options.length; i++) {
+        if (select.options[i].value === hiddenValue) {
+          select.options[i].selected = true; // セレクトボックスを選択状態にする
+          display.textContent = select.options[i].text; // 右側に支払方法名を表示する
+          break;
         }
       }
-    });
+    }
+  });
 
-  </script>
+</script>
 
-  @endsection
+@endsection
