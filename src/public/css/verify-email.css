@@ -36,13 +36,18 @@
   }
 
   .verify-email__message {
-    font-weight: 600;
-    font-size: 20px;
+    font-size: 16px;
+    font-weight: 400;
+  }
+
+  .verify-email__form {
+    margin-top: 30px;
   }
 
   .verify-email__resend-button {
+    font-size: 12px;
     font-weight: 400;
-    font-size: 16px;
     margin-top: 40px;
+    padding: 8px 20px;
   }
 }
