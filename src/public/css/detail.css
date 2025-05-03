@@ -350,7 +350,7 @@
   }
 
   .item-detail__wrapper {
-    gap: 12px;
+    gap: 24px;
   }
 
   .item-detail .item-card__sold-label {
@@ -366,8 +366,12 @@
     margin-left: 0px;
   }
 
+  .item-detail__image {
+    max-width: 300px;
+  }
+
   .item-card__img {
-    max-width: 350px;
+    max-width: 300px;
     height: auto;
   }
 
@@ -492,7 +496,7 @@
   }
 
   .comment__content {
-    font-size: 12px;
+    font-size: 14px;
     padding: 12px;
   }
 
