@@ -1,0 +1,91 @@
+.purchase-success {
+  min-height: calc(100vh - 120px);
+  /* ヘッダー + フラッシュ分を引く */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #fff;
+}
+
+.purchase-success__container {
+  position: relative;
+  z-index: 1;
+  padding: 80px 20px;
+  text-align: center;
+  max-width: 600px;
+  width: 100%;
+}
+
+.purchase-success__title,
+.purchase-success__message {
+  color: #8B7969;
+  margin-bottom: 24px;
+}
+
+.purchase-success__title {
+  font-size: 24px;
+  font-weight: 700;
+}
+
+.purchase-success__message {
+  font-size: 16px;
+  font-weight: 500;
+}
+
+/* ボタンの親コンテナ：2分割配置 */
+.purchase-success__actions {
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+  margin-top: 24px;
+}
+
+.purchase-success__button {
+  flex: 1;
+  max-width: 200px;
+  text-align: center;
+  padding: 12px 0;
+  font-size: 14px;
+  font-weight: 600;
+  color: #5A4C3B;
+  text-decoration: none;
+  border: 1px solid #C7B9A6;
+  border-radius: 4px;
+  background-color: #F9F6F3;
+  transition: background-color 0.2s ease;
+}
+
+.purchase-success__button--primary {
+  background-color: #F3EDE9;
+}
+
+.purchase-success__button--secondary {
+  background-color: #F9F6F3;
+}
+
+.purchase-success__button:hover {
+  background-color: #ECE7E2;
+}
+
+/* ===============================
+      タブレット（768〜850px）対応
+   =============================== */
+
+@media screen and (min-width:768px) and (max-width:850px) {
+  .purchase-success__container {
+    padding: 40px 16px;
+  }
+
+  .purchase-success__title {
+    font-size: 20px;
+  }
+
+  .purchase-success__message {
+    font-size: 14px;
+  }
+
+  .purchase-success__button {
+    padding: 8px 0;
+    font-size: 13px;
+  }
+}
