@@ -13,6 +13,7 @@
 }
 
 .register-form__heading {
+  padding-top: 30px;
   padding-bottom: 50px;
 }
 
@@ -26,7 +27,6 @@
   flex-direction: column;
   width: 100%;
   max-width: 680px;
-  gap: 6px;
 }
 
 .register-form__group {
@@ -34,12 +34,12 @@
   flex-direction: column;
   width: 100%;
   max-width: 680px;
-  gap: 6px;
+  margin-bottom: 12px;
 }
 
 .register-form__button {
   width: 100%;
-  margin-top: 40px;
+  margin-top: 60px;
 }
 
 .register-form__button-submit {
@@ -47,7 +47,6 @@
   height: 65px;
   background-color: #FF5555;
   color: #FFF;
-  font-family: Inter;
   font-weight: 700;
   font-size: 26px;
   cursor: pointer;
@@ -60,7 +59,6 @@
 }
 
 .register-form__link--login {
-  font-family: Inter;
   font-weight: 400;
   font-size: 20px;
   color: #0073CC;
@@ -71,23 +69,15 @@
    =============================== */
 
 @media screen and (min-width: 768px) and (max-width: 850px) {
-  .register-form {
-    padding: 8px 16px;
-  }
 
   .register-form__heading {
     font-size: 24px;
+    padding-top: 20px;
     padding-bottom: 32px;
   }
 
   .register-form__content {
     max-width: 480px;
-  }
-
-  .register-form__form,
-  .register-form__group {
-    max-width: 480px;
-    gap: 6px;
   }
 
   .register-form__label {
@@ -107,8 +97,9 @@
   }
 
   .register-form__button-submit {
-    height: 50px;
-    font-size: 20px;
+    height: 40px;
+    font-size: 16px;
+    font-weight: 600;
   }
 
   .register-form__link {
@@ -116,6 +107,6 @@
   }
 
   .register-form__link--login {
-    font-size: 16px;
+    font-size: 14px;
   }
 }
