@@ -1,7 +1,7 @@
 .profile-form {
   display: flex;
   justify-content: center;
-  padding: 16px 16px;
+  padding-bottom: 100px;
 }
 
 .profile-form__container {
@@ -13,7 +13,7 @@
 }
 
 .profile-form__heading {
-  padding-bottom: 24px;
+  padding-bottom: 32px;
 }
 
 .profile-form__content {
@@ -26,18 +26,13 @@
   flex-direction: column;
   width: 100%;
   max-width: 680px;
-  gap: 8px;
-}
-
-.profile-form__section {
-  margin-bottom: 40px;
 }
 
 .profile-form__image-area {
   display: flex;
   justify-content: flex-start;
   align-items: center;
-  gap: 42px
+  gap: 36px;
 }
 
 .profile-form__image {
@@ -86,7 +81,6 @@
   flex-direction: column;
   width: 100%;
   max-width: 680px;
-  gap: 6px;
 }
 
 .profile-form__button {
@@ -104,4 +98,69 @@
   font-weight: 700;
   font-size: 26px;
   cursor: pointer;
+}
+
+/* ===============================
+      タブレット（768〜850px）対応
+   =============================== */
+
+@media screen and (min-width: 768px) and (max-width: 850px) {
+
+  .profile-form__container {
+    max-width: 480px;
+  }
+
+  .profile-form__heading {
+    font-size: 24px;
+    padding-top: 20px;
+    padding-bottom: 12px;
+  }
+
+  .profile-form__form {
+    max-width: 480px;
+  }
+
+  .profile-form__image-area {
+    gap: 28px;
+  }
+
+  .profile-form__image {
+    width: 125px;
+    height: 125px;
+  }
+
+  .profile-form__image--default {
+    width: 125px;
+    height: 125px;
+  }
+
+  .profile-form__file-button {
+    width: 125px;
+    height: 35px;
+  }
+
+  .button--file-select {
+    font-weight: 600;
+    font-size: 14px;
+  }
+
+  .profile-form__label {
+    font-size: 20px;
+  }
+
+  .profile-form__input {
+    height: 40px;
+    font-size: 14px;
+  }
+
+  .profile-form__button {
+    width: 100%;
+    margin-top: 30px;
+  }
+
+  .profile-form__button-submit {
+    height: 40px;
+    font-weight: 600;
+    font-size: 18px;
+  }
 }
