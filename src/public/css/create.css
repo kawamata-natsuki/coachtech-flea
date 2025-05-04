@@ -16,7 +16,7 @@
   font-weight: 700;
   font-size: 36px;
   color: black;
-  margin-bottom: 40px;
+  margin-bottom: 20px;
 }
 
 .create-page__content {
@@ -35,11 +35,11 @@
 }
 
 .create-page__label {
-  font-family: Inter;
   font-weight: 700;
   font-size: 24px;
   color: black;
   margin-top: 24px;
+  margin-bottom: 8px;
 }
 
 .create-page__upload-area {
@@ -49,7 +49,7 @@
   text-align: center;
   cursor: pointer;
   width: 100%;
-  min-height: 200px;
+  min-height: 150px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -93,8 +93,8 @@
 /* タグのデザイン */
 .create-page__tag {
   display: inline-block;
-  padding: 8px 16px;
-  margin: 8px 5px;
+  padding: 4px 16px;
+  margin: 12px 5px;
   border: 2px solid #FF5655;
   border-radius: 20px;
   background-color: white;
@@ -130,14 +130,15 @@
 
 .create-page__select-wrapper::after {
   content: '';
+  width: 0;
+  height: 0;
+  border-left: 6px solid transparent;
+  border-right: 6px solid transparent;
+  border-top: 10px solid #5F5F5F;
   position: absolute;
-  right: 12px;
   top: 50%;
-  transform: translateY(-150%);
-  width: 18px;
-  height: 20px;
-  background: url('/images/select-icon.png') no-repeat center center;
-  background-size: contain;
+  right: 12px;
+  transform: translateY(-180%);
   pointer-events: none;
 }
 
@@ -200,4 +201,87 @@
   font-family: Inter;
   font-weight: 700;
   font-size: 26px;
+}
+
+/* ===============================
+      タブレット（768〜850px）対応
+   =============================== */
+
+@media screen and (min-width: 768px) and (max-width: 850px) {
+
+  .create-page__container {
+    max-width: 600px;
+  }
+
+  .create-page__heading {
+    font-weight: 600;
+    font-size: 28px;
+    margin-bottom: 16px;
+  }
+
+  .create-page__label {
+    font-weight: 600;
+    font-size: 20px;
+    margin-top: 20px;
+    margin-bottom: 4px;
+  }
+
+  .create-page__upload-button {
+    padding: 8px 16px;
+    border: 1px solid #FF5555;
+    font-weight: 600;
+    font-size: 14px;
+  }
+
+  .create-page__section-title {
+    border-bottom: 1px solid #5F5F5F;
+    padding-bottom: 4px;
+    margin: 24px 0;
+    font-weight: 600;
+    font-size: 24px;
+  }
+
+  /* タグのデザイン */
+  .create-page__tag {
+    margin: 8px 5px;
+    font-weight: 500;
+    font-size: 12px;
+  }
+
+  .create-page__select {
+    font-weight: 600;
+    font-size: 14px;
+  }
+
+  .create-page__select-wrapper::after {
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+    border-top: 10px solid #5F5F5F;
+    position: absolute;
+    top: 50%;
+    right: 12px;
+    transform: translateY(-180%);
+    pointer-events: none;
+  }
+
+  .create-page__input {
+    font-weight: 600;
+    font-size: 14px;
+  }
+
+  .create-page__textarea {
+    font-weight: 600;
+    font-size: 14px;
+  }
+
+  .item-create__button-wrapper {
+    margin-top: 40px;
+  }
+
+  .create-button {
+    padding: 8px;
+    font-weight: 600;
+    font-size: 20px;
+  }
+
 }

@@ -57,6 +57,7 @@ ul {
   font-weight: 700;
   font-size: 24px;
   color: #000;
+  margin-bottom: 8px;
 }
 
 .form__input {
@@ -79,29 +80,38 @@ ul {
    ===============================*/
 
 .error-message {
+  min-height: 24px;
   display: flex;
   align-items: center;
-  min-height: 24px;
-  margin-bottom: 12px;
-  line-height: 1.4;
   font-size: 16px;
   font-weight: 600;
   border-radius: 4px;
   padding: 0 12px;
-  transition: background-color 0.2s ease, color 0.2s ease;
+  line-height: 1.4;
+  transition: all 0.2s ease;
 }
 
+/* 表示する時だけ高さを持たせる */
 .error-message.has-error {
+  min-height: 24px;
   background-color: #ffe5e5;
   color: #d93025;
-  padding: 4px 12px;
+  padding: 0 12px;
+  font-size: 14px;
+  line-height: 1.4;
 }
 
+/* 非表示時は完全に消す */
 .error-message.no-error {
+  height: 0;
+  padding: 0;
+  margin: 0;
+  font-size: 0;
+  line-height: 0;
+  overflow: hidden;
+  border: none;
+  background: none;
   color: transparent;
-  background-color: transparent;
-  visibility: hidden;
-  padding: 4px 12px;
 }
 
 .flash-message {
@@ -155,6 +165,7 @@ ul {
   overflow: hidden;
   aspect-ratio: 1 / 1;
   background-color: #f8f8f8;
+  border-radius: 4px;
 }
 
 .item-card__img {
@@ -353,22 +364,18 @@ ul {
      ===============================*/
 
   .error-message {
-    min-height: 20px;
-    margin-bottom: 8px;
     font-size: 12px;
     font-weight: 500;
   }
 
+  /* 表示する時だけ高さを持たせる */
   .error-message.has-error {
-    padding: 2px 8px;
-  }
-
-  .error-message.no-error {
-    padding: 2px 8px;
+    padding: 0 12px;
+    font-size: 12px;
   }
 
   .flash-message {
-    min-height: 20px;
+    min-height: 24px;
     padding: 12px 0;
     font-weight: 500;
     font-size: 12px;
