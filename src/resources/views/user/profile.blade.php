@@ -20,27 +20,32 @@
         @endif
       </div>
 
-      <!-- ユーザー名 -->
-      <div class="profile-page__info">
-        <p class="profile-page__name">{{ $user->name }}</p>
-      </div>
+      <div class="profile-page__info-wrapper">
 
-      <!-- 編集リンク -->
-      <div class="profile-page__edit">
-        <a class="profile-page__edit-link" href="{{ route('profile.edit') }}">プロフィールを編集</a>
+        <!-- ユーザー名 -->
+        <div class="profile-page__info">
+          <p class="profile-page__name">{{ $user->name }}</p>
+        </div>
+
+        <!-- 編集リンク -->
+        <div class="profile-page__edit">
+          <a class="profile-page__edit-link" href="{{ route('profile.edit') }}">プロフィールを編集</a>
+        </div>
       </div>
     </div>
 
     <!-- メニュー -->
-    <div class="profile-page__menu">
-      <ul class="profile-page__tabs">
-        <li class="profile-page__tab {{ (request('tab') === 'sell' || request('tab') === null) ? 'is-active' : '' }}">
-          <a class="profile-page__link" href="{{ route('profile.index', ['tab' => 'sell']) }}">出品した商品</a>
-        </li>
-        <li class="profile-page__tab {{ request('tab') === 'buy' ? 'is-active' : '' }}">
-          <a class="profile-page__link" href="{{ route('profile.index', ['tab' => 'buy']) }}">購入した商品</a>
-        </li>
-      </ul>
+    <div class="profile-page__menu-wrapper">
+      <div class="profile-page__menu">
+        <ul class="profile-page__tabs">
+          <li class="profile-page__tab {{ (request('tab') === 'sell' || request('tab') === null) ? 'is-active' : '' }}">
+            <a class="profile-page__link" href="{{ route('profile.index', ['tab' => 'sell']) }}">出品した商品</a>
+          </li>
+          <li class="profile-page__tab {{ request('tab') === 'buy' ? 'is-active' : '' }}">
+            <a class="profile-page__link" href="{{ route('profile.index', ['tab' => 'buy']) }}">購入した商品</a>
+          </li>
+        </ul>
+      </div>
     </div>
 
     <!-- 商品リスト -->

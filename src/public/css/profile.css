@@ -1,14 +1,19 @@
-.profile-page__container {
+.profile-page {
   width: 100%;
   max-width: 1540px;
   margin: 0 auto;
 }
 
+.profile-page__container {
+  margin-bottom: 100px;
+}
+
 .profile-page__header {
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-columns: 1fr 3fr;
   align-items: center;
   gap: 24px;
+  margin-top: 32px;
 }
 
 /* プロフィール画像 */
@@ -17,12 +22,12 @@
   display: flex;
   align-items: center;
   justify-content: flex-end;
-  margin-right: 30px;
+  margin: 0;
 }
 
 .profile-page__image {
-  width: 200px;
-  height: 200px;
+  width: 175px;
+  height: 175px;
   border-radius: 50%;
   overflow: hidden;
   border: 1px solid #ccc;
@@ -40,6 +45,13 @@
 
 /* ユーザー名 */
 
+.profile-page__info-wrapper {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: flex-end;
+  gap: 24px;
+}
+
 .profile-page__info {
   display: flex;
   align-items: center;
@@ -52,40 +64,57 @@
   word-break: break-word;
   overflow-wrap: break-word;
   white-space: normal;
+  margin-left: 40px;
 }
 
 /* 修正リンク */
 
 .profile-page__edit {
-  max-width: 310px;
   display: flex;
   align-items: center;
   justify-content: center;
-  border: 2px solid #FF5555;
-  border-radius: 10px;
 }
 
 .profile-page__edit-link {
-  width: 100%;
-  padding: 16px;
   font-weight: 700;
   font-size: 26px;
   color: #FF5555;
   text-align: center;
+  border: 2px solid #FF5555;
+  border-radius: 10px;
+  padding: 12px 20px;
 }
 
 /* メニュータブ */
-.profile-page__menu {
-  border-bottom: 2px solid #5F5F5F;
+.profile-page__menu-wrapper {
+  position: relative;
   margin-top: 70px;
   margin-bottom: 70px;
+}
+
+.profile-page__menu-wrapper::before {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100vw;
+  height: 2px;
+  background-color: #5F5F5F;
+  z-index: 0;
+}
+
+.profile-page__menu {
+  position: relative;
+  z-index: 1;
+  max-width: 1540px;
+  margin: 0 auto;
 }
 
 .profile-page__tabs {
   display: flex;
   gap: 60px;
-  margin-left: 100px;
-  padding-bottom: 16px;
+  padding: 0 100px 16px;
 }
 
 .profile-page__tab.is-active .profile-page__link {
@@ -93,7 +122,6 @@
 }
 
 .profile-page__link {
-  font-family: Inter;
   font-weight: 700;
   font-size: 24px;
   color: #5F5F5F;
@@ -118,12 +146,113 @@
 
 .profile-page__list .item-card {
   width: 100%;
-  max-width: 100%;
+  max-width: 300px;
 }
 
 .profile-page__list .item-card__name {
-  font-family: Inter;
   font-weight: 400;
   font-size: 24px;
   color: #000000;
+}
+
+/* ===============================
+      タブレット（768〜850px）対応
+   =============================== */
+
+@media screen and (min-width: 768px) and (max-width: 850px) {
+  .profile-page {
+    max-width: 95%;
+  }
+
+  .profile-page__header {
+    grid-template-columns: 1fr 3fr;
+    gap: 12px;
+  }
+
+  /* プロフィール画像 */
+
+  .profile-page__image-wrapper {
+    display: flex;
+    justify-content: flex-end;
+  }
+
+  .profile-page__image {
+    width: 125px;
+    height: 125px;
+  }
+
+  .profile-page__image--default {
+    width: 125px;
+    height: 125px;
+  }
+
+  .profile-page__info-wrapper {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+    gap: 12px;
+  }
+
+  /* ユーザー名 */
+
+  .profile-page__name {
+    font-weight: 600;
+    font-size: 28px;
+    margin-left: 16px;
+  }
+
+  /* 修正リンク */
+
+  .profile-page__edit {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 200px;
+  }
+
+  .profile-page__edit-link {
+    font-weight: 600;
+    font-size: 18px;
+    padding: 4px;
+  }
+
+  /* メニュータブ */
+  .profile-page__menu-wrapper {
+    margin-top: 48px;
+    margin-bottom: 48px;
+  }
+
+  .profile-page__tabs {
+    gap: 48px;
+    padding-left: 70px;
+  }
+
+  .profile-page__link {
+    font-weight: 600;
+    font-size: 20px;
+  }
+
+  .profile-page__items {
+    margin-top: 28px;
+    padding: 0 30px;
+  }
+
+  .profile-page__list {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 40px;
+  }
+
+  .profile-page__empty {
+    font-size: 16px;
+  }
+
+  .profile-page__list .item-card {
+    width: 100%;
+    max-width: 300px;
+  }
+
+  .profile-page__list .item-card__name {
+    font-size: 16px;
+  }
+
 }
