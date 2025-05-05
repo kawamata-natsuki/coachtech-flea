@@ -16,7 +16,7 @@ class ItemController extends Controller
     // 商品一覧画面の表示
     public function index(Request $request)
     {
-        $tab = $request->query('tab', 'all');
+        $tab = $request->query('page', 'all');
         $keyword = $request->query('keyword');
 
         if ($tab === 'mylist') {

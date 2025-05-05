@@ -15,7 +15,7 @@
         <a class="items-page__link" href="/?keyword={{ request('keyword') }}">おすすめ</a>
       </li>
       <li class="items-page__tab {{ $tab==='mylist' ? 'is-active' : '' }}">
-        <a class="items-page__link" href="/?tab=mylist&keyword={{ request('keyword') }}">マイリスト</a>
+        <a class="items-page__link" href="/?page=mylist&keyword={{ request('keyword') }}">マイリスト</a>
       </li>
     </ul>
   </div>
