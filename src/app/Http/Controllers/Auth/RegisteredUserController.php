@@ -4,13 +4,13 @@ namespace App\Http\Controllers\Auth;
 
 use App\Actions\Fortify\CreateNewUser;
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
+use App\Http\Requests\RegisterRequest;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Auth\Events\Registered;
 
 class RegisteredUserController extends Controller
 {
-    public function store(Request $request)
+    public function store(RegisterRequest $request)
     {
         // ユーザー登録処理
         $user = app(CreateNewUser::class)->create($request->all());
