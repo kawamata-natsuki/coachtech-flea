@@ -2,6 +2,8 @@
 
 namespace Database\Factories;
 
+use App\Constants\Condition;
+use App\Constants\ItemStatus;
 use App\Models\Item;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
@@ -23,8 +25,8 @@ class ItemFactory extends Factory
             'price' => 1000,
             'item_image' => 'dummy.jpg',
             'user_id' => User::factory(),
-            'condition_id' => 1,
-            'item_status' => 'on_sale',
+            'condition_id' => Condition::codeToId(Condition::GOOD),
+            'item_status' => ItemStatus::ON_SALE,
         ];
     }
 }
