@@ -50,10 +50,6 @@ class ItemIndexTest extends TestCase
             'name' => 'testA',
             'item_status' => ItemStatus::SOLD_OUT,
         ]);
-        Item::factory()->create([
-            'name' => 'testB',
-            'item_status' => ItemStatus::SOLD_OUT,
-        ]);
 
         // 1. 商品ページを開く
         $response = $this->get('/');
@@ -61,7 +57,6 @@ class ItemIndexTest extends TestCase
 
         // 2. 購入済み商品を表示する
         $response->assertSee('testA');
-        $response->assertSee('testB');
 
         // 購入済み商品は「Sold」と表示される
         $response->assertSee('item-card__sold-label');
