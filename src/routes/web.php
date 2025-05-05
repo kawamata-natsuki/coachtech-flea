@@ -15,18 +15,12 @@ use Illuminate\Support\Facades\Route;
 
 use Illuminate\Support\Facades\Log;
 
-Route::get('/log-test', function () {
-    Log::debug('ログテスト成功！');
-    return 'ログ出力OK';
-});
-
 // -----------------------------------------------------
 // 認証関係のルート
 // -----------------------------------------------------
 
 // ユーザー登録の処理
 Route::post('/register', [RegisteredUserController::class, 'store'])->middleware(['guest']);
-// 登録後のメール認証機能のルーティング後ほど記述する
 
 // ログイン処理
 Route::post('/login', function (LoginRequest $request) {
