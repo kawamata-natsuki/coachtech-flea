@@ -26,7 +26,7 @@ class ItemController extends Controller
 
                 $items = $user->favoriteItems->filter(function ($item) use ($keyword, $user) {
                     return (
-                        (!$keyword || str_contains($item->name, $keyword))
+                        (!$keyword || str_contains(mb_strtolower($item->name), mb_strtolower($keyword)))
                         && $item->user_id !== $user->id
                     );
                 });
@@ -40,6 +40,7 @@ class ItemController extends Controller
                     return $query->where('user_id', '!=', auth()->id());
                 })
                 // 部分一致検索
+                // SQLのlikeは大文字小文字区別しない
                 ->when($keyword, function ($query) use ($keyword) {
                     return $query->where('name', 'like', '%' . $keyword . '%');
                 })
