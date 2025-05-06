@@ -40,10 +40,9 @@
               @csrf
               <button class="favorite-button" type="submit">
                 @if (auth()->check() && auth()->user()->favoriteItems->contains($item))
-                <img class="favorite-count__icon" src="{{ asset('images/liked.svg') }}" alt="いいね済み" width="24"
-                  height="24">
+                <img class="favorite-count__icon" src="{{ asset('images/liked.svg') }}" alt="いいね済み">
                 @else
-                <img class="favorite-count__icon" src="{{ asset('images/like.svg') }}" alt="いいね" width="24" height="24">
+                <img class="favorite-count__icon" src="{{ asset('images/like.svg') }}" alt="いいね">
                 @endif
               </button>
             </form>
@@ -52,7 +51,7 @@
 
           <!-- コメントカウント -->
           <div class="item-comment__count">
-            <img class="comment-count__icon" src="{{ asset('images/comment.svg') }}" alt="コメント数" width="24" height="24">
+            <img class="comment-count__icon" src="{{ asset('images/comment.svg') }}" alt="コメント数">
             <p class="comment-count">{{ $item->comments->count() }}</p>
           </div>
         </div>
@@ -105,7 +104,7 @@
               ? asset('storage/' . $profileImage)
               : asset('images/default-profile.svg');
               @endphp
-              <img class="user-icon" src="{{ $profileImageUrl }}" alt="プロフィール画像" width="40" height="40">
+              <img class="user-icon" src="{{ $profileImageUrl }}" alt="プロフィール画像">
               <span class="comment__user">{{ $comment->user->name ?? '匿名ユーザー' }}</span>
             </div>
 
