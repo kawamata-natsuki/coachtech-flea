@@ -9,7 +9,7 @@ use App\Http\Requests\ExhibitionRequest;
 use App\Models\Item;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Favades\Storage;
+use Illuminate\Support\Facades\Storage;
 
 class ItemController extends Controller
 {
@@ -21,10 +21,18 @@ class ItemController extends Controller
 
         if ($tab === 'mylist') {
             // ログイン済ならお気に入り取得、未ログインなら空のコレクションを渡す
-            $items = auth()->check() ? auth()->user()->favoriteItems->filter(function ($item) use ($keyword) {
-                return !$keyword || str_contains($item->name, $keyword);
-            })
-                : collect();
+            if (auth()->check()) {
+                $user = auth()->user();
+
+                $items = $user->favoriteItems->filter(function ($item) use ($keyword, $user) {
+                    return (
+                        (!$keyword || str_contains($item->name, $keyword))
+                        && $item->user_id !== $user->id
+                    );
+                });
+            } else {
+                $items = collect();
+            }
         } else {
             // オススメタブ全商品（自分の出品商品除外）＋いいねの多い順
             $items = Item::withCount('favorites')
