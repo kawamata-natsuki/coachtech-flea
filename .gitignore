@@ -16,3 +16,4 @@
 docker-compose.override.yml
 .env
 .env.dusk.local
+src/.env.testing
