@@ -10,9 +10,11 @@ services:
       - php
 
   php:
-    build: ./docker/php
+    image: laravelphp/php-dusk:8.1
     volumes:
       - ./src:/var/www/
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
 
   mysql:
     image: mysql:8.0

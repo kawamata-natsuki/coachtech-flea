@@ -15,7 +15,7 @@ class CreateOrdersTable extends Migration
             $table->unsignedBigInteger('payment_method_id');
             $table->string('shipping_postal_code');
             $table->string('shipping_address');
-            $table->string('shipping_building')->nullable(); // 確認中;
+            $table->string('shipping_building')->nullable();
             $table->timestamps();
 
             // 外部キー制約

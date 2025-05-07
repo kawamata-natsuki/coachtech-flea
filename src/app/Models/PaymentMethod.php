@@ -11,6 +11,7 @@ class PaymentMethod extends Model
 
     protected $fillable = [
         'name',
+        'code',
     ];
 
     // リレーション
