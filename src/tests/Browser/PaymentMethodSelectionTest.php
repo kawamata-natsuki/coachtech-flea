@@ -24,7 +24,9 @@ class PaymentMethodSelectionTest extends DuskTestCase
 
     public function test_payment_method_selection_is_reflected_immediately()
     {
-        $user = User::factory()->create();
+        $user = User::factory()->create([
+            'email_verified_at' => now(),
+        ]);
         $item = Item::factory()->create();
 
         PaymentMethod::create([
@@ -39,10 +41,14 @@ class PaymentMethodSelectionTest extends DuskTestCase
         $this->browse(function (Browser $browser) use ($user, $item) {
             $browser->loginAs($user)
                 ->visit(route('purchase.show', ['item' => $item->id]))
-                ->pause(500)
-                ->select('payment_method', 'convenience?store')
-                ->pause(500)
-                ->assertSee('コンビニ支払い');
+                ->waitFor('select[name="payment_method"]', 5)
+                ->select('select[name="payment_method"]', 'convenience_store');
+
+            // script() は別に呼び出して実行だけする
+            $browser->script('updatePaymentMethod()');
+
+            $browser->pause(1000)
+                ->assertSeeIn('#selected-method', 'コンビニ払い');
         });
     }
 }
