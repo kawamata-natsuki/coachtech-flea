@@ -15,3 +15,4 @@
 /docker/mysql/data/
 docker-compose.override.yml
 .env
+.env.dusk.local
