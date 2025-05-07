@@ -152,6 +152,25 @@
     php artisan storage:link
     ```
 
+## Laravel Dusk（自動テスト）
+1. Laravel Duskのセットアップ
+    ```bash
+    composer require --dev laravel/dusk
+    php artisan dusk:install
+    cp .env .env.dusk.local
+    ```
+    `.env.dusk.local` に以下の設定を追加または修正
+    `.env.dusk.local` は Gitにコミットしないように .gitignore に追加してください
+    ```
+    APP_ENV=testing
+    APP_URL=http://localhost
+    DB_CONNECTION=mysql
+    ```
+
+2. テストの実行方法
+    ```
+    php artisan dusk
+    ```
 
 ## 使用技術(実行環境)
 - Laravel Framework 8.83.29
