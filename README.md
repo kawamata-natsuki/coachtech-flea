@@ -61,11 +61,6 @@
     composer install
     ```
 
-    Laravelプロジェクトの作成
-    ```bash
-    composer create-project "laravel/laravel=8.*" . --prefer-dist
-    ```
-
     アプリケーションキーの生成
     ```bash
     php artisan key:generate
@@ -152,24 +147,64 @@
     php artisan storage:link
     ```
 
-## Laravel Dusk（自動テスト）
+## テスト実行方法まとめ
+
+### Featureテスト（PHPUnit）
+
+主にバリデーションやコントローラーのロジックを検証します。
+
+1. `.env.testing` を作成
+   ```bash
+   cp .env .env.testing
+   ```
+
+2. `.env.testing` に以下を含めてください
+    ```
+    APP_ENV=testing
+    APP_URL=http://nginx
+    SESSION_DOMAIN=.nginx
+    ```
+
+3. マイグレーション（テスト用DB）
+    ```
+    php artisan migrate --env=testing
+    ```
+
+4. テスト実行
+    ```
+    php artisan test
+    もしくは
+    ./vendor/bin/phpunit
+    ```
+
+### Laravel Dusk を使ったブラウザテスト
+
+実際のブラウザ操作を通して、UIの挙動や画面遷移などを確認します。
+
 1. Laravel Duskのセットアップ
     ```bash
     composer require --dev laravel/dusk
     php artisan dusk:install
     cp .env .env.dusk.local
     ```
-    `.env.dusk.local` に以下の設定を追加または修正
     `.env.dusk.local` は Gitにコミットしないように .gitignore に追加してください
     ```
+
+2. `.env.dusk.local` に以下を含めてください
+    ```
     APP_ENV=testing
-    APP_URL=http://localhost
+    APP_URL=http://nginx
     DB_CONNECTION=mysql
     ```
-
-2. テストの実行方法
+    
+3.  dusk コンテナでマイグレーション実行（※テスト用DBに対して）
     ```
-    php artisan dusk
+    docker compose exec dusk php artisan migrate
+    ```
+
+4.  Dusk テストの実行
+    ```
+    docker compose exec dusk php artisan dusk
     ```
 
 ## 使用技術(実行環境)
