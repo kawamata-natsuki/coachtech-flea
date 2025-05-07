@@ -207,6 +207,11 @@
     docker compose exec dusk php artisan dusk
     ```
 
+### 画像アップロードのテストについて
+
+    このプロジェクトでは画像アップロードのテストに `UploadedFile::fake()->image(...)` を使用しており、PHPのGDライブラリが必要になります。
+    DockerfileでGDはインストール済みのためため、特別な対応は不要です。
+
 ## 使用技術(実行環境)
 - Laravel Framework 8.83.29
 - PHP 8.4.3
