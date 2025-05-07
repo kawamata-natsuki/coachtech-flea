@@ -13,7 +13,7 @@
 /src/.idea
 /src/.vscode
 /docker/mysql/data/
-docker-compose.override.yml
-.env
-.env.dusk.local
-src/.env.testing
+/docker-compose.override.yml
+/.env
+/src/.env.dusk.local
+/src/.env.testing
