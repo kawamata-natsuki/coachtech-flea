@@ -37,3 +37,14 @@ services:
       - mysql
     ports:
       - 8080:80
+
+  dusk:
+    image: laravelphp/php-dusk:8.1
+    volumes:
+      - ./src:/var/www/
+    depends_on:
+      - php
+      - nginx
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    entrypoint: sh -c "chromedriver --port=9515 & tail -f /dev/null"
