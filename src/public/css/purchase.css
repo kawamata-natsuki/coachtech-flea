@@ -15,9 +15,17 @@
 }
 
 .item-purchase__image {
-  flex: 1;
-  min-width: 100px;
-  max-width: 180px;
+  width: 180px;
+  height: 180px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.item-card__img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
 /* 左カラム */
@@ -39,7 +47,8 @@
 .item-purchase__text {
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: flex-start;
+  justify-content: flex-start;
   gap: 12px;
 }
 
@@ -226,6 +235,17 @@
     gap: 50px;
   }
 
+  .item-purchase__image {
+    width: 150px;
+    height: 150px;
+  }
+
+  .item-card__img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
   /* 左カラム */
   .item-purchase__left {
     flex: 1 1 50%;
@@ -309,14 +329,16 @@
   }
 
   .item-purchase__confirm-price {
+    flex: 3;
     font-size: 18px;
   }
 
   .item-purchase__confirm-value {
-    flex: 2;
+    flex: 4;
     font-size: 20px;
     margin-left: 24px;
   }
+
 
   .item-purchase__button-wrapper {
     margin-top: 50px;

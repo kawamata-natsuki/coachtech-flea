@@ -29,7 +29,7 @@
 
         <!-- 支払方法選択 -->
         <div class="item-purchase__payment-form">
-          <p class="item-purchase__section-title">支払方法</p>
+          <p class="item-purchase__section-title">支払い方法</p>
           <div class="item-purchase__select-wrapper">
             <select class="item-purchase__select" name="payment_method" id="payment_method"
               onchange="updatePaymentMethod()">
@@ -77,7 +77,7 @@
             </p>
           </div>
           <div class="item-purchase__block">
-            <p class="item-purchase__confirm-price">支払方法</p>
+            <p class="item-purchase__confirm-price">支払い方法</p>
             <p id="selected-method" class="item-purchase__confirm-value"></p>
           </div>
         </div>
