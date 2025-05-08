@@ -16,8 +16,9 @@ class CreateUsersTable extends Migration
             $table->string('password');
             $table->string('postal_code')->nullable(); // ハイフンつき7桁の郵便番号
             $table->string('address')->nullable();
-            $table->string('building')->nullable(); // 確認中
+            $table->string('building')->nullable();
             $table->string('profile_image')->nullable(); // 画像はstorageに保存し、DBにはファイルパスのみ保持
+            $table->boolean('is_admin')->default(false); // 管理者ユーザー or 一般ユーザー
             $table->timestamps();
         });
     }

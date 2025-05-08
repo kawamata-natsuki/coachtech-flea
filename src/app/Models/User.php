@@ -22,6 +22,7 @@ class User extends Authenticatable implements MustVerifyEmail
         'address',
         'building',
         'profile_image',
+        'is_admin', 
     ];
 
     protected $hidden = [
@@ -30,6 +31,7 @@ class User extends Authenticatable implements MustVerifyEmail
 
     protected $casts = [
         'email_verified_at' => 'datetime', // 認証処理で日時扱いに必要
+        'is_admin' => 'boolean',
     ];
 
     // リレーション

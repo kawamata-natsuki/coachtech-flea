@@ -17,6 +17,7 @@ class UserFactory extends Factory
             'postal_code' => $this->faker->postcode(),
             'address' => $this->faker->address(),
             'building' => $this->faker->secondaryAddress(),
+            'is_admin'=> false,
             'profile_image' => null,
         ];
     }

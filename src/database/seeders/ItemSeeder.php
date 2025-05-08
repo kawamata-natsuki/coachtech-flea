@@ -85,8 +85,11 @@ class ItemSeeder extends Seeder
 
         foreach ($items as $data) {
 
-            // ランダムなユーザーを毎回1人選ぶ
-            $randomUser = User::inRandomOrder()->first();
+            // ランダムなユーザーを毎回1人選ぶ(管理者ユーザー以外)
+            $randomUser = User::where('is_admin', false)->inRandomOrder()->first();
+            if (!$randomUser) {
+                $randomUser = User::factory()->create(['is_admin' => false]);
+            }
 
             // ランダム状態取得
             $conditionCode = $faker->randomElement(Condition::all());
@@ -94,6 +97,9 @@ class ItemSeeder extends Seeder
 
             // 画像ファイル名
             $filename = 'items/' . Str::uuid() . '.jpg';
+
+            // 商品状態
+            $itemStatus = $faker->randomElement([ItemStatus::ON_SALE, ItemStatus::SOLD_OUT]);
 
             // 外部画像をダウンロードして保存
             $content = file_get_contents($data['item_image']);
@@ -108,7 +114,7 @@ class ItemSeeder extends Seeder
                 'condition_id' => $conditionId,
                 'item_image'   => $filename,
                 'user_id'      => $randomUser->id,
-                'item_status' => 'on_sale',
+                'item_status'  => $itemStatus,
             ]);
 
             // ランダムでカテゴリを1〜3個選んで紐付け
