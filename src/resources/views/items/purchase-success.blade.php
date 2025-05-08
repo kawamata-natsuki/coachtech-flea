@@ -17,7 +17,7 @@
       <a href="{{ route('items.index') }}" class="purchase-success__button purchase-success__button--primary">
         トップページへ戻る
       </a>
-      <a href="{{ route('profile.index', ['tab' => 'buy']) }}"
+      <a href="{{ route('profile.index', ['page' => 'buy']) }}"
         class="purchase-success__button purchase-success__button--secondary">
         購入履歴を見る
       </a>

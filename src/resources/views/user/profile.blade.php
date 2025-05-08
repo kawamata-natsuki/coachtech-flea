@@ -38,11 +38,12 @@
     <div class="profile-page__menu-wrapper">
       <div class="profile-page__menu">
         <ul class="profile-page__tabs">
-          <li class="profile-page__tab {{ (request('tab') === 'sell' || request('tab') === null) ? 'is-active' : '' }}">
-            <a class="profile-page__link" href="{{ route('profile.index', ['tab' => 'sell']) }}">出品した商品</a>
+          <li
+            class="profile-page__tab {{ (request('page') === 'sell' || request('page') === null) ? 'is-active' : '' }}">
+            <a class="profile-page__link" href="{{ route('profile.index', ['page' => 'sell']) }}">出品した商品</a>
           </li>
-          <li class="profile-page__tab {{ request('tab') === 'buy' ? 'is-active' : '' }}">
-            <a class="profile-page__link" href="{{ route('profile.index', ['tab' => 'buy']) }}">購入した商品</a>
+          <li class="profile-page__tab {{ request('page') === 'buy' ? 'is-active' : '' }}">
+            <a class="profile-page__link" href="{{ route('profile.index', ['page' => 'buy']) }}">購入した商品</a>
           </li>
         </ul>
       </div>
@@ -50,7 +51,7 @@
 
     <!-- 商品リスト -->
     <div class="profile-page__items">
-      @if ($tab === 'sell')
+      @if ($page === 'sell')
       @if ($sellingItems->isEmpty())
       <p class="profile-page__empty">出品した商品はありません。</p>
       @else
@@ -61,7 +62,7 @@
       </div>
       @endif
 
-      @elseif ($tab === 'buy')
+      @elseif ($page === 'buy')
       @if ($purchasedItems->isEmpty())
       <p class="profile-page__empty">購入した商品はありません。</p>
       @else

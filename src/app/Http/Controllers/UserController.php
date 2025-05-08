@@ -53,12 +53,12 @@ class UserController extends Controller
     public function index(Request $request)
     {
         $user = auth()->user();
-        $tab = $request->query('tab', 'sell'); // デフォルトは出品商品
+        $page = $request->query('page', 'sell'); // デフォルトは出品商品
 
         $sellingItems = $user->items; // 出品した商品
         $purchasedItems = $user->orders()->with('item')->get(); // 購入した商品（order経由）
 
-        return view('user.profile', compact('user', 'tab', 'sellingItems', 'purchasedItems'));
+        return view('user.profile', compact('user', 'page', 'sellingItems', 'purchasedItems'));
     }
 
     public function edit()
