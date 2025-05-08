@@ -141,7 +141,7 @@ class PurchaseTest extends TestCase
         ]);
 
         // 4. プロフィール画面を表示する
-        $response = $this->get('/mypage?tab=purchase');
+        $response = $this->get(route('profile.index', ['tab' => 'buy']));
         $response->assertStatus(200);
 
         // 購入した商品がプロフィールの購入した商品一覧に追加されている
