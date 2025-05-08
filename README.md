@@ -153,24 +153,18 @@
 
 主にバリデーションやコントローラーのロジックを検証します。
 
-1. `.env.testing` を作成
+1. `.env.testing.example` をコピーして `.env.testing` を作成
+    ※ `.env.testing.example` はテスト専用の設定テンプレートです。z
    ```bash
-   cp .env .env.testing
+   cp .env.testing.example .env.testing
    ```
 
-2. `.env.testing` に以下を含めてください
-    ```
-    APP_ENV=testing
-    APP_URL=http://nginx
-    SESSION_DOMAIN=.nginx
-    ```
-
-3. マイグレーション（テスト用DB）
+2. マイグレーション（テスト用DB）
     ```
     php artisan migrate --env=testing
     ```
 
-4. テスト実行
+3. テスト実行
     ```
     php artisan test
     もしくは
@@ -185,16 +179,12 @@
     ```bash
     composer require --dev laravel/dusk
     php artisan dusk:install
-    cp .env .env.dusk.local
-    ```
-    `.env.dusk.local` は Gitにコミットしないように .gitignore に追加してください
     ```
 
-2. `.env.dusk.local` に以下を含めてください
+2. `.env.dusk.local.example` をコピーして `.env.dusk.local` を作成
+    ※ `.env.dusk.local.example` はDusk専用のローカル環境テンプレートです。
     ```
-    APP_ENV=testing
-    APP_URL=http://nginx
-    DB_CONNECTION=mysql
+    cp .env.dusk.local.example .env.dusk.local
     ```
     
 3.  dusk コンテナでマイグレーション実行（※テスト用DBに対して）
