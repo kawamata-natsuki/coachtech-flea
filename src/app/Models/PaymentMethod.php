@@ -19,4 +19,9 @@ class PaymentMethod extends Model
     {
         return $this->hasMany(Order::class, 'payment_method_id');
     }
+
+    public static function getIdByCode(string $code): ?int
+    {
+        return static::where('code', $code)->value('id');
+    }
 }
