@@ -14,28 +14,21 @@ use Stripe\Checkout\Session;
 
 class OrderController extends Controller
 {
-    public function show($item_id, Request $request)
+    // 商品購入画面の表示
+    public function show(Request $request, Item $item)
     {
-        $item = Item::findOrFail($item_id);
         $paymentMethods = PaymentMethodConst::LABELS;
-        $user = auth()->user()->refresh();
+        $user = auth()->user();
 
         $selectedPaymentMethod = $request->query('payment_method');
 
         return view('items.purchase', compact('item', 'paymentMethods', 'user', 'selectedPaymentMethod'));
     }
 
-    public function store(PurchaseRequest $request, $item_id)
+    // 商品購入の処理
+    public function store(PurchaseRequest $request, Item $item)
     {
-        $request->validate([
-            'payment_method' => ['required', 'string', 'in:credit_card,convenience_store'],
-            'postal_code' => ['required', 'string'],
-            'address' => ['required', 'string'],
-            'building' => ['nullable', 'string'],
-        ]);
-
-        $item = Item::findOrFail($item_id);
-
+        // 価格が30万超えてたらエラーにする（Stripe仕様上の制約）
         if ($item->price > 300000) {
             return redirect()->back()->withErrors([
                 'item' => '30万円以上の商品は決済できません。',
@@ -60,27 +53,34 @@ class OrderController extends Controller
                 'quantity' => 1,
             ]],
             'mode' => 'payment',
-            'success_url' => url('/purchase/success/' . $item->id),
-            'cancel_url' => url('/'),
+            'success_url' => route('purchase.success', ['item' => $item->id]),
+            'cancel_url' => route('purchase.show', ['item' => $item->id]),
         ]);
 
         session([
-            'payment_method' => $request->payment_method,
+            'purchase.payment_method' => $request->payment_method,
         ]);
 
         return redirect($session->url);
     }
 
-    public function success(Request $request, $item_id)
+    public function success(Request $request, Item $item)
     {
         $user = auth()->user();
-        $item = Item::findOrFail($item_id);
+        $code = session('purchase.payment_method');
 
-        if (!Order::where('item_id', $item_id)->exists()) {
+        if (!$code) {
+            return redirect()->route('purchase.show', ['item' => $item->id])
+                ->withErrors([
+                    'payment' => '支払い方法が不明です。もう一度購入手続きを行ってください。',
+                ]);
+        }
+
+        if (!Order::firstWhere('item_id', $item->id)) {
             Order::create([
                 'user_id' => $user->id,
                 'item_id' => $item->id,
-                'payment_method_id' => $this->getPaymentMethodId(session('payment_method')),
+                'payment_method_id' => PaymentMethod::getIdByCode($code),
                 'shipping_postal_code' => $user->postal_code,
                 'shipping_address' => $user->address,
                 'shipping_building' => $user->building,
@@ -93,10 +93,5 @@ class OrderController extends Controller
         ]);
 
         return view('items.purchase-success');
-    }
-
-    private function getPaymentMethodId(string $code): ?int
-    {
-        return PaymentMethod::where('code', $code)->value('id');
     }
 }
