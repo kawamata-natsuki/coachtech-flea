@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-<!-- ヘッダーロゴにトップページのリンクつけてます -->
 <html lang="ja">
 
 <head>
@@ -23,8 +22,6 @@
 
       @auth
       <nav class="header-nav">
-        <!-- 検索窓 -->
-        <!-- リアルタイム検索はJSが必要なのでボタン設置しました -->
         <div class="header-nav__search">
           <form class="search-form" action="/" method="get">
             <input class="search-form__input" type="text" name="keyword" value="{{ request('keyword') }}"
@@ -32,8 +29,6 @@
             <button class="search-form__button" type="submit">検索</button>
           </form>
         </div>
-
-        <!-- ナビゲーションリンク -->
         <div class="header-nav__links">
           <form class="header-nav__item header-nav__item--logout" action="{{ route('logout') }}" method="POST">
             @csrf
@@ -46,11 +41,8 @@
       @endauth
 
       @guest
-      <!-- 会員登録画面とログイン画面では非表示 -->
       @if (!request()->is('login') && !request()->is('register'))
       <nav class="header-nav">
-        <!-- 検索窓 -->
-        <!-- リアルタイム検索はJSが必要なのでボタン設置しました -->
         <div class="header-nav__search">
           <form class="search-form" action="/" method="get">
             <input class="search-form__input" type="text" name="keyword" value="{{ request('keyword') }}"
@@ -58,8 +50,6 @@
             <button class="search-form__button" type="submit">検索</button>
           </form>
         </div>
-
-        <!-- ナビゲーションリンク -->
         <div class="header-nav__links">
           <a class="header-nav__item header-nav__item--login" href="{{ route('login') }}">ログイン</a>
           <a class="header-nav__item header-nav__item--mypage" href="{{ route('login') }}">マイページ</a>
@@ -71,23 +61,24 @@
     </div>
   </header>
 
+  @if (!request()->is(['email/verify', 'purchase/success/*']))
   <div class="flash-container">
     @if (session('success') || session('error'))
     <div class="flash-message
-    {{ session('success') ? 'flash-message--success' : 'flash-message--error' }}
-    is-visible">
+      {{ session('success') ? 'flash-message--success' : 'flash-message--error' }}
+      is-visible">
       {{ session('success') ?? session('error') }}
     </div>
     @else
     <div class="flash-message">&nbsp;</div>
     @endif
   </div>
+  @endif
 
   <main class="main">
     @yield('content')
     @yield('js')
   </main>
-
 </body>
 
 </html>

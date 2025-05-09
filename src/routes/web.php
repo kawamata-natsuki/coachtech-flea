@@ -51,6 +51,10 @@ Route::post('/email/verification-notification', function (Request $request) {
     return back()->with('message', '確認メールを再送しました');
 })->middleware(['auth', 'throttle:6,1'])->name('verification.send');
 
+Route::get('/email/verify/check', function () {
+    return redirect(auth()->user()?->hasVerifiedEmail() ? '/' : '/email/verify');
+})->name('verification.check')->middleware('auth');
+
 // -----------------------------------------------------
 // プロフィール画面のルート
 // -----------------------------------------------------
