@@ -42,11 +42,12 @@ class UserController extends Controller
         $user->save();
 
         // 遷移分岐
+        // 初回（会員登録直後）はトップページへ遷移
         if (session('profile_edit_first_time')) {
             session()->forget('profile_edit_first_time');
-            return redirect('/')->with('success', 'プロフィールを登録しました'); // 初回はトップページへ
+            return redirect('/')->with('success', 'プロフィールを登録しました');
         }
-
+        // 2回目以降（通常のプロフィール更新）は編集画面のまま
         return redirect()->route('profile.edit')->with('success', 'プロフィールを更新しました');
     }
 
