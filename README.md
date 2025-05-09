@@ -229,3 +229,34 @@
 - データベース：http://localhost:8080
 
   ※ポート番号は`docker-compose.override.yml`で各自調整してください。
+
+
+## 【補足】会員登録について
+
+### バリデーションエラーについて
+仕様書に加えて、以下のルールとメッセージを追加しています：
+※すべての入力値に対して `string` を指定し、不正な配列入力などを防止しています。
+
+- name：
+  - `required`（基本設計書にユーザー名がなかったため）
+  - `max:50`（レイアウト崩れ防止のため）
+  - `string`
+- email：
+  - `max:255`
+  - `unique:users,email`（既存メールアドレスとの重複チェック）
+  - `string`
+- password：
+  - `confirmed`（確認用パスワードとの一致チェック）
+  - `string`
+- password_confirmation：
+  - `required`（確認用パスワードのフォーム直下にエラー表示させるため）
+
+### プレースホルダーについて
+プレースホルダーはUI補助として追加しています。
+以下のとおり簡単な入力例を表示しています
+
+【placeholder文言一覧】
+- name                  ： 例：山田　太郎
+- email                 ： 例：user@example.com
+- password              ： 8文字以上のパスワードを入力
+- password_confirmation ： もう一度パスワードを入力
