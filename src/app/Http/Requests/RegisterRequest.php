@@ -18,21 +18,21 @@ class RegisterRequest extends FormRequest
         return [
             'name' => [
                 'required',
+                'max:50',
                 'string',
-                'max:50'
             ],
             'email' => [
                 'required',
-                'string',
                 'email',
                 'max:255',
                 Rule::unique('users', 'email'),
+                'string',
             ],
             'password' => [
                 'required',
-                'string',
                 'min:8',
-                'confirmed'
+                'confirmed',
+                'string',
             ],
             'password_confirmation' => [
                 'required'
@@ -40,14 +40,14 @@ class RegisterRequest extends FormRequest
         ];
     }
 
-    // email.email のエラーメッセージがないので、追加しています
-    // 確認用パスワードの下にもエラーメッセージ表示されるように、password_confirmation.required 追加しています
     public function messages()
     {
         return [
-            'name.required'     => 'お名前を入力してください',
+            'name.required'         => 'お名前を入力してください',
+            'name.max'              => 'お名前は50文字以内で入力してください',
             'email.required'        => 'メールアドレスを入力してください',
             'email.email'           => 'メールアドレスは「ユーザー名@ドメイン」形式で入力してください',
+            'email.max'             => 'メールアドレスは255文字以内で入力してください',
             'email.unique'          => 'このメールアドレスはすでに登録されています',
             'password.required'     => 'パスワードを入力してください',
             'password.min'          => 'パスワードは8文字以上で入力してください',
