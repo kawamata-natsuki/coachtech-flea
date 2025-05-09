@@ -2,7 +2,7 @@
 
 use App\Http\Controllers\ItemController;
 use App\Http\Requests\LoginRequest;
-use App\Http\Controllers\Auth\RegisteredUserController;
+use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\FavoriteController;
 use App\Http\Controllers\ItemCommentController;
 use App\Http\Controllers\OrderController;
@@ -18,7 +18,7 @@ use Illuminate\Support\Facades\Route;
 // -----------------------------------------------------
 
 // ユーザー登録の処理
-Route::post('/register', [RegisteredUserController::class, 'store'])->middleware(['guest']);
+Route::post('/register', [RegisterController::class, 'store'])->middleware(['guest']);
 
 // ログイン処理
 Route::post('/login', function (LoginRequest $request) {

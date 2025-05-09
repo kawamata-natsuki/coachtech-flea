@@ -8,7 +8,7 @@ use App\Http\Requests\RegisterRequest;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Auth\Events\Registered;
 
-class RegisteredUserController extends Controller
+class RegisterController extends Controller
 {
     public function store(RegisterRequest $request)
     {
