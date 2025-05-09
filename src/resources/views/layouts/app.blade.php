@@ -63,11 +63,9 @@
 
   @if (!request()->is(['email/verify', 'purchase/success/*']))
   <div class="flash-container">
-    @if (session('success') || session('error'))
-    <div class="flash-message
-      {{ session('success') ? 'flash-message--success' : 'flash-message--error' }}
-      is-visible">
-      {{ session('success') ?? session('error') }}
+    @if (session('success'))
+    <div class="flash-message flash-message--success is-visible">
+      {{ session('success') }}
     </div>
     @else
     <div class="flash-message">&nbsp;</div>
