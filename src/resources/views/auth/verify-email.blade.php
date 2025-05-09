@@ -15,11 +15,6 @@
     認証後は別タブで画面が開きます。この画面は閉じても問題ありません。
   </p>
 
-  <!-- 
-認証はこちらからボタン？リンク？これはメールから認証するので不要では？ 
-<a href="#">認証はこちらから</a>
--->
-
   <form class="verify-email__form" method="POST" action="{{ route('verification.send') }}">
     @csrf
     <button class="verify-email__resend-button" type="submit">認証メールを再送する</button>
