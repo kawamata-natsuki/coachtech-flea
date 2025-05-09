@@ -10,10 +10,10 @@ use Illuminate\Auth\Events\Registered;
 
 class RegisterController extends Controller
 {
-    public function store(RegisterRequest $request)
+    public function store(RegisterRequest $request, CreateNewUSer $creator)
     {
         // ユーザー登録処理
-        $user = app(CreateNewUser::class)->create($request->all());
+        $user = $creator->create($request->all());
 
         // ユーザー登録完了のイベント（メール認証のトリガーになる）
         event(new Registered($user));
