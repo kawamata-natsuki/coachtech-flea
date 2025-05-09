@@ -14,13 +14,11 @@ class LoginRequest extends FormRequest
     public function rules()
     {
         return [
-            'email'     => ['required', 'email'],
-            'password'  => ['required', 'string', 'min:8'],
+            'email'     => ['required', 'email', 'string'],
+            'password'  => ['required', 'min:8', 'string'],
         ];
     }
 
-    // email.email のエラーメッセージの指示なかったので、追加しています
-    // password.min のエラーメッセージの指示なかったので、追加しています
     public function messages()
     {
         return [
