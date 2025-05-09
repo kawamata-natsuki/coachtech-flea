@@ -86,10 +86,6 @@ button {
     フラッシュメッセージ・エラーメッセージ
    ===============================*/
 
-.flash-container {
-  min-height: 48px;
-}
-
 .error-message {
   min-height: 24px;
   display: flex;

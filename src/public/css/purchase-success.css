@@ -1,6 +1,5 @@
 .purchase-success {
-  min-height: calc(100vh - 120px);
-  /* ヘッダー + フラッシュ分を引く */
+  min-height: calc(100vh - 76px);
   display: flex;
   justify-content: center;
   align-items: center;
