@@ -12,7 +12,6 @@ class RegisterRequest extends FormRequest
         return true;
     }
 
-    // バリデーションルール追加しています
     public function rules()
     {
         return [
