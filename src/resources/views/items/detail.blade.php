@@ -100,11 +100,15 @@
               @php
               $profileImage = optional($comment->user)->profile_image;
 
-              $profileImageUrl = $profileImage
-              ? asset('storage/' . $profileImage)
-              : asset('images/default-profile.svg');
+              $isDefault = empty($profileImage);
+              $profileImageUrl = $isDefault
+              ? asset('images/default-profile.svg')
+              : asset('storage/' . $profileImage);
+              $profileImageClass = $isDefault
+              ? 'user-icon user-icon--default'
+              : 'user-icon';
               @endphp
-              <img class="user-icon" src="{{ $profileImageUrl }}" alt="プロフィール画像">
+              <img class="{{ $profileImageClass }}" src="{{ $profileImageUrl }}" alt="プロフィール画像">
               <span class="comment__user">{{ $comment->user->name ?? '匿名ユーザー' }}</span>
             </div>
 

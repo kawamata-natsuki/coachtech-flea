@@ -237,8 +237,12 @@
 
 .comment__header {
   display: flex;
+  flex-wrap: nowrap;
+  align-items: center;
   gap: 16px;
   margin-bottom: 16px;
+  max-width: 100%;
+  overflow: hidden;
 }
 
 .user-icon {
@@ -253,9 +257,15 @@
   object-fit: cover;
 }
 
+.user-icon--default {
+  border: none;
+}
+
 .comment__user {
-  display: flex;
-  align-items: center;
+  flex: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
   font-weight: 700;
   font-size: 30px;
   color: #000;
@@ -290,7 +300,7 @@
   max-width: 570px;
   min-height: 246px;
   padding: 12px;
-  font-weight: 300;
+  font-weight: 400;
   font-size: 20px;
   color: #000000;
   border: 2px solid #5F5F5F;
@@ -486,8 +496,8 @@
   }
 
   .user-icon {
-    width: 50px;
-    height: 50px;
+    width: 48px;
+    height: 48px;
   }
 
   .comment__user {
@@ -513,6 +523,7 @@
     width: 100%;
     min-height: 200px;
     padding: 12px;
+    font-weight: 300;
     font-size: 14px;
     border: 1px solid #5F5F5F;
   }
