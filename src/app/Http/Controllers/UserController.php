@@ -44,7 +44,7 @@ class UserController extends Controller
         // 遷移分岐
         if (session('profile_edit_first_time')) {
             session()->forget('profile_edit_first_time');
-            return redirect('/'); // 初回はトップページへ
+            return redirect('/')->with('success', 'プロフィールを登録しました'); // 初回はトップページへ
         }
 
         return redirect()->route('profile.edit')->with('success', 'プロフィールを更新しました');
