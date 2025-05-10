@@ -33,36 +33,42 @@ class ItemSeeder extends Seeder
         $itemsData = [
             [
                 'name' => '腕時計',
+                'brand' => 'EMPORIO ARMANI',
                 'price' => 15000,
                 'description' => 'スタイリッシュなデザインのメンズ腕時計',
                 'item_image' => 'https://coachtech-matter.s3.ap-northeast-1.amazonaws.com/image/Armani+Mens+Clock.jpg',
             ],
             [
                 'name' => 'HDD',
+                'brand' => 'TOSHIBA',
                 'price' => 5000,
                 'description' => '高速で信頼性の高いハードディスク',
                 'item_image' => 'https://coachtech-matter.s3.ap-northeast-1.amazonaws.com/image/HDD+Hard+Disk.jpg',
             ],
             [
                 'name' => '玉ねぎ3束',
+                'brand' => 'IBARAKI FARM',
                 'price' => 300,
                 'description' => '新鮮な玉ねぎ3束のセット',
                 'item_image' => 'https://coachtech-matter.s3.ap-northeast-1.amazonaws.com/image/iLoveIMG+d.jpg',
             ],
             [
                 'name' => '革靴',
+                'brand' => 'REGAL',
                 'price' => 4000,
                 'description' => 'クラシックなデザインの革靴',
                 'item_image' => 'https://coachtech-matter.s3.ap-northeast-1.amazonaws.com/image/Leather+Shoes+Product+Photo.jpg',
             ],
             [
                 'name' => 'ノートPC',
+                'brand' => 'DELL',
                 'price' => 45000,
                 'description' => '高性能なノートパソコン',
                 'item_image' => 'https://coachtech-matter.s3.ap-northeast-1.amazonaws.com/image/Living+Room+Laptop.jpg',
             ],
             [
                 'name' => 'マイク',
+                'brand' => 'SONY',
                 'price' => 8000,
                 'description' => '高音質のレコーディング用マイク',
                 'item_image' => 'https://coachtech-matter.s3.ap-northeast-1.amazonaws.com/image/Music+Mic+4632231.jpg',
@@ -91,6 +97,13 @@ class ItemSeeder extends Seeder
                 'description' => '便利なメイクアップセット',
                 'item_image' => 'https://coachtech-matter.s3.ap-northeast-1.amazonaws.com/image/%E5%A4%96%E5%87%BA%E3%83%A1%E3%82%A4%E3%82%AF%E3%82%A2%E3%83%83%E3%83%95%E3%82%9A%E3%82%BB%E3%83%83%E3%83%88.jpg',
             ],
+            [
+                'name' => 'トレーディングカード',
+                'brand' => 'POKE',
+                'price' => 45004500,
+                'description' => '美品のトレーディングカードです！',
+                'item_image' => '//',
+            ]
         ];
 
         $sellerIndex = 0;
@@ -115,6 +128,7 @@ class ItemSeeder extends Seeder
             // 商品登録
             $item = Item::create([
                 'name'         => $data['name'],
+                'brand'        => $data['brand'],
                 'price'        => $data['price'],
                 'description'  => $data['description'],
                 'condition_id' => $conditionId,
