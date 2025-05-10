@@ -2,7 +2,7 @@
 
 namespace App\Constants;
 
-class PaymentMethod
+class PaymentMethodConstants
 {
     public const CONVENIENCE_STORE = 'convenience_store';
     public const CREDIT_CARD       = 'credit_card';

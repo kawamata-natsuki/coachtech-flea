@@ -19,6 +19,7 @@ class UserSeeder extends Seeder
             'address'       => 'キノコ王国 マンマミーヤ通り1-1',
             'building'      => 'ピーチ城 1F',
             'is_admin'      => false,
+            'email_verified_at' => now(),
         ]);
         User::create([
             'name'          => '緑川　リンク',
@@ -28,6 +29,7 @@ class UserSeeder extends Seeder
             'address'       => 'ハイラル王国 伝説の森3-2',
             'building'      => '',
             'is_admin'      => false,
+            'email_verified_at' => now(),
         ]);
         User::create([
             'name'          => '星野　カービィ',
@@ -37,6 +39,7 @@ class UserSeeder extends Seeder
             'address'       => 'プププランド グリーングリーンズ1-1',
             'building'      => '木の下の家',
             'is_admin'      => false,
+            'email_verified_at' => now(),
         ]);
         User::create([
             'name' => '管理者ユーザー',
@@ -46,6 +49,7 @@ class UserSeeder extends Seeder
             'address' => '東京都港区芝公園4-2-8',
             'building' => '東京タワー 1F',
             'is_admin' => true,
+            'email_verified_at' => now(),
         ]);
     }
 }

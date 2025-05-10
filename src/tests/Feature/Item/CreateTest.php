@@ -2,8 +2,8 @@
 
 namespace Tests\Feature;
 
-use App\Constants\Category;
-use App\Constants\Condition;
+use App\Constants\CategoryConstants;
+use App\Constants\ConditionConstants;
 use App\Models\User;
 use Database\Seeders\CategorySeeder;
 use Database\Seeders\ConditionSeeder;
@@ -38,9 +38,9 @@ class CreateTest extends TestCase
             'name' => 'testItem',
             'price' => 1000,
             'description' => 'This is a test item.',
-            'condition_code' => Condition::GOOD,
+            'condition_code' => ConditionConstants::GOOD,
             'item_image' => $file,
-            'category_codes' => [Category::BOOK],
+            'category_codes' => [CategoryConstants::BOOK],
         ];
 
         $response = $this->post(route('items.store'), $data);
@@ -51,7 +51,7 @@ class CreateTest extends TestCase
             'name' => 'testItem',
             'price' => 1000,
             'description' => 'This is a test item.',
-            'condition_id' => Condition::codeToId(Condition::GOOD),
+            'condition_id' => ConditionConstants::codeToId(ConditionConstants::GOOD),
             'user_id' => $user->id,
             'item_status' => 'on_sale',
         ]);
@@ -61,9 +61,9 @@ class CreateTest extends TestCase
         $this->assertStringContainsString('items/', $item->item_image);
         $this->assertFileExists(storage_path('app/public/' . $item->item_image));
         $this->assertEquals('on_sale', $item->item_status);
-        $this->assertEquals(Condition::codeToId(Condition::GOOD), $item->condition_id);
+        $this->assertEquals(ConditionConstants::codeToId(ConditionConstants::GOOD), $item->condition_id);
 
-        $bookCategoryId = Category::codesToIds([Category::BOOK])[0];
+        $bookCategoryId = CategoryConstants::codesToIds([CategoryConstants::BOOK])[0];
         $this->assertDatabaseHas('category_item', [
             'item_id' => $item->id,
             'category_id' => $bookCategoryId,

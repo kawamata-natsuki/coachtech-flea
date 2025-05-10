@@ -2,7 +2,9 @@
 
 namespace App\Constants;
 
-class Condition
+use App\Models\Condition;
+
+class ConditionConstants
 {
   public const GOOD  = 'good';
   public const CLEAN = 'clean';
@@ -28,6 +30,6 @@ class Condition
 
   public static function codeToId(string $code): int
   {
-    return \App\Models\Condition::where('code', $code)->value('id');
+    return Condition::where('code', $code)->value('id');
   }
 }

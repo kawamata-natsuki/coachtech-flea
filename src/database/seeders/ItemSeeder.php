@@ -2,10 +2,13 @@
 
 namespace Database\Seeders;
 
+use App\Models\Category;
+use App\Models\Order;
+use App\Models\PaymentMethod;
 use App\Models\Item;
 use App\Models\User;
-use App\Models\Condition as ConditionModel;
-use App\Constants\Condition;
+use App\Models\Condition;
+use App\Constants\ConditionConstants;
 use App\Constants\ItemStatus;
 use Faker\Factory as Faker;
 use Illuminate\Database\Seeder;
@@ -16,11 +19,18 @@ class ItemSeeder extends Seeder
 {
     public function run()
     {
-        $conditionMap = ConditionModel::all()->keyBy('code');
-
+        $conditionMap = Condition::all()->keyBy('code');
         $faker = Faker::create();
 
-        $items = [
+        $users = User::where('is_admin', false)->take(3)->get();
+        if ($users->count() < 3) {
+            $users = collect();
+            for ($i = 0; $i < 3; $i++) {
+                $users->push(User::factory()->create(['is_admin' => false]));
+            }
+        }
+
+        $itemsData = [
             [
                 'name' => '腕時計',
                 'price' => 15000,
@@ -83,43 +93,53 @@ class ItemSeeder extends Seeder
             ],
         ];
 
-        foreach ($items as $data) {
+        $sellerIndex = 0;
+        $buyerIndex = 1;
 
-            // ランダムなユーザーを毎回1人選ぶ(管理者ユーザー以外)
-            $randomUser = User::where('is_admin', false)->inRandomOrder()->first();
-            if (!$randomUser) {
-                $randomUser = User::factory()->create(['is_admin' => false]);
-            }
+        foreach ($itemsData as $data) {
 
-            // ランダム状態取得
-            $conditionCode = $faker->randomElement(Condition::all());
+            $seller = $users[$sellerIndex % 3];
+            $buyer = $users[$buyerIndex % 3];
+            $paymentMethodId = PaymentMethod::first()->id;
+            $isSold = $sellerIndex < 6;
+
+            // 状態（condition）取得
+            $conditionCode = $faker->randomElement(ConditionConstants::all());
             $conditionId = $conditionMap[$conditionCode]->id;
 
-            // 画像ファイル名
+            // 画像保存
             $filename = 'items/' . Str::uuid() . '.jpg';
-
-            // 商品状態
-            $itemStatus = $faker->randomElement([ItemStatus::ON_SALE, ItemStatus::SOLD_OUT]);
-
-            // 外部画像をダウンロードして保存
             $content = file_get_contents($data['item_image']);
             Storage::disk('public')->put($filename, $content);
 
             // 商品登録
-            // 商品データ一覧には'user_id' 'item_status'はありませんが、テーブル設計の都合で追加しています（READMEに記載する）
             $item = Item::create([
                 'name'         => $data['name'],
                 'price'        => $data['price'],
                 'description'  => $data['description'],
                 'condition_id' => $conditionId,
                 'item_image'   => $filename,
-                'user_id'      => $randomUser->id,
-                'item_status'  => $itemStatus,
+                'user_id'      => $seller->id,
+                'item_status'  => $isSold ? ItemStatus::SOLD_OUT : ItemStatus::ON_SALE,
             ]);
 
-            // ランダムでカテゴリを1〜3個選んで紐付け
-            $categories = \App\Models\Category::inRandomOrder()->take(rand(1, 3))->pluck('id');
+            // カテゴリを紐付け
+            $categories = Category::inRandomOrder()->take(rand(1, 3))->pluck('id');
             $item->categories()->attach($categories);
+
+            if ($isSold) {
+                Order::create([
+                    'user_id' => $buyer->id,
+                    'item_id' => $item->id,
+                    'payment_method_id' => $paymentMethodId,
+                    'shipping_postal_code' => '123-4567',
+                    'shipping_address' => '東京都渋谷区1-1-1',
+                    'shipping_building' => 'テストビル101',
+                ]);
+            }
+
+            $sellerIndex++;
+            $buyerIndex++;
         }
     }
 }

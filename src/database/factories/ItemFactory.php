@@ -2,7 +2,7 @@
 
 namespace Database\Factories;
 
-use App\Constants\Condition;
+use App\Constants\ConditionConstants;
 use App\Constants\ItemStatus;
 use App\Models\Item;
 use App\Models\User;
@@ -25,7 +25,7 @@ class ItemFactory extends Factory
             'price' => 1000,
             'item_image' => 'dummy.jpg',
             'user_id' => User::factory(),
-            'condition_id' => Condition::codeToId(Condition::GOOD),
+            'condition_id' => ConditionConstants::codeToId(ConditionConstants::GOOD),
             'item_status' => ItemStatus::ON_SALE,
         ];
     }

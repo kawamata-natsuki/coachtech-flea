@@ -1,6 +1,6 @@
 @php
-use App\Constants\Category;
-use App\Constants\Condition;
+use App\Constants\CategoryConstants;
+use App\Constants\ConditionConstants;
 @endphp
 
 
@@ -45,7 +45,7 @@ use App\Constants\Condition;
           <div class="create-page__field">
             <label class="create-page__label">カテゴリー</label>
             <div class="create-page__tags">
-              @foreach (Category::LABELS as $code => $label)
+              @foreach (CategoryConstants::LABELS as $code => $label)
               <input type="checkbox" name="category_codes[]" value="{{ $code }}" id="category_{{ $code }}"
                 class="create-page__tag-checkbox">
               <label for="category_{{ $code }}" class="create-page__tag">{{ $label }}</label>
@@ -61,7 +61,7 @@ use App\Constants\Condition;
             <div class="create-page__select-wrapper">
               <select name="condition_code" class="create-page__select">
                 <option value="">選択してください</option>
-                @foreach (Condition::LABELS as $code => $label)
+                @foreach (ConditionConstants::LABELS as $code => $label)
                 <option value="{{ $code }}">{{ $label }}</option>
                 @endforeach
               </select>

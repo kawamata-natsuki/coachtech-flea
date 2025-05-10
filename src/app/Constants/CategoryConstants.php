@@ -2,7 +2,9 @@
 
 namespace App\Constants;
 
-class Category
+use App\Models\Category;
+
+class CategoryConstants
 {
   public const FASHION     = 'fashion';
   public const APPLIANCE   = 'appliance';
@@ -50,6 +52,6 @@ class Category
 
   public static function codesToIds(array $codes): array
   {
-    return \App\Models\Category::whereIn('code', $codes)->pluck('id')->toArray();
+    return Category::whereIn('code', $codes)->pluck('id')->toArray();
   }
 }

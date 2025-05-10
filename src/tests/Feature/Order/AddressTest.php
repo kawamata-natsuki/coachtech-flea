@@ -2,15 +2,12 @@
 
 namespace Tests\Feature;
 
-use App\Constants\Category;
-use App\Constants\Condition;
 use App\Models\Item;
 use App\Models\PaymentMethod;
 use App\Models\User;
 use Database\Seeders\CategorySeeder;
 use Database\Seeders\ConditionSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
 class AddressTest extends TestCase

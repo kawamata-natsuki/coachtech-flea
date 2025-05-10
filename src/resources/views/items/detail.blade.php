@@ -1,3 +1,8 @@
+@php
+use App\Constants\ConditionConstants;
+@endphp
+
+
 @extends('layouts.app')
 
 @section('css')
@@ -88,7 +93,7 @@
         </div>
         <div class="item-info__status">
           <p class="item-info__label">商品の状態</p>
-          <p class="item-condition">{{ \App\Constants\Condition::label(optional($item->condition)->code) }}</p>
+          <p class="item-condition">{{ ConditionConstants::label(optional($item->condition)->code) }}</p>
         </div>
 
         <!-- コメント表示 -->

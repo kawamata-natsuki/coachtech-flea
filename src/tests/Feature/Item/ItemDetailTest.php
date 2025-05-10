@@ -2,8 +2,8 @@
 
 namespace Tests\Feature;
 
-use App\Constants\Category;
-use App\Constants\Condition;
+use App\Constants\CategoryConstants;
+use App\Constants\ConditionConstants;
 use App\Models\Item;
 use App\Models\ItemComment;
 use App\Models\User;
@@ -41,10 +41,10 @@ class ItemDetailTest extends TestCase
             'price' => 1000,
             'description' => 'This is test item.',
             'user_id' => $user1->id,
-            'condition_id' => Condition::codeToId(Condition::GOOD),
+            'condition_id' => ConditionConstants::codeToId(ConditionConstants::GOOD),
         ]);
 
-        $categoryIds = Category::codesToIds([Category::BOOK]);
+        $categoryIds = CategoryConstants::codesToIds([CategoryConstants::BOOK]);
         $item->categories()->attach($categoryIds);
 
         // 作成した商品にいいねを追加（3ユーザー）
@@ -79,8 +79,8 @@ class ItemDetailTest extends TestCase
         $response->assertSeeText('3'); // いいねの数
         $response->assertSeeText('4'); // コメントの数
         $response->assertSee('This is test item');
-        $response->assertSee(Category::label(Category::BOOK));
-        $response->assertSee(Condition::label(Condition::GOOD));
+        $response->assertSee(CategoryConstants::label(CategoryConstants::BOOK));
+        $response->assertSee(ConditionConstants::label(ConditionConstants::GOOD));
         $response->assertSee('(4)'); // コメントの数
         $response->assertSee('images/default-profile.svg'); // コメントしたユーザーのプロフィール画像
         $response->assertSee($user1->name); // コメントしたユーザー名
@@ -102,8 +102,8 @@ class ItemDetailTest extends TestCase
         $item = Item::factory()->create();
 
         // 複数カテゴリを紐づけ
-        $categoryCodes = [Category::BOOK, Category::GAME];
-        $categoryIds = Category::codesToIds($categoryCodes);
+        $categoryCodes = [CategoryConstants::BOOK, CategoryConstants::GAME];
+        $categoryIds = CategoryConstants::codesToIds($categoryCodes);
         $item->categories()->attach($categoryIds);
 
         // 1. 商品詳細ページを開く
@@ -112,7 +112,7 @@ class ItemDetailTest extends TestCase
 
         // 複数選択されたカテゴリが商品詳細ページに表示されている
         foreach ($categoryCodes as $code) {
-            $response->assertSee(Category::label($code));
+            $response->assertSee(CategoryConstants::label($code));
         }
     }
 }

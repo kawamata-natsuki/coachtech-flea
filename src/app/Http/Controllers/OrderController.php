@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Item;
 use App\Models\Order;
 use App\Models\PaymentMethod;
-use App\Constants\PaymentMethod as PaymentMethodConst;
+use App\Constants\PaymentMethodConstants;
 use App\Constants\ItemStatus;
 use App\Http\Requests\PurchaseRequest;
 use Stripe\Stripe;
@@ -17,7 +17,7 @@ class OrderController extends Controller
     // 商品購入画面の表示
     public function show(Request $request, Item $item)
     {
-        $paymentMethods = PaymentMethodConst::LABELS;
+        $paymentMethods = PaymentMethodConstants::LABELS;
         $user = auth()->user();
 
         $selectedPaymentMethod = $request->query('payment_method');
