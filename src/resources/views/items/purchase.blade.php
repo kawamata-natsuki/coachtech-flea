@@ -26,7 +26,6 @@
           </div>
         </div>
 
-
         <!-- 支払方法選択 -->
         <div class="item-purchase__payment-form">
           <p class="item-purchase__section-title">支払い方法</p>
