@@ -69,24 +69,31 @@
 6. `.env`ファイルの設定
 
     `.env`ファイルに以下の内容を追記・修正してください：
+
     #### メール設定
+
+    Mailtrapのアカウントをお持ちでない場合は、https://mailtrap.io から無料登録し、
+    自身の受信箱に記載の `MAIL_USERNAME` と `MAIL_PASSWORD` を `.env` に設定してください。
     ```ini
     MAIL_MAILER=smtp
     MAIL_HOST=sandbox.smtp.mailtrap.io
     MAIL_PORT=2525
-    MAIL_USERNAME=86721f057eae5a
-    MAIL_PASSWORD=1c38873d2cf2fb
+    MAIL_USERNAME=your_mailtrap_username_here
+    MAIL_PASSWORD=your_mailtrap_password_here
     MAIL_ENCRYPTION=null
     MAIL_FROM_ADDRESS=no-reply@example.com
-    MAIL_FROM_NAME="${APP_NAME}"
+    MAIL_FROM_NAME="${APP_NAME}"  
     ```
     #### Stripe設定
+
+    Stripeのアカウントをお持ちでない場合は、[https://dashboard.stripe.com/register](https://dashboard.stripe.com/register) から無料登録し、
+    テスト用APIキー（公開キー・秘密キー）を取得して `.env` に設定してください。
     ```ini
-    STRIPE_KEY=pk_test_51RFxk9FYmDOFjDEsqcXkKVtXfBeBu5dDp4nb4EgRibPVHW1Jg7GWQU2DxxlhXYvRoZsFCXWAr4rbmrZLcJmoHAIt00tD7xrg9O
-    STRIPE_SECRET=sk_test_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+    STRIPE_KEY=your_stripe_public_key_here
+    STRIPE_SECRET=your_stripe_secret_key_here
     ``` 
     
-    #### Stripe テストカード番号
+    ### 補足：Stripe テストカード番号（決済テスト用）
     - 成功：4242 4242 4242 4242  
     - 失敗：4000 0000 0000 9995  
     - 有効期限：任意の未来日（例：04/34）  
@@ -260,3 +267,19 @@
 - email                 ： 例：user@example.com
 - password              ： 8文字以上のパスワードを入力
 - password_confirmation ： もう一度パスワードを入力
+
+### メール認証について
+- Mailtrap を使用しています（設定は `.env` を参照）
+
+## 【補足】ログインについて
+
+### バリデーションエラーについて
+仕様書に加えて、`string`のルールを追加し、不正な配列入力などを防止しています。
+
+### プレースホルダーについて
+プレースホルダーはUI補助として追加しています。
+以下のとおり簡単な入力例を表示しています
+
+【placeholder文言一覧】
+- email                 ： 例：user@example.com
+- password              ： 8文字以上のパスワードを入力
