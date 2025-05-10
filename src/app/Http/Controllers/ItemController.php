@@ -92,13 +92,12 @@ class ItemController extends Controller
     // マイリストに表示する商品を取得する
     private function getFavoriteItems($keyword, $user)
     {
-        return $user->favoriteItems->filter(function ($item) use ($keyword, $user) {
-            return (
-                // キーワードがある場合は商品名に部分一致（大文字小文字を無視）
-                (!$keyword || str_contains(mb_strtolower($item->name), mb_strtolower($keyword)))
-                // 自分が出品した商品は除外
-                && $item->user_id !== $user->id
-            );
-        });
+        return $user->favoriteItems()
+            ->where('items.user_id', '!=', $user->id)
+            ->when($keyword, fn($query) => $query->where('items.name', 'like', "%{$keyword}%"))
+            ->withCount('favorites')
+            ->orderByDesc('favorites_count')
+            ->orderByDesc('items.created_at')
+            ->get();
     }
 }
