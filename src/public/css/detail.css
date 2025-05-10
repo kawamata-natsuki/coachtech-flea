@@ -8,8 +8,9 @@
 
 .item-detail__wrapper {
   display: flex;
-  gap: 40px;
+  gap: 60px;
   align-items: flex-start;
+  justify-content: center;
 }
 
 .item-detail__image {
@@ -26,6 +27,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  margin-top: 32px;
 }
 
 .item-detail .item-card__sold-label {

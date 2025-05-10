@@ -1,9 +1,10 @@
 /* ページ全体のレイアウト */
 html,
 body {
-  width: 100%;
-  min-height: 100vh;
-  font-family: Inter;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  overflow-y: auto;
 }
 
 *,
@@ -31,7 +32,7 @@ button {
 .main {
   display: flex;
   flex-direction: column;
-  height: auto;
+  min-height: 100vh;
   width: 100%;
   max-width: 1512px;
   margin: 0 auto;
