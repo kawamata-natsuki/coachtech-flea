@@ -111,4 +111,6 @@ Route::middleware(['auth', 'verified'])->get('/purchase/{item}', [OrderControlle
 
 Route::middleware(['auth', 'verified'])->post('/purchase/{item}', [OrderController::class, 'store'])->name('purchase.store');
 
-Route::get('/purchase/success/{item}', [OrderController::class, 'success'])->name('purchase.success');
+Route::get('/purchase/success/{item}', [OrderController::class, 'success'])
+    ->middleware('auth')
+    ->name('purchase.success');
