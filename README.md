@@ -71,7 +71,8 @@
     `.env`ファイルに以下の内容を追記・修正してください：
 
     #### メール設定
-
+    
+    メール認証はMailtrapを使用しています。
     Mailtrapのアカウントをお持ちでない場合は、https://mailtrap.io から無料登録し、
     自身の受信箱に記載の `MAIL_USERNAME` と `MAIL_PASSWORD` を `.env` に設定してください。
     ```ini
