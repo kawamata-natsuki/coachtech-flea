@@ -40,7 +40,7 @@ class CommentTest extends TestCase
         // 2. コメントを入力する
         // 3. コメントボタンを押す
         $response = $this->post(route('items.comments.store', ['item' => $item->id]), [
-            'comment' => 'login user comment',
+            'content' => 'login user comment',
         ]);
         $response->assertRedirect(route('items.show', ['item' => $item->id]));
 
@@ -64,7 +64,7 @@ class CommentTest extends TestCase
         // 1. コメントを入力する
         // 2. コメントボタンを押す
         $response = $this->post(route('items.comments.store', ['item' => $item->id]), [
-            'comment' => 'guest user comment',
+            'content' => 'guest user comment',
         ]);
 
         // コメントが送信されない
@@ -93,13 +93,13 @@ class CommentTest extends TestCase
 
         // 2. コメントボタンを押す
         $response = $this->post(route('items.comments.store', ['item' => $item->id]), [
-            'comment' => '',
+            'content' => '',
         ]);
         $response->assertSessionHasErrors('comment');
 
         // バリデーションメッセージが表示される
         $errors = session('errors');
-        $this->assertEquals('コメントを入力してください', $errors->first('comment'));
+        $this->assertEquals('コメントを入力してください', $errors->first('content'));
     }
 
     public function test_validation_error_when_comment_exceeds_max_length()
@@ -124,12 +124,12 @@ class CommentTest extends TestCase
         $longComment = str_repeat('a', 256);
 
         $response = $this->post(route('items.comments.store', ['item' => $item->id]), [
-            'comment' => $longComment
+            'content' => $longComment
         ]);
-        $response->assertSessionHasErrors('comment');
+        $response->assertSessionHasErrors('content');
 
         // バリデーションメッセージが表示される
         $errors = session('errors');
-        $this->assertEquals('コメントは255文字以内で入力してください', $errors->first('comment'));
+        $this->assertEquals('コメントは255文字以内で入力してください', $errors->first('content'));
     }
 }

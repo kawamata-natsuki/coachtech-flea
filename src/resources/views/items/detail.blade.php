@@ -129,8 +129,8 @@ use App\Constants\ConditionConstants;
           <h3 class="comment-form__heading">商品へのコメント</h3>
           <form action="{{ route('items.comments.store', ['item' => $item -> id]) }}" method="post">
             @csrf
-            <textarea class="comment-form__textarea" name="comment" id="comment">{{ old('comment') }}</textarea>
-            <x-error-message class="error-message" field="comment" />
+            <textarea class="comment-form__textarea" name="content" id="content">{{ old('content') }}</textarea>
+            <x-error-message class="error-message" field="content" />
             <button class="comment-button" type="submit">コメントを送信する</button>
           </form>
         </div>

@@ -15,7 +15,7 @@ class ItemCommentController extends Controller
         ItemComment::create([
             'item_id' => $item->id,
             'user_id' => auth()->id(),
-            'content' => $request->comment,
+            'content' => $request->content,
         ]);
 
         return redirect()->route('items.show', ['item' => $item->id])
