@@ -28,10 +28,13 @@ class OrderController extends Controller
     // 商品購入の処理
     public function store(PurchaseRequest $request, Item $item)
     {
-        // 価格が30万超えてたらエラーにする（Stripe仕様上の制約）
-        if ($item->price > 300000) {
+        // コンビニ支払いの価格が30万超えてたらエラーにする（Stripe仕様上の制約）
+        if (
+            $request->payment_method === 'convenience_store' &&
+            $item->price > 300000
+        ) {
             return redirect()->back()->withErrors([
-                'item' => '30万円以上の商品は決済できません。',
+                'item_price' => 'コンビニ支払いでは30万円を超える商品は購入できません。',
             ]);
         }
 
