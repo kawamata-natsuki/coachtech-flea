@@ -93,7 +93,7 @@ use App\Constants\ConditionConstants;
           <div class="create-page__field">
             <label class="create-page__label">商品の説明</label>
             <textarea class="create-page__textarea" name="description"></textarea>
-            <x-error-message class="error-message" field="price" />
+            <x-error-message class="error-message" field="description" />
           </div>
 
           <!-- 販売価格 -->
