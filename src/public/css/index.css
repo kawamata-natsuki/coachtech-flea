@@ -43,6 +43,7 @@
 
 .item-card__name {
   overflow-wrap: break-word;
+  word-break: break-word;
   max-width: 100%;
   font-weight: 400;
   font-size: 24px;

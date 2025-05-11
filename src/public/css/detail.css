@@ -65,6 +65,7 @@
 }
 
 .item-detail__name {
+  word-break: break-word;
   overflow-wrap: break-word;
   max-width: 100%;
   font-weight: 700;
@@ -76,6 +77,7 @@
 
 .item-detail__brand {
   overflow-wrap: break-word;
+  word-break: break-word;
   font-weight: 400;
   font-size: 20px;
   color: #000;
@@ -172,6 +174,7 @@
 }
 
 .item-description__text {
+  word-break: break-word;
   overflow-wrap: break-word;
   max-width: 100%;
   font-weight: 400;
@@ -303,6 +306,7 @@
   color: #000000;
   padding: 15px;
   white-space: normal;
+  word-break: break-word;
   overflow-wrap: break-word;
 }
 
