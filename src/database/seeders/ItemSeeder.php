@@ -98,11 +98,12 @@ class ItemSeeder extends Seeder
                 'item_image' => 'https://coachtech-matter.s3.ap-northeast-1.amazonaws.com/image/%E5%A4%96%E5%87%BA%E3%83%A1%E3%82%A4%E3%82%AF%E3%82%A2%E3%83%83%E3%83%95%E3%82%9A%E3%82%BB%E3%83%83%E3%83%88.jpg',
             ],
             [
-                'name' => 'トレーディングカード',
-                'brand' => 'POKE',
-                'price' => 45004500,
-                'description' => '美品のトレーディングカードです！',
-                'item_image' => '//',
+                'name' => 'CARDCARDCARDCARDCARDCARDCARDCARDCARDCARD',
+                'brand' => 'BRANDBRANDBRANDBRANDBRANDBRANDBRANDBRANDBRANDBRANDBRANDBRANDBRANDBRANDBRANDBRANDBRANDBRANDBRANDBRAND',
+                'price' => 9999999,
+                'description' => '美品のトレカです！！美品のトレカです！！美品のトレカです！！美品のトレカです！！美品のトレカです！！美品のトレカです！！美品のトレカです！！美品のトレカです！！美品のトレカです！！美品のトレカです！！美品のトレカです！！美品のトレカです！！美品のトレカです！！美品のトレカです！！美品のトレカです！！美品のトレカです！！美品のトレカです！！美品のトレカです！！美品のトレカです！！美品のトレカです！！美品のトレカです！！美品のトレカです！！美品のトレカです！！美品のトレカです！！美品のトレカです！！！！！！！',
+                'item_image' => 'https://github.com/kawamata-natsuki/coachtech-flea/blob/main/src/public/images/test-item.jpg?raw=true',
+                'attach_all_categories' => true,
             ]
         ];
 
@@ -128,7 +129,7 @@ class ItemSeeder extends Seeder
             // 商品登録
             $item = Item::create([
                 'name'         => $data['name'],
-                'brand'        => $data['brand'],
+                'brand'        => $data['brand'] ?? null,
                 'price'        => $data['price'],
                 'description'  => $data['description'],
                 'condition_id' => $conditionId,
@@ -138,7 +139,10 @@ class ItemSeeder extends Seeder
             ]);
 
             // カテゴリを紐付け
-            $categories = Category::inRandomOrder()->take(rand(1, 3))->pluck('id');
+            $categories = isset($data['attach_all_categories']) && $data['attach_all_categories']
+                ? Category::pluck('id')
+                : Category::inRandomOrder()->take(rand(1, 3))->pluck('id');
+
             $item->categories()->attach($categories);
 
             if ($isSold) {
