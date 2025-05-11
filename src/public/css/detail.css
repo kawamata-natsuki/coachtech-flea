@@ -133,7 +133,7 @@
   display: flex;
   justify-content: center;
   background-color: transparent;
-  margin-left: 8px;
+  margin: 16px 0 16px 8px;
 }
 
 .purchase-button {
@@ -411,16 +411,19 @@
   .item-detail__name {
     font-size: 28px;
     font-weight: 600;
+    margin-bottom: 12px;
   }
 
   .item-detail__brand {
     font-size: 16px;
     margin-left: 4px;
+    margin-bottom: 16px;
   }
 
   .item-detail__price {
     font-size: 28px;
     margin-top: 4px;
+    margin-bottom: 16px;
   }
 
   .item-detail__price-sub {
@@ -429,8 +432,8 @@
 
   .item-detail__actions {
     gap: 28px;
-    padding-left: 16px;
-    margin: 12px;
+    padding-left: 24px;
+    margin: 0 0 16px 0;
   }
 
   .favorite-count__icon {
@@ -497,7 +500,7 @@
 
   .item-category {
     min-width: 60px;
-    padding: 4px 8px;
+    padding: 4px 6px;
     font-size: 12px;
   }
 
@@ -557,10 +560,9 @@
   }
 
   .error-message {
-    min-height: 28px;
-    font-size: 16px;
+    min-height: 20px;
+    font-size: 14px;
     font-weight: 400;
-    margin: 12px 0;
   }
 
 }
