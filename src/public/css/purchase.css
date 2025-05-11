@@ -1,3 +1,30 @@
+.placeholder-option {
+  display: none;
+}
+
+/* 共通スタイル */
+.error-message {
+  font-size: 14px;
+  font-weight: 600;
+  color: #d10000;
+  line-height: 1.4;
+}
+
+/* セレクトボックス下用 */
+.error-under-select {
+  margin-left: 50px;
+  margin-top: 8px;
+  width: 265px;
+}
+
+/* 購入ボタン下用 */
+.error-under-button {
+  margin-top: 16px;
+  text-align: center;
+  font-size: 13px;
+  font-weight: 500;
+}
+
 .item-purchase {
   padding: 32px 16px;
   margin-bottom: 100px;
@@ -5,7 +32,7 @@
 
 .item-purchase__container {
   width: 100%;
-  max-width: 1250px;
+  max-width: 1350px;
   margin: 0 auto;
 }
 
@@ -15,18 +42,11 @@
 }
 
 .item-purchase__image {
-  width: 180px;
-  height: 180px;
-  border: 1px solid #ccc;
-  border-radius: 8px;
-  overflow: hidden;
+  flex: 1;
+  min-width: 150px;
+  max-width: 180px;
 }
 
-.item-card__img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
 
 /* 左カラム */
 .item-purchase__left {
@@ -34,7 +54,7 @@
   flex: 1 1 60%;
   display: flex;
   flex-direction: column;
-  gap: 32px;
+  gap: 16px;
 }
 
 .item-purchase__item-info {
@@ -42,6 +62,16 @@
   padding-bottom: 60px;
   gap: 50px;
   border-bottom: 1px solid #000000;
+}
+
+.item-purchase__image {
+  aspect-ratio: 1 / 1;
+  background-color: #f8f8f8;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 4px;
+  overflow: hidden;
 }
 
 .item-purchase__text {
@@ -53,6 +83,8 @@
 }
 
 .item-purchase__name {
+  word-break: break-word;
+  overflow-wrap: break-word;
   font-weight: 700;
   font-size: 30px;
 }
@@ -71,7 +103,6 @@
   display: flex;
   flex-direction: column;
   padding: 20px;
-  gap: 16px;
   border-bottom: 1px solid #000000;
 }
 
@@ -87,7 +118,7 @@
   position: relative;
   width: 265px;
   height: 32px;
-  margin: 20px 50px;
+  margin: 20px 0 0 50px;
   cursor: pointer;
 }
 
@@ -119,22 +150,6 @@
   pointer-events: none;
 }
 
-.placeholder-option {
-  display: none;
-}
-
-.error-message {
-  display: inline-flex;
-  align-items: center;
-  font-size: 14px;
-  font-weight: 600;
-  border-radius: 4px;
-  padding: 4px 8px;
-  line-height: 1.4;
-  background-color: #ffe5e5;
-  color: #d10000;
-  width: 100%;
-}
 
 .item-purchase__address {
   border-bottom: 1px solid #000000;
@@ -168,7 +183,6 @@
   flex: 1 1 35%;
   display: flex;
   flex-direction: column;
-  gap: 32px;
 }
 
 .item-purchase__confirm {
@@ -191,12 +205,16 @@
   flex: 1;
   font-weight: 400;
   font-size: 20px;
+  line-height: 1.2;
 }
 
 .item-purchase__confirm-value {
   flex: 1;
   font-weight: 400;
   font-size: 24px;
+  line-height: 1.2;
+  min-height: 30px;
+  text-align: center;
 }
 
 .item-purchase__button-wrapper {
@@ -204,13 +222,13 @@
   background-color: #FF5555;
   border-radius: 5px;
   text-align: center;
-  margin-top: 80px;
+  margin-top: 60px;
 }
 
 .purchase-button {
   display: block;
   width: 100%;
-  padding: 16px;
+  padding: 12px;
   cursor: pointer;
   color: #FFFFFF;
   font-weight: 700;

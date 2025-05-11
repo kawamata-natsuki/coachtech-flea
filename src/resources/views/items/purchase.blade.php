@@ -7,7 +7,6 @@
 
 @section('content')
 <div class="item-purchase">
-  <x-error-message class="error-message" field="item" />
   <div class="item-purchase__container">
     <div class="item-purchase__wrapper">
 
@@ -40,8 +39,8 @@
               </option>
               @endforeach
             </select>
-            <x-error-message class="error-message" field="payment_method" />
           </div>
+          <x-error-message class="error-message error-under-select" field="payment_method" />
         </div>
 
         <!-- 住所 -->
@@ -61,6 +60,7 @@
             <p>{{ $user->building }}</p>
             @endif
           </div>
+          <x-error-message class="error-message error-under-select" field="" />
         </div>
       </div>
 
@@ -93,11 +93,8 @@
           <div class="item-purchase__button-wrapper">
             <button class="purchase-button" type="submit">購入する</button>
           </div>
-          <!-- テスト用カード番号　 4242 4242 4242 4242　成功処理 -->
-          <!-- テスト用カード番号　 4000 0000 0000 9995　失敗テスト -->
-          <!-- 有効期限とCVCは適当な数字でOK -->
-          <!-- READMEに記述しておく -->
         </form>
+        <x-error-message class="error-message error-under-button" field="item_price" />
       </div>
     </div>
   </div>
