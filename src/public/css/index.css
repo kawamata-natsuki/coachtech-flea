@@ -42,7 +42,6 @@
 }
 
 .item-card__name {
-  word-break: break-word;
   overflow-wrap: break-word;
   max-width: 100%;
   font-weight: 400;
