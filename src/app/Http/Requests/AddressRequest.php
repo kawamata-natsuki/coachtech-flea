@@ -21,7 +21,6 @@ class AddressRequest extends FormRequest
         ];
     }
 
-    // バリデーションメッセージの指示ないから、自分で作成
     public function messages()
     {
         return [
