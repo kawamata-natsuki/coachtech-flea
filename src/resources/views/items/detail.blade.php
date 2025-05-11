@@ -80,20 +80,18 @@ use App\Constants\ConditionConstants;
         <!-- 商品の情報・カテゴリ -->
         <div class="item-info">
           <h2 class="item-info__heading">商品の情報</h2>
-          <div class="item-info__section">
-            <div class="item-info__category">
-              <p class="item-info__label">カテゴリー</p>
-              <div class="item-info__tags">
-                @foreach ($item->categories as $category)
-                <span class="item-category">{{ $category->name }}</span>
-                @endforeach
-              </div>
+          <div class="item-info__category">
+            <p class="item-info__label">カテゴリー</p>
+            <div class="item-info__tags">
+              @foreach ($item->categories as $category)
+              <span class="item-category">{{ $category->name }}</span>
+              @endforeach
             </div>
           </div>
-        </div>
-        <div class="item-info__status">
-          <p class="item-info__label">商品の状態</p>
-          <p class="item-condition">{{ ConditionConstants::label(optional($item->condition)->code) }}</p>
+          <div class="item-info__status">
+            <p class="item-info__label">商品の状態</p>
+            <p class="item-condition">{{ ConditionConstants::label(optional($item->condition)->code) }}</p>
+          </div>
         </div>
 
         <!-- コメント表示 -->
