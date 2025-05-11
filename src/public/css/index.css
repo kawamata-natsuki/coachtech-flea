@@ -42,7 +42,9 @@
 }
 
 .item-card__name {
-  font-family: Inter;
+  word-break: break-word;
+  overflow-wrap: break-word;
+  max-width: 100%;
   font-weight: 400;
   font-size: 24px;
   color: #000000;
