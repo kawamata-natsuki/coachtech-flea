@@ -45,11 +45,11 @@
 .create-page__upload-area {
   border: 1px dashed #5F5F5F;
   border-radius: 4px;
-  padding: 40px 20px;
   text-align: center;
   cursor: pointer;
   width: 100%;
-  min-height: 150px;
+  min-height: 100px;
+  padding: 24px 16px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -203,6 +203,75 @@
   font-size: 26px;
 }
 
+/* 商品画像のドラッグ＆ドロップ */
+.create-page__upload-area {
+  width: 100%;
+  height: auto;
+  min-height: 240px;
+  border: 1px dashed #5F5F5F;
+  border-radius: 4px;
+  background-color: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  cursor: pointer;
+  padding: 16px;
+  flex-direction: column;
+  text-align: center;
+}
+
+/* アップロードエリアに画像があるときのスタイル */
+.create-page__upload-area.has-image {
+  border: none;
+  justify-content: flex-start;
+  padding: 0;
+  position: relative;
+}
+
+/* 最初に表示されるテキスト */
+.upload-instruction {
+  font-weight: 700;
+  font-size: 16px;
+  color: #FF5655;
+  border: 2px solid #FF5555;
+  border-radius: 10px;
+  padding: 12px 24px;
+}
+
+/* プレビュー画像を正方形に */
+.image-preview {
+  width: 200px;
+  height: 200px;
+  aspect-ratio: 1 / 1;
+  object-fit: contain;
+  border-radius: 4px;
+  background-color: #f8f8f8;
+  padding: 4px;
+  display: block;
+}
+
+/* プレビュー表示されたら文字を非表示に */
+.create-page__upload-area.has-image .upload-instruction {
+  display: none;
+}
+
+.remove-image {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  background-color: rgba(0, 0, 0, 0.6);
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 24px;
+  height: 24px;
+  font-size: 16px;
+  line-height: 24px;
+  text-align: center;
+  cursor: pointer;
+}
+
 /* ===============================
       タブレット（768〜850px）対応
    =============================== */
@@ -222,7 +291,7 @@
   .create-page__label {
     font-weight: 600;
     font-size: 20px;
-    margin-top: 20px;
+    margin-top: 8px;
     margin-bottom: 4px;
   }
 
@@ -236,7 +305,7 @@
   .create-page__section-title {
     border-bottom: 1px solid #5F5F5F;
     padding-bottom: 4px;
-    margin: 24px 0;
+    margin: 8px 0;
     font-weight: 600;
     font-size: 24px;
   }
@@ -284,4 +353,30 @@
     font-size: 20px;
   }
 
+  /* 商品画像のドラッグ＆ドロップ */
+  .create-page__upload-area {
+    width: 100%;
+    min-height: 200px;
+    padding: 12px;
+  }
+
+  /* 最初に表示されるテキスト */
+  .upload-instruction {
+    font-weight: 600;
+    font-size: 14px;
+    padding: 8px 20px;
+  }
+
+  /* プレビュー画像を正方形に */
+  .image-preview {
+    width: 170px;
+    height: 170px;
+  }
+
+  .remove-image {
+    width: 20px;
+    height: 20px;
+    font-size: 14px;
+    line-height: 20px;
+  }
 }
