@@ -3,6 +3,8 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
+use App\Constants\PaymentMethodConstants;
 
 class PurchaseRequest extends FormRequest
 {
@@ -15,7 +17,7 @@ class PurchaseRequest extends FormRequest
     public function rules()
     {
         return [
-            'payment_method' => ['required', 'string', 'in:credit_card,convenience_store'],
+            'payment_method' => ['required', 'string', Rule::in(PaymentMethodConstants::all())],
             'postal_code' => ['required', 'string'],
             'address' => ['required', 'string'],
             'building' => ['nullable', 'string'],
