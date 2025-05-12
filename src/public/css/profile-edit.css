@@ -35,18 +35,23 @@
   gap: 36px;
 }
 
+/* 共通の画像設定（JSが使う） */
 .profile-form__image {
   width: 150px;
   height: 150px;
   object-fit: cover;
-  border-radius: 50%;
-  border: 1px solid #ccc;
 }
 
-
+/* デフォルト画像 */
 .profile-form__image--default {
   width: 150px;
   height: 150px;
+}
+
+/* ユーザーがアップした画像だけ枠付きの丸 */
+.profile-form__image--custom {
+  border-radius: 50%;
+  border: 1px solid #ccc;
 }
 
 .profile-form__file-button {
@@ -69,6 +74,7 @@
   font-weight: 700;
   font-size: 20px;
   color: #FF5555;
+  cursor: pointer;
 }
 
 .profile-form__input-area {

@@ -7,6 +7,8 @@
   <link rel="stylesheet" href="https://unpkg.com/ress/dist/ress.min.css">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="{{ asset('css/common.css') }}">
+  <link href="https://unpkg.com/cropperjs/dist/cropper.min.css" rel="stylesheet">
+  <script src="https://unpkg.com/cropperjs/dist/cropper.min.js"></script>
   @yield('css')
   <title>coachtech-flea</title>
 </head>
@@ -77,8 +79,8 @@
 
   <main class="main">
     @yield('content')
-    @yield('js')
   </main>
+  @yield('js')
 </body>
 
 </html>

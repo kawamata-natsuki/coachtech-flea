@@ -39,6 +39,21 @@ class UserController extends Controller
             $user->profile_image = $path;
         }
 
+        // base64を画像として保存
+        if ($request->filled('cropped_image')) {
+            if ($user->profile_image) {
+                Storage::disk('public')->delete($user->profile_image);
+            }
+
+            $imageData = $request->input('cropped_image');
+            $imageData = preg_replace('/^data:image\/\w+;base64,/', '', $imageData);
+            $imageData = base64_decode($imageData);
+
+            $fileName = 'profile_images/' . uniqid() . '.jpg';
+            Storage::disk('public')->put($fileName, $imageData);
+            $user->profile_image = $fileName;
+        }
+
         $user->save();
 
         // 遷移分岐
