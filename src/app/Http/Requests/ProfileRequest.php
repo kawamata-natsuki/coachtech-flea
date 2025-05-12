@@ -13,9 +13,8 @@ class ProfileRequest extends FormRequest
 
     public function rules()
     {
-        // バリデーションルールは拡張子の指示のみ
         return [
-            'profile_image' => ['file', 'image', 'mimes:jpg,jpeg,png'],
+            'profile_image' => ['image', 'mimes:jpg,jpeg,png'],
         ];
     }
 
