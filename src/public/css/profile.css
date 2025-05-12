@@ -1,11 +1,9 @@
 .profile-page {
-  width: 100%;
-  max-width: 1540px;
-  margin: 0 auto;
+  padding-bottom: 100px;
 }
 
 .profile-page__container {
-  margin-bottom: 100px;
+  padding: 30px 70px;
 }
 
 .profile-page__header {
@@ -128,13 +126,12 @@
 
 .profile-page__items {
   margin-top: 32px;
-  padding: 0 70px;
 }
 
 .profile-page__list {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: 24px;
+  gap: 70px;
 }
 
 .profile-page__empty {
@@ -162,7 +159,11 @@
 
 @media screen and (min-width: 768px) and (max-width: 850px) {
   .profile-page {
-    max-width: 95%;
+    margin-bottom: 40px;
+  }
+
+  .profile-page__container {
+    padding: 0 30px;
   }
 
   .profile-page__header {
@@ -235,7 +236,6 @@
 
   .profile-page__items {
     margin-top: 28px;
-    padding: 0 30px;
   }
 
   .profile-page__list {
