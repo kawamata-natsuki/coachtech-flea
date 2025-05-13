@@ -57,7 +57,7 @@ class OrderController extends Controller
             ]],
             'mode' => 'payment',
             'success_url' => route('purchase.success', ['item' => $item->id]),
-            'cancel_url' => route('purchase.show', ['item' => $item->id]),
+            'cancel_url' => route('purchase.cancel', ['item' => $item->id]),
         ]);
 
         session([
@@ -96,5 +96,10 @@ class OrderController extends Controller
         ]);
 
         return view('items.purchase-success');
+    }
+
+    public function cancel(Request $request, Item $item)
+    {
+        return view('items.purchase-cancel', compact('item'));
     }
 }
