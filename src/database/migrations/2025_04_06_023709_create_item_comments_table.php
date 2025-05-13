@@ -15,6 +15,7 @@ class CreateItemCommentsTable extends Migration
             $table->string('content'); // コメント最大255文字
             $table->timestamps();
 
+            // 外部キー制約
             $table->foreign('item_id')->references('id')->on('items')->onDelete('cascade');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });

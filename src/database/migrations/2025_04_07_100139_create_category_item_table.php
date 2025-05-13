@@ -18,7 +18,7 @@ class CreateCategoryItemTable extends Migration
             $table->foreign('item_id')->references('id')->on('items')->onDelete('cascade');
             $table->foreign('category_id')->references('id')->on('categories')->onDelete('cascade');
 
-            // 複合ユニーク制約（item_idとuser_idの組み合わせが重複しない）
+            // 複合ユニーク制約（item_idとcategory_idの組み合わせが重複しない）
             // 同じitemに同じcategoryを重複登録しない
             $table->unique(['item_id', 'category_id']);
         });
