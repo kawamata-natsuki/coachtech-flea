@@ -50,6 +50,8 @@
 
 /* ユーザーがアップした画像だけ枠付きの丸 */
 .profile-form__image--custom {
+  width: 150px;
+  height: 150px;
   border-radius: 50%;
   border: 1px solid #ccc;
 }

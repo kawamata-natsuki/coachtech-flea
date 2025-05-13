@@ -115,8 +115,13 @@
         <!-- プロフィール画像 -->
         <div class="profile-form__image-area">
           <div class="profile-form__image-wrapper">
-            <img id="preview-image" class="profile-form__image profile-form__image--custom"
-              src="{{ $user->profile_image ? asset('storage/' . $user->profile_image) : asset('images/default-profile.svg') }}"
+            @php
+            $isDefault = !$user->profile_image;
+            @endphp
+
+            <img id="preview-image"
+              class="profile-form__image {{ $isDefault ? 'profile-form__image--default' : 'profile-form__image--custom' }}"
+              src="{{ $isDefault ? asset('images/default-profile.svg') : asset('storage/' . $user->profile_image) }}"
               alt="プロフィール画像">
           </div>
           <div class="profile-form__file-button">
@@ -231,15 +236,12 @@
         }
       });
 
-      // 🔽 ここで value をクリアするのがポイント！
       document.getElementById('select-image').value = '';
     };
     reader.readAsDataURL(file);
   });
 
   document.getElementById('crop-button').addEventListener('click', function () {
-    const cropBox = cropper.getCropBoxData();
-
     const canvas = cropper.getCroppedCanvas({
       width: 280,
       height: 280,
@@ -248,7 +250,14 @@
     const preview = document.getElementById('preview-image');
     const croppedData = canvas.toDataURL('image/jpeg');
 
+    // プレビュー画像を差し替え
     preview.src = croppedData;
+
+    // ▼ クラスを切り替え（デフォルト枠 → カスタム枠）
+    preview.classList.remove('profile-form__image--default');
+    preview.classList.add('profile-form__image--custom');
+
+    // データをhiddenに保存
     document.getElementById('cropped-image-data').value = croppedData;
     document.getElementById('cropper-modal').style.display = 'none';
 
