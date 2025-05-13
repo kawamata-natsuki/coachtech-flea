@@ -57,6 +57,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/purchase/{item}', [OrderController::class, 'show'])->name('purchase.show');
     Route::post('/purchase/{item}', [OrderController::class, 'store'])->name('purchase.store');
     Route::get('/purchase/success/{item}', [OrderController::class, 'success'])->name('purchase.success');
+    Route::get('/purchase/cancel/{item}', [OrderController::class, 'cancel'])->name('purchase.cancel');
 
     // いいね・コメント機能
     Route::post('/item/{item}/favorite', [FavoriteController::class, 'toggle'])->name('item.favorite.toggle');
