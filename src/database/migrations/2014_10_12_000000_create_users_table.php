@@ -12,13 +12,13 @@ class CreateUsersTable extends Migration
             $table->id();
             $table->string('name')->nullable();
             $table->string('email')->unique();
-            $table->timestamp('email_verified_at')->nullable(); //メール認証で必要
+            $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
-            $table->string('postal_code')->nullable(); // ハイフンつき7桁の郵便番号
+            $table->string('postal_code')->nullable();
             $table->string('address')->nullable();
             $table->string('building')->nullable();
             $table->string('profile_image')->nullable(); // 画像はstorageに保存し、DBにはファイルパスのみ保持
-            $table->boolean('is_admin')->default(false); // 管理者ユーザー or 一般ユーザー
+            $table->boolean('is_admin')->default(false);
             $table->timestamps();
         });
     }

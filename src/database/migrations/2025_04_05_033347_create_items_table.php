@@ -17,11 +17,10 @@ class CreateItemsTable extends Migration
             $table->unsignedBigInteger('condition_id'); // 商品の状態
             $table->string('item_image'); // 商品画像
             $table->unsignedBigInteger('user_id'); // 出品者情報
-            $table->string('item_status')->default('on_sale'); // 販売状況(Enum)
+            $table->string('item_status')->default('on_sale'); // 販売状況
             $table->timestamps();
 
             // 外部キー制約
-            // 使われているマスタは削除できない
             $table->foreign('condition_id')->references('id')->on('conditions')->onDelete('restrict');
             // ユーザーアカウント削除したら、関連する出品商品も一緒に削除
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
