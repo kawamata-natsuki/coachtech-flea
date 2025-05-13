@@ -82,6 +82,8 @@ class ItemController extends Controller
             ->when(auth()->check(), fn($query) => $query->where('user_id', '!=', auth()->id()))
             // 検索ワードがあるときだけ、商品名を部分一致で検索
             ->when($keyword, fn($query) => $query->where('name', 'like', "%{$keyword}%"))
+            // 売り切れ商品を下に表示
+            ->orderByRaw("FIELD(item_status, 'on_sale', 'sold_out')")
             // いいねの数が多い順に並び替え
             ->orderByDesc('favorites_count')
             // いいね数が同じなら、新しい順に並べる
@@ -98,6 +100,7 @@ class ItemController extends Controller
             ->withCount('favorites')
             ->orderByDesc('favorites_count')
             ->orderByDesc('items.created_at')
+            ->distinct() //
             ->get();
     }
 }
