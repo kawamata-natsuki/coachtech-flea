@@ -32,4 +32,9 @@ class ConditionConstants
   {
     return Condition::where('code', $code)->value('id');
   }
+
+  public static function idToCode(int $id): ?string
+  {
+    return Condition::find($id)?->code;
+  }
 }
