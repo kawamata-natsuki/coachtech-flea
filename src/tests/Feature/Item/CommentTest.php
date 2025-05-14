@@ -95,7 +95,7 @@ class CommentTest extends TestCase
         $response = $this->post(route('items.comments.store', ['item' => $item->id]), [
             'content' => '',
         ]);
-        $response->assertSessionHasErrors('comment');
+        $response->assertSessionHasErrors('content');
 
         // バリデーションメッセージが表示される
         $errors = session('errors');

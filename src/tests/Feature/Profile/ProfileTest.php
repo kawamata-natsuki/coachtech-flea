@@ -79,7 +79,7 @@ class ProfileTest extends TestCase
         $response->assertDontSee('purchasedItem');
 
         // 購入商品タブを確認
-        $response = $this->get(route('profile.index', ['tab' => 'buy']));
+        $response = $this->get(route('profile.index', ['page' => 'buy']));
         $response->assertStatus(200);
         $response->assertSee('storage/profile_images/custom.jpg');
         $response->assertSee('KAWAMATA');

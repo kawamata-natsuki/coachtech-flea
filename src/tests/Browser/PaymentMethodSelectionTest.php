@@ -39,12 +39,12 @@ class PaymentMethodSelectionTest extends DuskTestCase
         ]);
 
         $this->browse(function (Browser $browser) use ($user, $item) {
-            $browser->loginAs($user)
+            $browser->withHost('127.0.0.1') // ←★これを追加！
+                ->loginAs($user)
                 ->visit(route('purchase.show', ['item' => $item->id]))
                 ->waitFor('select[name="payment_method"]', 5)
                 ->select('select[name="payment_method"]', 'convenience_store');
 
-            // script() は別に呼び出して実行だけする
             $browser->script('updatePaymentMethod()');
 
             $browser->pause(1000)

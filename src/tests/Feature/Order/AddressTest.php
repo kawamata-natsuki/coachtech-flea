@@ -88,7 +88,7 @@ class AddressTest extends TestCase
         $response->assertStatus(200);
 
         $response = $this
-            ->withSession(['payment_method' =>  $this->paymentMethodCode])
+            ->withSession(['purchase.payment_method' =>  $this->paymentMethodCode])
             ->get(route('purchase.success', ['item' => $item->id]));
         $response->assertStatus(200);
 

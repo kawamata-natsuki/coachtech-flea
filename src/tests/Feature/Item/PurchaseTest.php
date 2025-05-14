@@ -8,7 +8,6 @@ use App\Models\User;
 use Database\Seeders\CategorySeeder;
 use Database\Seeders\ConditionSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
 class PurchaseTest extends TestCase
@@ -51,7 +50,7 @@ class PurchaseTest extends TestCase
 
         // 3. 商品を選択して「購入する」ボタンを押下
         $response = $this
-            ->withSession(['payment_method' => $this->paymentMethodCode])
+            ->withSession(['purchase.payment_method' => $this->paymentMethodCode])
             ->get(route('purchase.success', ['item' => $item->id]));
         $response->assertStatus(200);
 
@@ -85,7 +84,7 @@ class PurchaseTest extends TestCase
 
         // 3. 商品を選択して「購入する」ボタンを押下
         $response = $this
-            ->withSession(['payment_method' => $this->paymentMethodCode])
+            ->withSession(['purchase.payment_method' => $this->paymentMethodCode])
             ->get(route('purchase.success', ['item' => $item->id]));
         $response->assertStatus(200);
 
@@ -126,8 +125,8 @@ class PurchaseTest extends TestCase
 
         // 3. 商品を選択して「購入する」ボタンを押下
         $response = $this
-            ->withSession(['payment_method' => $this->paymentMethodCode])
-            ->get(route('purchase.success', ['item' => $item->id]));
+            ->withSession(['purchase.payment_method' => $this->paymentMethodCode])
+            ->post(route('purchase.success', ['item' => $item->id]));
         $response->assertStatus(200);
 
         // 購入が完了する
@@ -141,7 +140,7 @@ class PurchaseTest extends TestCase
         ]);
 
         // 4. プロフィール画面を表示する
-        $response = $this->get(route('profile.index', ['tab' => 'buy']));
+        $response = $this->get(route('profile.index', ['page' => 'buy']));
         $response->assertStatus(200);
 
         // 購入した商品がプロフィールの購入した商品一覧に追加されている
