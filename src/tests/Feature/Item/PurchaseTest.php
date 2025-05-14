@@ -126,7 +126,7 @@ class PurchaseTest extends TestCase
         // 3. 商品を選択して「購入する」ボタンを押下
         $response = $this
             ->withSession(['purchase.payment_method' => $this->paymentMethodCode])
-            ->post(route('purchase.success', ['item' => $item->id]));
+            ->get(route('purchase.success', ['item' => $item->id]));
         $response->assertStatus(200);
 
         // 購入が完了する
