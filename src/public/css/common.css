@@ -34,11 +34,10 @@ button {
   flex-direction: column;
   min-height: calc(100vh - 82px);
   width: 100%;
-  max-width: 1512px;
+  max-width: 1540px;
   margin: 0 auto;
   padding: 0;
   flex-grow: 1;
-  /* 高さが足りないときに伸びるようにする */
 }
 
 .content__heading {
