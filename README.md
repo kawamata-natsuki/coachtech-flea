@@ -224,7 +224,7 @@
 
 ## 使用技術(実行環境)
 - Laravel Framework 8.83.29
-- PHP 8.4.3
+- PHP 8.2.28
 - MYSQL 8.0.26
 - Nginx 1.21.1
 - phpMyAdmin 8.2.27

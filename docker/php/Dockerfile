@@ -1,4 +1,4 @@
-FROM php:8.1-fpm
+FROM php:8.2-fpm
 
 COPY php.ini /usr/local/etc/php/
 
@@ -19,7 +19,7 @@ ARG USER_ID=1000
 ARG GROUP_ID=1000
 
 # ユーザーとグループを作成
-RUN groupadd -g ${GROUP_ID} appgroup && \
-  useradd -u ${USER_ID} -g appgroup -m appuser
+RUN groupadd -f -g ${GROUP_ID} appgroup && \
+  id -u appuser &>/dev/null || useradd -u ${USER_ID} -g appgroup -m appuser
 
 WORKDIR /var/www
