@@ -22,15 +22,18 @@
 
   <!-- 商品一覧 -->
   <div class="items-page__container">
-    @if ($items->isEmpty())
-    <p class="items-page__empty">表示する商品がありません。</p>
-    @else
-    <div class="items-page__list">
-      @foreach ($items as $item)
-      <x-item-card :item="$item" />
-      @endforeach
-    </div>
-    @endif
+    @if (request('keyword') && mb_strlen(request('keyword')) < 2) <p class="items-page__notice">
+      検索キーワードは2文字以上で入力してください。
+      </p>
+      @elseif ($items->isEmpty())
+      <p class="items-page__empty">表示する商品がありません。</p>
+      @else
+      <div class="items-page__list">
+        @foreach ($items as $item)
+        <x-item-card :item="$item" />
+        @endforeach
+      </div>
+      @endif
   </div>
 </div>
 @endsection
