@@ -37,7 +37,11 @@ class ItemController extends Controller
             'favorites',
         ]);
 
-        return view('items.detail', compact('item'));
+        $conditionLabel = ConditionConstants::label(
+            ConditionConstants::idToCode($item->condition_id)
+        );
+
+        return view('items.detail', compact('item', 'conditionLabel'));
     }
 
     // 商品出品画面の表示
