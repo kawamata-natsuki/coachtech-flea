@@ -46,6 +46,13 @@
   color: #000000;
 }
 
+.items-page__notice {
+  display: block;
+  text-align: center;
+  font-size: 20px;
+  color: #d9534f;
+}
+
 .items-page__empty {
   text-align: center;
   font-size: 20px;
@@ -83,6 +90,10 @@
   }
 
   .items-page__list .item-card__name {
+    font-size: 16px;
+  }
+
+  .items-page__notice {
     font-size: 16px;
   }
 
