@@ -13,16 +13,15 @@ class ItemController extends Controller
     // 商品一覧画面の表示
     public function index(Request $request)
     {
-        // URLのクエリパラメータを取得
         $tab = $request->query('page', 'all');
-        // 検索窓の入力内容を取得
         $keyword = $request->query('keyword');
         $user = auth()->user();
 
+        // メニュータブの「おすすめ」「マイリスト」切り替え
         if ($tab === 'mylist') {
             $items = $user
-                ? $this->getFavoriteItems($keyword, $user) // ログインしていればいいねした商品を取得
-                : collect(); // 未ログインなら空のコレクションを返す
+                ? $this->getFavoriteItems($keyword, $user)
+                : collect();
         } else {
             $items = $this->getRecommendedItems($keyword);
         }

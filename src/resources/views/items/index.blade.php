@@ -8,7 +8,7 @@
 <h1 class="sr-only">商品一覧</h1>
 
 <div class="items-page">
-  <!-- メニュー -->
+  <!-- メニュータブ -->
   <div class="items-page__menu">
     <ul class="items-page__tabs">
       <li class="items-page__tab {{ $tab==='all' ? 'is-active' : '' }}">
