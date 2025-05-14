@@ -79,8 +79,8 @@ class ItemController extends Controller
         return Item::withCount('favorites')
             // ユーザーがログインしてる時だけ、自分の出品商品を除外
             ->when(auth()->check(), fn($query) => $query->where('user_id', '!=', auth()->id()))
-            // 検索ワードがあるときだけ、商品名を部分一致で検索
-            ->when($keyword, fn($query) => $query->where('name', 'like', "%{$keyword}%"))
+            // 検索ワードがあるときだけ、商品名を部分一致で検索(2文字以上)
+            ->when(mb_strlen($keyword) >= 2, fn($query) => $query->where('name', 'like', "%{$keyword}%"))
             // 売り切れ商品を下に表示
             ->orderByRaw("FIELD(item_status, 'on_sale', 'sold_out')")
             // いいねの数が多い順に並び替え
@@ -95,7 +95,7 @@ class ItemController extends Controller
     {
         return $user->favoriteItems()
             ->where('items.user_id', '!=', $user->id)
-            ->when($keyword, fn($query) => $query->where('items.name', 'like', "%{$keyword}%"))
+            ->when(mb_strlen($keyword) >= 2, fn($query) => $query->where('items.name', 'like', "%{$keyword}%"))
             ->withCount('favorites')
             ->orderByDesc('favorites_count')
             ->orderByDesc('items.created_at')
