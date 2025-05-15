@@ -1,5 +1,4 @@
 @extends('layouts.app')
-<!-- 入力フォームにplaceholder追加しています -->
 
 @section('css')
 <link rel="stylesheet" href="{{ asset('css/register.css') }}">
@@ -15,7 +14,6 @@
 
     <div class="register-form__content">
       <form class="register-form__form" action="/register" method="post" novalidate>
-        <!-- novalidate でブラウザによる自動バリデーションを無効にする -->
         @csrf
 
         <!-- ユーザー名 -->
@@ -58,6 +56,8 @@
           <button class="register-form__button-submit" type="submit">登録する</button>
         </div>
       </form>
+
+      <!-- リンク -->
       <div class="register-form__link">
         <a href="/login" class="register-form__link--login">ログインはこちら</a>
       </div>
