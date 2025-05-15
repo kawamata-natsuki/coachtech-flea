@@ -85,10 +85,6 @@
     font-size: 16px;
   }
 
-  .login-page__input {
-    height: 40px;
-  }
-
   .login-page__input::placeholder {
     font-size: 12px;
   }
