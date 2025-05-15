@@ -1,0 +1,86 @@
+.js-cropper-modal {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.6);
+  justify-content: center;
+  align-items: center;
+  z-index: 999;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+.js-cropper-modal>.cropper-modal__content {
+  background: white;
+  padding: 16px;
+  border-radius: 10px;
+  max-width: 100%;
+  max-height: 100%;
+  overflow: auto;
+  box-sizing: border-box;
+}
+
+.cropper-modal__wrapper {
+  width: 400px;
+  height: 400px;
+  position: relative;
+}
+
+.js-cropper-image {
+  max-width: 100%;
+  display: block;
+}
+
+.cropper-mask {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 400px;
+  height: 400px;
+}
+
+.cropper-crop-box,
+.cropper-view-box {
+  border-radius: 50% !important;
+}
+
+.cropper-modal__buttons {
+  z-index: 1;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+  margin-top: 20px;
+}
+
+.js-crop-button,
+.js-crop-close {
+  padding: 10px 24px;
+  font-size: 16px;
+  font-weight: bold;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.js-crop-button {
+  background-color: #007BFF;
+  color: white;
+}
+
+.js-crop-button:hover {
+  background-color: #0056b3;
+}
+
+.js-crop-close {
+  background-color: #e0e0e0;
+  color: #333;
+}
+
+.js-crop-close:hover {
+  background-color: #c0c0c0;
+}
