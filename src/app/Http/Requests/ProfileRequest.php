@@ -15,6 +15,7 @@ class ProfileRequest extends FormRequest
     {
         return [
             'profile_image' => ['image', 'mimes:jpg,jpeg,png'],
+            'cropped_image' => ['nullable'],
         ];
     }
 
