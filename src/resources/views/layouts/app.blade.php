@@ -63,7 +63,7 @@
     </div>
   </header>
 
-  @if (!request()->is(['email/verify', 'purchase/success/*']))
+  @if (!request()->is(['email/verify', 'purchase/success/*', 'login']))
   <div class="flash-container">
     @if (session('success') || session('error'))
     <div class="flash-message
