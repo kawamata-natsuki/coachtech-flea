@@ -32,16 +32,20 @@ class ItemController extends Controller
     public function show(Item $item)
     {
         $item->load([
-            'comments' => fn($query) => $query->latest(),
+            'comments' => fn($query) => $query->latest()->with('user'),
             'categories',
             'favorites',
         ]);
+
+        $categoryLabels = $item->categories->map(function ($category) {
+            return CategoryConstants::label($category->code);
+        });
 
         $conditionLabel = ConditionConstants::label(
             ConditionConstants::idToCode($item->condition_id)
         );
 
-        return view('items.detail', compact('item', 'conditionLabel'));
+        return view('items.detail', compact('item', 'categoryLabels', 'conditionLabel'));
     }
 
     // 商品出品画面の表示
