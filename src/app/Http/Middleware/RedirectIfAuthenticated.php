@@ -11,16 +11,16 @@ class RedirectIfAuthenticated
 {
     public function handle(Request $request, Closure $next, ...$guards)
     {
-        // ログイン済みユーザーが /login や /register にアクセスしたら、/ にリダイレクトする
         $guards = empty($guards) ? [null] : $guards;
 
+        /** ログイン済みユーザーが /login や /register にアクセスしたら、/ にリダイレクトする */
         foreach ($guards as $guard) {
             if (Auth::guard($guard)->check()) {
                 return redirect(RouteServiceProvider::HOME);
             }
         }
 
-        // ゲストユーザーは /login や /register にアクセスできる
+        /** ゲストユーザーは /login や /register にアクセスできる */
         return $next($request);
     }
 }
