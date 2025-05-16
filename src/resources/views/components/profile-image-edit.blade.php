@@ -14,10 +14,8 @@ $imageClass = $isDefault
   <img src="{{ $imageSrc }}" alt="プロフィール画像" class="js-preview-image {{ $imageClass }}">
 </div>
 <div class="profile-edit-page__file-button">
-  <label class="button--file-select">
-    画像を選択する
-    <input type="file" accept="image/*" hidden class="js-image-input">
-  </label>
+  <button type="button" class="js-trigger-file">画像を選択</button>
+  <input type="file" class="js-image-input" hidden>
   <input type="hidden" name="cropped_image" class="js-cropped-data">
 </div>
 <x-error-message field="profile_image"

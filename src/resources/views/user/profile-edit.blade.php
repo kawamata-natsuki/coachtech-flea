@@ -87,8 +87,16 @@
     const cropperImage = document.querySelector('.js-cropper-image');
     const cropButton = document.querySelector('.js-crop-button');
     const closeButton = document.querySelector('.js-crop-close');
+    const triggerFileButton = document.querySelector('.js-trigger-file');
 
     let cropper;
+
+    // ✅ 画像選択ボタンのクリックで input を起動
+    if (triggerFileButton && imageInput) {
+      triggerFileButton.addEventListener('click', () => {
+        imageInput.click();
+      });
+    }
 
     if (!imageInput || !previewImage || !cropperModal || !cropperImage) return;
 
