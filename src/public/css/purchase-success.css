@@ -1,4 +1,4 @@
-.purchase-success {
+.purchase-success-page {
   height: 100%;
   flex-grow: 1;
   display: flex;
@@ -8,7 +8,7 @@
   overflow: hidden;
 }
 
-.purchase-success__container {
+.purchase-success-page__container {
   position: relative;
   z-index: 1;
   padding: 80px 20px;
@@ -17,37 +17,28 @@
   width: 100%;
 }
 
-.purchase-success__title {
-  font-size: 26px;
+.purchase-success-page__title {
+  font-size: 24px;
   font-weight: 700;
   color: #5A4C3B;
   letter-spacing: 1px;
 }
 
-.purchase-success__message {
+.purchase-success-page__message {
+  font-size: 16px;
+  font-weight: 500;
   color: #8B7969;
   margin-bottom: 24px;
 }
 
-.purchase-success__title {
-  font-size: 24px;
-  font-weight: 700;
-}
-
-.purchase-success__message {
-  font-size: 16px;
-  font-weight: 500;
-}
-
-/* ボタンの親コンテナ：2分割配置 */
-.purchase-success__actions {
+.purchase-success-page__buttons {
   display: flex;
   justify-content: center;
   gap: 16px;
   margin-top: 24px;
 }
 
-.purchase-success__button {
+.purchase-success-page__button {
   flex: 1;
   text-align: center;
   padding: 8px 16px;
@@ -62,16 +53,22 @@
   transition: background-color 0.2s ease;
 }
 
-.purchase-success__button--primary {
+.purchase-success-page__button--primary {
   background-color: #F3EDE9;
 }
 
-.purchase-success__button--secondary {
+.purchase-success-page__button--secondary {
   background-color: #F9F6F3;
 }
 
-.purchase-success__button:hover {
+.purchase-success-page__button:hover {
   background-color: #ECE7E2;
+}
+
+.purchase-success-page__button:active {
+  transform: scale(0.98);
+  opacity: 0.75;
+  transition: transform 0.05s ease, opacity 0.05s ease;
 }
 
 /* ===============================
@@ -79,23 +76,23 @@
    =============================== */
 
 @media screen and (min-width:768px) and (max-width:850px) {
-  .purchase-success__container {
+  .purchase-success-page__container {
     padding: 40px 16px;
   }
 
-  .purchase-success__title {
+  .purchase-success-page__title {
     font-size: 20px;
   }
 
-  .purchase-success__message {
+  .purchase-success-page__message {
     font-size: 14px;
   }
 
-  .purchase-success__actions {
+  .purchase-success-page__buttons {
     gap: 20px;
   }
 
-  .purchase-success__button {
+  .purchase-success-page__button {
     max-width: 200px;
     padding: 10px 16px;
     font-size: 13px;
