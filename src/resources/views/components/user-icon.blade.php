@@ -10,8 +10,10 @@
 $isDefault = empty($user?->profile_image);
 @endphp
 
-<img class="{{ $isDefault ? " $imageClass $defaultClass" : $imageClass }}"
-  src="{{ $isDefault ? asset('images/icons/default-profile.svg') : asset('storage/' . $user->profile_image) }}"
-  alt="プロフィール画像">
+<div class="{{ $wrapperClass }}">
+  <img class="{{ $isDefault ? " $imageClass $defaultClass" : $imageClass }}"
+    src="{{ $isDefault ? asset('images/icons/default-profile.svg') : asset('storage/' . $user->profile_image) }}"
+    alt="プロフィール画像">
 
-<span class="{{ $nameClass }}">{{ $user?->name ?? '匿名ユーザー' }}</span>
+  <span class="{{ $nameClass }}">{{ $user?->name ?? '匿名ユーザー' }}</span>
+</div>
