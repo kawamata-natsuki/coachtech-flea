@@ -12,19 +12,18 @@ class RegisterController extends Controller
 {
     public function store(RegisterRequest $request, CreateNewUSer $creator)
     {
-        // ユーザー登録処理
         $user = $creator->create($request->all());
 
-        // ユーザー登録完了のイベント（メール認証のトリガーになる）
+        /** メール認証のトリガー */
         event(new Registered($user));
 
-        // 登録したユーザーで即ログイン
+        /** 登録したユーザーで即ログイン */
         Auth::login($user);
 
-        // セッション再生成（セキュリティ対策）
+        /** セッション再生成（セキュリティ対策） */
         $request->session()->regenerate();
 
-        // 新規登録後のリダイレクト先をプロフィール編集画面に変更
+        /* 新規登録後のリダイレクト先をプロフィール編集画面に変更 */
         session(['profile_edit_first_time' => true]);
         return redirect('/mypage/profile');
     }
