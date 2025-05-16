@@ -55,17 +55,10 @@
   align-items: center;
 }
 
-.create-page__upload-button {
+.upload-instruction {
   display: inline-block;
-  padding: 10px 20px;
-  color: #FF5655;
-  border: 2px solid #FF5555;
-  border-radius: 10px;
-  background-color: transparent;
-  font-family: Inter;
-  font-weight: 700;
   font-size: 16px;
-  cursor: pointer;
+  padding: 12px 24px;
 }
 
 .create-page__file-input {
@@ -194,11 +187,6 @@
 
 .create-button {
   width: 100%;
-  padding: 12px;
-  background-color: #FF5555;
-  color: #FFFFFF;
-  border-radius: 5px;
-  font-family: Inter;
   font-weight: 700;
   font-size: 26px;
 }

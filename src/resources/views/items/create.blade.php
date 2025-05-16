@@ -22,7 +22,7 @@ use App\Constants\ConditionConstants;
         <div class="create-page__field">
           <label class="create-page__label">商品画像</label>
           <div class="create-page__upload-area" id="drop-area">
-            <span class="upload-instruction">画像を選択する</span>
+            <span class="upload-instruction button--outline-red">画像を選択する</span>
             <img id="preview" class="image-preview" style="display: none;" alt="プレビュー">
             <button type="button" id="remove-image" class="remove-image" style="display: none;">✕</button>
           </div>
@@ -98,7 +98,7 @@ use App\Constants\ConditionConstants;
 
         <!-- ボタン -->
         <div class="item-create__button-wrapper">
-          <button class="create-button" type="submit">出品する</button>
+          <button class="button--solid-red create-button" type="submit">出品する</button>
         </div>
 
       </form>
