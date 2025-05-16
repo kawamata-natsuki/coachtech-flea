@@ -55,7 +55,7 @@
         <!-- 購入ボタン -->
         <div class="item-detail-page__purchase-button">
           @if (!$item->isSoldOut())
-          <a class="purchase-button" href="{{ route('purchase.show', ['item' => $item->id]) }}">
+          <a class="button--solid-red purchase-button" href="{{ route('purchase.show', ['item' => $item->id]) }}">
             購入手続きへ
           </a>
           @else
@@ -113,7 +113,7 @@
               id="content">{{ old('content') }}</textarea>
             <x-error-message class="error-message" field="content" />
 
-            <button class="item-detail-page__comment-submit-button" type="submit">コメントを送信する</button>
+            <button type="submit" class="button--solid-red item-detail-page__comment-submit-button">コメントを送信</button>
           </form>
         </div>
       </div>
