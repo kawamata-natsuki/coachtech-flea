@@ -68,7 +68,8 @@
 
         <!-- 送信ボタン -->
         <div class="profile-edit-page__button">
-          <button class="profile-edit-page__button-submit" type="submit">更新する</button>
+          <button type="submit" class="button--solid-red profile-edit-page__button-submit">
+            更新する </button>
         </div>
       </form>
     </div>
