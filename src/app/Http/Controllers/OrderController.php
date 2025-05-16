@@ -28,6 +28,14 @@ class OrderController extends Controller
     // 商品購入の処理
     public function store(PurchaseRequest $request, Item $item)
     {
+        // すでに購入済かチェック
+        if (
+            $item->item_status === ItemStatus::SOLD_OUT ||
+            Order::where('item_id', $item->id)->exists()
+        ) {
+            return redirect()->route('purchase.invalid', ['item' => $item->id]);
+        }
+
         // コンビニ支払いの価格が30万超えてたらエラーにする（Stripe仕様上の制約）
         if (
             $request->payment_method === 'convenience_store' &&
@@ -79,6 +87,8 @@ class OrderController extends Controller
                 ]);
         }
 
+        session()->pull('purchase.payment_method');
+
         if (!Order::firstWhere('item_id', $item->id)) {
             Order::create([
                 'user_id' => $user->id,
@@ -93,6 +103,11 @@ class OrderController extends Controller
         // item_status を sold_out に更新
         $item->update([
             'item_status' => ItemStatus::SOLD_OUT,
+        ]);
+
+        session([
+            'purchase.payment_method' => $request->payment_method,
+            'purchase.complete' => true
         ]);
 
         return view('items.purchase-success');
