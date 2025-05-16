@@ -78,8 +78,19 @@ class OrderController extends Controller
     public function success(Request $request, Item $item)
     {
         $user = auth()->user();
-        $code = session('purchase.payment_method');
 
+        // 売り切れチェック
+        if ($item->item_status === ItemStatus::SOLD_OUT || Order::where('item_id', $item->id)->exists()) {
+            return redirect()->route('purchase.invalid', ['item' => $item->id]);
+        }
+
+        // セッションチェック
+        if (!session()->has('purchase.payment_method')) {
+            return redirect()->route('purchase.show', ['item' => $item->id])
+                ->withErrors(['payment' => 'セッションが切れています。もう一度支払い方法を選択してください。']);
+        }
+
+        $code = session()->pull('purchase.payment_method');
         if (!$code) {
             return redirect()->route('purchase.show', ['item' => $item->id])
                 ->withErrors([
@@ -87,27 +98,18 @@ class OrderController extends Controller
                 ]);
         }
 
-        session()->pull('purchase.payment_method');
-
-        if (!Order::firstWhere('item_id', $item->id)) {
-            Order::create([
-                'user_id' => $user->id,
-                'item_id' => $item->id,
-                'payment_method_id' => PaymentMethod::getIdByCode($code),
-                'shipping_postal_code' => $user->postal_code,
-                'shipping_address' => $user->address,
-                'shipping_building' => $user->building,
-            ]);
-        }
+        Order::create([
+            'user_id' => $user->id,
+            'item_id' => $item->id,
+            'payment_method_id' => PaymentMethod::getIdByCode($code),
+            'shipping_postal_code' => $user->postal_code,
+            'shipping_address' => $user->address,
+            'shipping_building' => $user->building,
+        ]);
 
         // item_status を sold_out に更新
         $item->update([
             'item_status' => ItemStatus::SOLD_OUT,
-        ]);
-
-        session([
-            'purchase.payment_method' => $request->payment_method,
-            'purchase.complete' => true
         ]);
 
         return view('items.purchase-success');
@@ -116,5 +118,10 @@ class OrderController extends Controller
     public function cancel(Request $request, Item $item)
     {
         return view('items.purchase-cancel', compact('item'));
+    }
+
+    public function invalid(Request $request, Item $item)
+    {
+        return view('items.purchase-invalid', compact('item'));
     }
 }
