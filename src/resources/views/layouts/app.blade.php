@@ -68,7 +68,6 @@
   'purchase.success',
   'purchase.cancel',
   'purchase.invalid',
-  'login',
   'register',
   ]))
   <div class="flash-container">
