@@ -1,5 +1,5 @@
 .purchase-success-page {
-  height: 100%;
+  min-height: calc(100vh - 77px);
   flex-grow: 1;
   display: flex;
   justify-content: center;
@@ -76,6 +76,10 @@
    =============================== */
 
 @media screen and (min-width:768px) and (max-width:850px) {
+  .purchase-success-page {
+    min-height: calc(100vh - 65px);
+  }
+
   .purchase-success-page__container {
     padding: 40px 16px;
   }
