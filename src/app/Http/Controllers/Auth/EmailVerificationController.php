@@ -15,12 +15,13 @@ class EmailVerificationController extends Controller
 
     public function verify(EmailVerificationRequest $request)
     {
-        $request->fulfill(); //認証完了
-        return redirect('/mypage/profile'); //認証後のリダイレクト先
+        $request->fulfill();
+        return redirect('/mypage/profile');
     }
 
     public function resend(Request $request)
     {
+        /** メール認証の再送信 */
         $request->user()->sendEmailVerificationNotification();
         return back()->with('message', '確認メールを再送しました');
     }
