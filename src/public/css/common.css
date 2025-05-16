@@ -127,7 +127,6 @@ button {
   height: 16px;
   display: inline-block;
   vertical-align: middle;
-  /* ← 追加 */
   flex-shrink: 0;
 }
 
