@@ -144,6 +144,18 @@
   text-decoration: none;
 }
 
+.purchase-button:hover {
+  background-color: #fa5a5a;
+  opacity: 0.9;
+  transition: background-color 0.2s ease, opacity 0.2s ease;
+}
+
+.purchase-button:active {
+  transform: scale(0.98);
+  opacity: 0.75;
+  transition: transform 0.05s ease, opacity 0.05s ease;
+}
+
 .purchase-button.is-disabled {
   background-color: #fff;
   color: #FF5555;
@@ -344,6 +356,18 @@
   color: #fff;
   font-weight: 700;
   font-size: 25px;
+}
+
+.item-detail-page__comment-submit-button:hover {
+  background-color: #fa5a5a;
+  opacity: 0.9;
+  transition: background-color 0.2s ease, opacity 0.2s ease;
+}
+
+.item-detail-page__comment-submit-button:active {
+  transform: scale(0.98);
+  opacity: 0.75;
+  transition: transform 0.05s ease, opacity 0.05s ease;
 }
 
 .error-message {
