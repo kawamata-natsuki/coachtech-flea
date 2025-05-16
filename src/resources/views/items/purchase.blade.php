@@ -6,30 +6,30 @@
 @endsection
 
 @section('content')
-<div class="item-purchase">
-  <div class="item-purchase__container">
-    <div class="item-purchase__wrapper">
+<div class="item-purchase-page">
+  <div class="item-purchase-page__container">
+    <div class="item-purchase-page__wrapper">
 
       <!-- 左 -->
-      <div class="item-purchase__left">
+      <div class="item-purchase-page__input-area">
         <!-- 商品情報 -->
-        <div class="item-purchase__item-info">
-          <div class="item-purchase__image">
+        <div class="item-purchase-page__item-info">
+          <div class="item-purchase-page__item-image">
             <img class="item-card__img" src="{{ asset('storage/' . $item->item_image) }}" alt="{{ $item->name }}">
           </div>
-          <div class="item-purchase__text">
-            <h1 class="item-purchase__name">{{ $item->name }}</h1>
-            <p class="item-purchase__price">
-              <span class="item-purchase__price-unit">¥ </span>{{ number_format($item->price) }}
+          <div class="item-purchase-page__item-summary">
+            <h1 class="item-purchase-page__item-name">{{ $item->name }}</h1>
+            <p class="item-purchase-page__item-price">
+              <span class="item-purchase-page__price-unit">¥ </span>{{ number_format($item->price) }}
             </p>
           </div>
         </div>
 
         <!-- 支払方法選択 -->
-        <div class="item-purchase__payment-form">
-          <p class="item-purchase__section-title">支払い方法</p>
-          <div class="item-purchase__select-wrapper">
-            <select class="item-purchase__select" name="payment_method" id="payment_method"
+        <div class="item-purchase-page__payment-form">
+          <p class="item-purchase-page__section-title">支払い方法</p>
+          <div class="item-purchase-page__select-wrapper">
+            <select class="item-purchase-page__select" name="payment_method" id="payment_method"
               onchange="updatePaymentMethod()">
               <option class="placeholder-option" value="" disabled selected hidden>選択してください</option>
               @foreach ($paymentMethods as $code => $label)
@@ -44,43 +44,44 @@
         </div>
 
         <!-- 住所 -->
-        <div class="item-purchase__address">
-          <div class="item-purchase__address-header">
-            <p class="item-purchase__section-title">配送先</p>
-            <a class="item-purchase__link"
+        <div class="item-purchase-page__address">
+          <div class="item-purchase-page__address-header">
+            <p class="item-purchase-page__section-title">配送先</p>
+            <a class="item-purchase-page__link"
               href="{{ route('address.edit', ['item' => $item->id, 'payment_method' => old('payment_method') ?? $selectedPaymentMethod]) }}">
               変更する
             </a>
           </div>
 
-          <div class="item-purchase__address-body">
-            <p><span class="item-purchase__postal-mark">〒 </span>{{ $user->postal_code }}</p>
-            <p>{{ $user->address }}</p>
+          <div class="item-purchase-page__address-body">
+            <p><span class="item-purchase-page__postal-mark">〒 </span>{{ $user->postal_code }}</p>
+            <p class="item-purchase-page__address-text">{{ $user->address }}</p>
             @if ($user->building)
-            <p>{{ $user->building }}</p>
+            <p class="item-purchase-page__address-text">{{ $user->building }}</p>
             @endif
           </div>
-          <x-error-message class="error-message error-under-select" field="" />
+          <x-error-message :fields="['postal_code', 'address']" class="error-message" />
         </div>
       </div>
 
       <!-- 右 -->
-      <div class="item-purchase__right">
-        <div class="item-purchase__confirm">
-          <div class="item-purchase__block">
-            <p class="item-purchase__confirm-price">
+      <div class="item-purchase-page__purchase-summary">
+        <div class="item-purchase-page__confirm">
+          <div class="item-purchase-page__block">
+            <p class="item-purchase-page__confirm-label">
               商品代金
             </p>
-            <p class="item-purchase__confirm-value">
+            <p class="item-purchase-page__confirm-value">
               ¥{{ number_format($item->price) }}
             </p>
           </div>
-          <div class="item-purchase__block">
-            <p class="item-purchase__confirm-price">支払い方法</p>
-            <p id="selected-method" class="item-purchase__confirm-value"></p>
+          <div class="item-purchase-page__block">
+            <p class="item-purchase-page__confirm-label">支払い方法</p>
+            <p class="item-purchase-page__confirm-value js-selected-method"></p>
           </div>
         </div>
 
+        <!-- 購入ボタン -->
         <form method="POST" action="{{ route('purchase.store', $item->id) }}">
           @csrf
           <input type="hidden" name="payment_method" id="hidden_payment_method"
@@ -90,8 +91,8 @@
           @if ($user->building)
           <input type="hidden" name="building" value="{{ $user->building }}">
           @endif
-          <div class="item-purchase__button-wrapper">
-            <button class="purchase-button" type="submit">購入する</button>
+          <div class="item-purchase-page__button">
+            <button class="item-purchase-page__button-submit" type="submit">購入する</button>
           </div>
         </form>
         <x-error-message class="error-message error-under-button" field="item_price" />
@@ -106,7 +107,7 @@
 <script>
   function updatePaymentMethod() {
     const select = document.getElementById('payment_method');
-    const display = document.getElementById('selected-method');
+    const display = document.querySelector('.js-selected-method');
     const hidden = document.getElementById('hidden_payment_method');
 
     // 表示用
@@ -122,7 +123,7 @@
 
   window.addEventListener('DOMContentLoaded', function () {
     const select = document.getElementById('payment_method');
-    const display = document.getElementById('selected-method');
+    const display = document.querySelector('.js-selected-method');
     const hidden = document.getElementById('hidden_payment_method');
 
     const hiddenValue = hidden.value; // ← hiddenの値を見る！
@@ -137,7 +138,5 @@
       }
     }
   });
-
 </script>
-
 @endsection
