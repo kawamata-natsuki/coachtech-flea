@@ -44,15 +44,16 @@
 
         <!-- 送信ボタン -->
         <div class="login-page__button">
-          <button class="login-page__button-submit" type="submit">ログインする</button>
+          <button class="button--solid-red login-page__button-submit" type="submit">ログインする</button>
         </div>
-      </form>
+    </div>
+    </form>
 
-      <!-- リンク -->
-      <div class="login-page__link">
-        <a href="/register" class="login-page__link--register">会員登録はこちら</a>
-      </div>
+    <!-- リンク -->
+    <div class="login-page__link">
+      <a href="/register" class="login-page__link--register">会員登録はこちら</a>
     </div>
   </div>
+</div>
 </div>
 @endsection
