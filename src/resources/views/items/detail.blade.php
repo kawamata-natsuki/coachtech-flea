@@ -91,7 +91,8 @@
           @foreach ($item->comments as $comment)
           <div class="item-detail-page__comment">
             <div class="item-detail-page__comment-header">
-              <x-user-icon :user="$comment->user" />
+              <x-user-icon :user="$comment->user" wrapperClass="item-detail-page__comment-header" imageClass="user-icon"
+                defaultClass="user-icon--default" nameClass="item-detail-page__comment-user" />
             </div>
 
             <p class="item-detail-page__comment-content">{!! nl2br(e($comment['content'])) !!}</p>
