@@ -10,14 +10,14 @@ use Illuminate\Http\Request;
 
 class ItemController extends Controller
 {
-    // 商品一覧画面の表示
+    /** 商品一覧画面の表示 */
     public function index(Request $request)
     {
         $tab = $request->query('page', 'all');
         $keyword = $request->query('keyword');
         $user = auth()->user();
 
-        // メニュータブの「おすすめ」「マイリスト」切り替え
+        /** メニュータブの「おすすめ」「マイリスト」切り替え */
         if ($tab === 'mylist') {
             $items = $user
                 ? $this->getFavoriteItems($keyword, $user)
@@ -28,7 +28,7 @@ class ItemController extends Controller
         return view('items.index', compact('items', 'tab'));
     }
 
-    // 商品詳細画面の表示
+    /** 商品詳細画面の表示 */
     public function show(Item $item)
     {
         $item->load([
@@ -48,21 +48,21 @@ class ItemController extends Controller
         return view('items.detail', compact('item', 'categoryLabels', 'conditionLabel'));
     }
 
-    // 商品出品画面の表示
+    /** 商品出品画面の表示 */
     public function create()
     {
         return view('items.create');
     }
 
-    // 商品出品の処理
+    /** 商品出品の処理 */
     public function store(ExhibitionRequest $request)
     {
-        // 商品画像の保存処理
+        /** 商品画像の保存処理 */
         if ($request->hasfile('item_image')) {
             $path = $request->file('item_image')->store('items', 'public');
         }
 
-        // 商品保存処理
+        /** 商品保存処理 */
         $item = new Item();
         $item->name = $request->input('name');
         $item->description = $request->input('description');
@@ -81,24 +81,24 @@ class ItemController extends Controller
         return redirect()->route('items.index')->with('success', '商品を出品しました！');
     }
 
-    // おすすめタブに表示する商品を取得する
+    /** おすすめタブに表示する商品を取得する */
     private function getRecommendedItems($keyword)
     {
         return Item::withCount('favorites')
-            // ユーザーがログインしてる時だけ、自分の出品商品を除外
+            /** ユーザーがログインしてる時だけ、自分の出品商品を除外 */
             ->when(auth()->check(), fn($query) => $query->where('user_id', '!=', auth()->id()))
-            // 検索ワードがあるときだけ、商品名を部分一致で検索(2文字以上)
+            /** 検索ワードがあるときだけ、商品名を部分一致で検索(2文字以上) */
             ->when(mb_strlen($keyword) >= 2, fn($query) => $query->where('name', 'like', "%{$keyword}%"))
-            // 売り切れ商品を下に表示
+            /** 売り切れ商品を下に表示 */
             ->orderByRaw("FIELD(item_status, 'on_sale', 'sold_out')")
-            // いいねの数が多い順に並び替え
+            /** いいねの数が多い順に並び替え */
             ->orderByDesc('favorites_count')
-            // いいね数が同じなら、新しい順に並べる
+            /** いいね数が同じなら、新しい順に並べる*/
             ->orderByDesc('created_at')
             ->get();
     }
 
-    // マイリストに表示する商品を取得する
+    /** マイリストに表示する商品を取得する */
     private function getFavoriteItems($keyword, $user)
     {
         return $user->favoriteItems()
@@ -107,7 +107,7 @@ class ItemController extends Controller
             ->withCount('favorites')
             ->orderByDesc('favorites_count')
             ->orderByDesc('items.created_at')
-            ->distinct() //
+            ->distinct()
             ->get();
     }
 }
