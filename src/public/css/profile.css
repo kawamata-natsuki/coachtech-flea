@@ -136,11 +136,12 @@
 }
 
 .profile-page__list .item-card__name {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
   font-weight: 400;
   font-size: 24px;
   color: #000000;
-  overflow-wrap: break-word;
-  word-break: break-word;
 }
 
 /* ===============================
