@@ -223,6 +223,25 @@ button {
 }
 
 /* ===============================
+    ユーザーアイコンのデザイン
+   ===============================*/
+
+.user-icon {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  object-fit: cover;
+  display: block;
+  border: 1px solid #ccc;
+}
+
+/* デフォルトユーザーアイコン */
+.user-icon--default {
+  border: none;
+  background-color: #f0f0f0;
+}
+
+/* ===============================
     headerのデザイン
    ===============================*/
 
