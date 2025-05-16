@@ -12,11 +12,13 @@ class PaymentMethodConstants
         self::CREDIT_CARD       => 'カード支払い',
     ];
 
+    /** 支払いコードに対応する日本語ラベルを返す */
     public static function label(string $code): string
     {
         return self::LABELS[$code] ?? '';
     }
 
+    /** 定義されているすべての支払いコード一覧を返す */
     public static function all(): array
     {
         return array_keys(self::LABELS);

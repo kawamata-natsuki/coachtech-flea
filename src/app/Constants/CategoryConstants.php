@@ -38,18 +38,19 @@ class CategoryConstants
     self::BABY_KIDS   => 'ベビー・キッズ',
   ];
 
-  // 指定されたコードに対応するラベルを返す
+  /** カテゴリコードに対応する日本語ラベルを返す */
   public static function label(string $code): string
   {
     return self::LABELS[$code] ?? '';
   }
 
-  //利用可能なカテゴリコード一覧を返す
+  /** 定義されているすべてのカテゴリコード一覧を返す */
   public static function all(): array
   {
     return array_keys(self::LABELS);
   }
 
+  /** カテゴリコードから categories テーブルのIDを取得する　*/
   public static function codesToIds(array $codes): array
   {
     return Category::whereIn('code', $codes)->pluck('id')->toArray();

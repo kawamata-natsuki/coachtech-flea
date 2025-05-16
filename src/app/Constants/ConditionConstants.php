@@ -18,21 +18,25 @@ class ConditionConstants
     self::BAD   => '状態が悪い',
   ];
 
+  /** 状態コードに対応する日本語ラベルを返す */
   public static function label(string $code): string
   {
     return self::LABELS[$code] ?? '';
   }
 
+  /** 定義されているすべての状態コード一覧を返す */
   public static function all(): array
   {
     return array_keys(self::LABELS);
   }
 
+  /** 状態コードから conditions テーブルのIDを取得する */
   public static function codeToId(string $code): int
   {
     return Condition::where('code', $code)->value('id');
   }
 
+  /** conditions テーブルのIDから状態コードを取得する */
   public static function idToCode(int $id): ?string
   {
     return Condition::find($id)?->code;
