@@ -33,14 +33,15 @@
 
 .items-page__list {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: 70px;
 }
 
 .item-card__name {
-  overflow-wrap: break-word;
-  word-break: break-word;
-  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+
   font-weight: 400;
   font-size: 24px;
   color: #000000;
@@ -85,7 +86,7 @@
   }
 
   .items-page__list {
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(3, minmax(0, 1fr));
     gap: 40px;
   }
 
