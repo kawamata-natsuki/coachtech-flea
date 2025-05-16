@@ -29,8 +29,8 @@ class PurchaseRequest extends FormRequest
         return [
             'payment_method.required' => '支払方法を選択してください',
             'payment_method.in' => '支払方法の選択内容が不正です',
-            'postal_code.required' => '郵便番号が未入力です。配送先を確認してください。',
-            'address.required' => '住所が未入力です。配送先を確認してください。',
+            'postal_code.required' => '配送先を入力してください。',
+            'address.required' => '配送先を入力してください。',
         ];
     }
 }
