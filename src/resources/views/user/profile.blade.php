@@ -16,7 +16,7 @@
         defaultClass="user-icon--default" nameClass="profile-page__name" />
       <!-- 編集リンク -->
       <div class="profile-page__edit-wrapper">
-        <a class="profile-page__edit-link" href="{{ route('profile.edit') }}">
+        <a class="button--outline-red profile-page__edit-link" href="{{ route('profile.edit') }}">
           プロフィールを編集
         </a>
       </div>
