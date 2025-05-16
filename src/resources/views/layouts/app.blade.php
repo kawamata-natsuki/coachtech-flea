@@ -63,7 +63,14 @@
     </div>
   </header>
 
-  @if (!request()->is(['email/verify', 'purchase/success/*', 'login','register']))
+  @if (!request()->routeIs([
+  'verification.notice',
+  'purchase.success',
+  'purchase.cancel',
+  'purchase.invalid',
+  'login',
+  'register',
+  ]))
   <div class="flash-container">
     @if (session('success') || session('error'))
     <div class="flash-message
