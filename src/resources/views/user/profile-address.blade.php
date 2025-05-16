@@ -47,7 +47,7 @@
 
         <!-- 送信ボタン -->
         <div class="profile-address-page__button">
-          <button class="profile-address-page__button-submit" type="submit">更新する</button>
+          <button type="submit" class="button--solid-red profile-address-page__button-submit">変更を保存</button>
         </div>
       </form>
     </div>
