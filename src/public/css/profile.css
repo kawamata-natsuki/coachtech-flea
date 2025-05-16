@@ -8,51 +8,28 @@
 
 .profile-page__header {
   display: grid;
-  grid-template-columns: 1fr 3fr;
-  align-items: center;
+  grid-template-columns: 1fr 1fr;
+  align-items: stretch;
   gap: 24px;
-  margin-top: 32px;
+  height: 200px;
 }
 
-/* プロフィール画像 */
-
-.profile-page__image-wrapper {
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
-  margin: 0;
-}
-
-.profile-page__image {
-  width: 175px;
-  height: 175px;
-  border-radius: 50%;
-  overflow: hidden;
-  border: 1px solid #ccc;
+/* アイコン＋名前 */
+.profile-page__user {
   display: flex;
   align-items: center;
   justify-content: center;
-  object-fit: cover;
-}
-
-.profile-page__image--default {
-  width: 200px;
-  height: 200px;
-  object-fit: cover;
-}
-
-/* ユーザー名 */
-
-.profile-page__info-wrapper {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  align-items: flex-end;
   gap: 24px;
 }
 
-.profile-page__info {
-  display: flex;
-  align-items: center;
+.user-icon {
+  width: 175px;
+  height: 175px;
+}
+
+.user-icon--default {
+  width: 175px;
+  height: 175px;
 }
 
 .profile-page__name {
@@ -64,28 +41,28 @@
   margin-left: 40px;
 }
 
-/* 修正リンク */
-
-.profile-page__edit {
+/* 編集リンク */
+.profile-page__edit-wrapper {
   display: flex;
-  align-items: center;
   justify-content: center;
+  align-items: center;
 }
 
 .profile-page__edit-link {
+  width: 50%;
   font-weight: 700;
   font-size: 26px;
   color: #FF5555;
   text-align: center;
   border: 2px solid #FF5555;
   border-radius: 10px;
-  padding: 12px 20px;
+  padding: 8px 16px;
 }
 
 /* メニュータブ */
 .profile-page__menu-wrapper {
   position: relative;
-  margin-top: 70px;
+  margin-top: 40px;
   margin-bottom: 70px;
 }
 
@@ -124,20 +101,21 @@
   color: #5F5F5F;
 }
 
+/* 商品リスト */
 .profile-page__items {
   margin-top: 32px;
-}
-
-.profile-page__list {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 70px;
 }
 
 .profile-page__empty {
   text-align: center;
   font-size: 20px;
   color: #666;
+}
+
+.profile-page__list {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 70px;
 }
 
 .profile-page__list .item-card {
@@ -167,66 +145,61 @@
   }
 
   .profile-page__header {
-    grid-template-columns: 1fr 3fr;
-    gap: 12px;
-  }
-
-  /* プロフィール画像 */
-
-  .profile-page__image-wrapper {
     display: flex;
-    justify-content: flex-end;
-  }
-
-  .profile-page__image {
-    width: 125px;
-    height: 125px;
-  }
-
-  .profile-page__image--default {
-    width: 125px;
-    height: 125px;
-  }
-
-  .profile-page__info-wrapper {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
+    flex-direction: column;
     align-items: center;
-    gap: 12px;
+    gap: 8px;
+    padding: 16px 0;
+    height: auto;
   }
 
-  /* ユーザー名 */
+  /* アイコン＋名前 */
+  .profile-page__user {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+  }
+
+  .user-icon,
+  .user-icon--default {
+    width: 100px;
+    height: 100px;
+  }
 
   .profile-page__name {
     font-weight: 600;
-    font-size: 28px;
-    margin-left: 16px;
+    font-size: 22px;
+    margin-left: 0;
+    text-align: center;
   }
 
-  /* 修正リンク */
-
-  .profile-page__edit {
+  /* 編集リンク */
+  .profile-page__edit-wrapper {
+    width: 100%;
     display: flex;
-    align-items: center;
     justify-content: center;
-    width: 200px;
+    align-items: center;
   }
 
   .profile-page__edit-link {
-    font-weight: 600;
-    font-size: 18px;
-    padding: 4px;
+    max-width: 200px;
+    width: 100%;
+    font-size: 16px;
+    font-weight: 500;
+    padding: 6px 12px;
+    margin-top: 4px;
   }
 
   /* メニュータブ */
   .profile-page__menu-wrapper {
-    margin-top: 48px;
+    margin-top: 20px;
     margin-bottom: 48px;
   }
 
   .profile-page__tabs {
     gap: 48px;
-    padding-left: 70px;
+    padding-left: 20px;
   }
 
   .profile-page__link {

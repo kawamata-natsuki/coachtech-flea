@@ -9,32 +9,20 @@
 
 <div class="profile-page">
   <div class="profile-page__container">
+
     <div class="profile-page__header">
-
-      <!-- プロフィール画像 -->
-      <div class="profile-page__image-wrapper">
-        @if ($user->profile_image)
-        <img class="profile-page__image" src="{{ asset('storage/' . $user->profile_image) }}" alt="プロフィール画像">
-        @else
-        <img class="profile-page__image--default" src="{{ asset('images/default-profile.svg') }}" alt="デフォルト画像">
-        @endif
-      </div>
-
-      <div class="profile-page__info-wrapper">
-
-        <!-- ユーザー名 -->
-        <div class="profile-page__info">
-          <p class="profile-page__name">{{ $user->name }}</p>
-        </div>
-
-        <!-- 編集リンク -->
-        <div class="profile-page__edit">
-          <a class="profile-page__edit-link" href="{{ route('profile.edit') }}">プロフィールを編集</a>
-        </div>
+      <!-- アイコン＋名前 -->
+      <x-user-icon :user="$user" wrapperClass="profile-page__user" imageClass="user-icon"
+        defaultClass="user-icon--default" nameClass="profile-page__name" />
+      <!-- 編集リンク -->
+      <div class="profile-page__edit-wrapper">
+        <a class="profile-page__edit-link" href="{{ route('profile.edit') }}">
+          プロフィールを編集
+        </a>
       </div>
     </div>
 
-    <!-- メニュー -->
+    <!-- メニュータブ -->
     <div class="profile-page__menu-wrapper">
       <div class="profile-page__menu">
         <ul class="profile-page__tabs">
@@ -51,6 +39,7 @@
 
     <!-- 商品リスト -->
     <div class="profile-page__items">
+      <!-- 出品商品一覧 -->
       @if ($page === 'sell')
       @if ($sellingItems->isEmpty())
       <p class="profile-page__empty">出品した商品はありません。</p>
@@ -62,6 +51,7 @@
       </div>
       @endif
 
+      <!-- 購入商品一覧 -->
       @elseif ($page === 'buy')
       @if ($purchasedItems->isEmpty())
       <p class="profile-page__empty">購入した商品はありません。</p>
@@ -76,5 +66,4 @@
     </div>
   </div>
 </div>
-
 @endsection
