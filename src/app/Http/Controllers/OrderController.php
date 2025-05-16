@@ -34,7 +34,7 @@ class OrderController extends Controller
             $item->price > 300000
         ) {
             return redirect()->back()->withErrors([
-                'item_price' => 'コンビニ支払いでは30万円を超える商品は購入できません。',
+                'item_price' => 'コンビニ支払いの上限は30万円です。',
             ]);
         }
 
