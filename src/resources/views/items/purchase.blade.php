@@ -92,7 +92,7 @@
           <input type="hidden" name="building" value="{{ $user->building }}">
           @endif
           <div class="item-purchase-page__button">
-            <button class="item-purchase-page__button-submit" type="submit">購入する</button>
+            <button type="submit" class="button--solid-red item-purchase-page__button-submit">購入する</button>
           </div>
         </form>
         <x-error-message class="error-message error-under-button" field="item_price" />
