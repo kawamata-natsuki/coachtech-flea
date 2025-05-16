@@ -55,7 +55,7 @@
 
         <!-- 送信ボタン -->
         <div class="register-page__button">
-          <button class="register-page__button-submit" type="submit">登録する</button>
+          <button class="button--solid-red register-page__button-submit" type="submit">登録する</button>
         </div>
       </form>
     </div>

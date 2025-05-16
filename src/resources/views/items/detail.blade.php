@@ -55,7 +55,8 @@
         <!-- 購入ボタン -->
         <div class="item-detail-page__purchase-button">
           @if (!$item->isSoldOut())
-          <a class="button--solid-red purchase-button" href="{{ route('purchase.show', ['item' => $item->id]) }}">
+          <a class="button--solid-red item-detail-page__purchase-button-submit"
+            href="{{ route('purchase.show', ['item' => $item->id]) }}">
             購入手続きへ
           </a>
           @else
