@@ -10,7 +10,7 @@ class LoginController extends Controller
 {
     public function login(LoginRequest $request)
     {
-        $credentials = $request->only('email', 'password');
+        $credentials = $request->validated();
 
         // ログイン成功時の処理
         if (Auth::attempt($credentials)) {
