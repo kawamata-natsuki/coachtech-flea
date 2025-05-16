@@ -1,4 +1,4 @@
-.purchase-success-page {
+.purchase-invalid-page {
   height: 100%;
   flex-grow: 1;
   display: flex;
@@ -8,7 +8,7 @@
   overflow: hidden;
 }
 
-.purchase-success-page__container {
+.purchase-invalid-page__container {
   position: relative;
   z-index: 1;
   padding: 80px 20px;
@@ -17,83 +17,69 @@
   width: 100%;
 }
 
-.purchase-success-page__title {
-  font-size: 24px;
+.purchase-invalid-page__title {
+  font-size: 26px;
   font-weight: 700;
   color: #5A4C3B;
   letter-spacing: 1px;
   margin-bottom: 16px;
 }
 
-.purchase-success-page__message {
-  font-size: 16px;
-  font-weight: 500;
+.purchase-invalid-page__message {
   color: #8B7969;
   margin-bottom: 24px;
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 1.6;
 }
 
-.purchase-success-page__buttons {
+.purchase-invalid-page__button {
   display: flex;
   justify-content: center;
   gap: 16px;
   margin-top: 24px;
 }
 
-.purchase-success-page__button {
+.purchase-invalid-page__button--primary {
   flex: 1;
   text-align: center;
   padding: 8px 16px;
   font-size: 14px;
   font-weight: 500;
   max-width: 300px;
-  color: #5A4C3B;
   text-decoration: none;
-  border: 1px solid #C7B9A6;
+  border: 1px solid #FF9999;
   border-radius: 4px;
-  background-color: #F9F6F3;
+  background-color: #FFECEC;
+  color: #B20000;
   transition: background-color 0.2s ease;
 }
 
-.purchase-success-page__button--primary {
-  background-color: #F3EDE9;
-}
-
-.purchase-success-page__button--secondary {
-  background-color: #F9F6F3;
-}
-
-.purchase-success-page__button:hover {
-  background-color: #ECE7E2;
-}
-
-.purchase-success-page__button:active {
-  transform: scale(0.98);
-  opacity: 0.75;
-  transition: transform 0.05s ease, opacity 0.05s ease;
+.purchase-cancel__button--primary:hover {
+  background-color: #FFD1D1;
 }
 
 /* ===============================
       タブレット（768〜850px）対応
    =============================== */
-
 @media screen and (min-width:768px) and (max-width:850px) {
-  .purchase-success-page__container {
+  .purchase-invalid-page__container {
     padding: 40px 16px;
   }
 
-  .purchase-success-page__title {
+  .purchase-invalid-page__title {
     font-size: 20px;
   }
 
-  .purchase-success-page__message {
+  .purchase-invalid-page__message {
     font-size: 14px;
   }
 
-  .purchase-success-page__buttons {
+  .purchase-invalid-page__button {
     gap: 20px;
   }
 
-  .purchase-success-page__button {
+  .purchase-invalid-page__button--primary {
     max-width: 200px;
     padding: 10px 16px;
     font-size: 13px;
