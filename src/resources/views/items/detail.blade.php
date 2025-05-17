@@ -99,7 +99,7 @@
             <p class="item-detail-page__comment-content">{!! nl2br(e($comment['content'])) !!}</p>
 
             <div class="item-detail-page__comment-footer">
-              <span class="item-detail-page__comment-date">{{ $comment['date'] }}</span>
+              <span class="item-detail-page__comment-date">{{ $comment->created_at->format('Y/m/d H:i') }}</span>
             </div>
           </div>
           @endforeach
