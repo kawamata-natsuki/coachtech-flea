@@ -2,7 +2,7 @@
 
 
 @section('css')
-<link rel="stylesheet" href="{{ asset('css/purchase.css') }}">
+<link rel="stylesheet" href="{{ asset('css/items/purchase.css') }}">
 @endsection
 
 @section('content')
@@ -121,7 +121,7 @@
     hidden.value = select.value;
   }
 
-  window.addEventListener('DOMContentLoaded', function () {
+  window.addEventListener('DOMContentLoaded', function() {
     const select = document.getElementById('payment_method');
     const display = document.querySelector('.js-selected-method');
     const hidden = document.getElementById('hidden_payment_method');

@@ -6,7 +6,7 @@ use App\Constants\ConditionConstants;
 @extends('layouts.app')
 
 @section('css')
-<link rel="stylesheet" href="{{ asset('css/create.css') }}">
+<link rel="stylesheet" href="{{ asset('css/items/create.css') }}">
 @endsection
 
 @section('content')
@@ -109,7 +109,7 @@ use App\Constants\ConditionConstants;
 
 @section('js')
 <script>
-  document.addEventListener('DOMContentLoaded', function () {
+  document.addEventListener('DOMContentLoaded', function() {
     const dropArea = document.getElementById('drop-area');
     const input = document.getElementById('file-input');
     const preview = document.getElementById('preview');

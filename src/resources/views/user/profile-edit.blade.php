@@ -1,10 +1,10 @@
 @extends('layouts.app')
 
 @section('css')
-<link rel="stylesheet" href="{{ asset('css/profile-edit.css') }}">
+<link rel="stylesheet" href="{{ asset('css/user/profile-edit.css') }}">
 <!-- Cropper.js CSS -->
 <link href="https://unpkg.com/cropperjs@1.5.13/dist/cropper.min.css" rel="stylesheet">
-<link rel="stylesheet" href="{{ asset('css/cropper-modal.css') }}">
+<link rel="stylesheet" href="{{ asset('css/components/cropper-modal.css') }}">
 @endsection
 
 @section('content')
@@ -142,7 +142,10 @@
     });
 
     cropButton?.addEventListener('click', () => {
-      const canvas = cropper.getCroppedCanvas({ width: 280, height: 280 });
+      const canvas = cropper.getCroppedCanvas({
+        width: 280,
+        height: 280
+      });
       const croppedData = canvas.toDataURL('image/jpeg');
       previewImage.src = croppedData;
       previewImage.classList.remove('profile-edit-page__image--default');
