@@ -11,7 +11,7 @@ class Category extends Model
 
     protected $fillable = ['name'];
 
-    /** リレーション */
+    // リレーション
     public function items()
     {
         return $this->belongsToMany(

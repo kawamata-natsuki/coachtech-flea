@@ -23,19 +23,19 @@ class Item extends Model
         'item_status',
     ];
 
-    /** 画像をURLに変換 */
+    // 画像をURLに変換
     public function getImageUrlAttribute()
     {
         return asset('storage/' . $this->item_image);
     }
 
-    /** 売り切れの判定 */
+    // 売り切れの判定
     public function isSoldOut(): bool
     {
         return $this->item_status === ItemStatus::SOLD_OUT;
     }
 
-    /** リレーション */
+    // リレーション
     public function categories()
     {
         return $this->belongsToMany(

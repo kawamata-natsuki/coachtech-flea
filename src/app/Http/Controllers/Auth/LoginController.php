@@ -12,13 +12,13 @@ class LoginController extends Controller
     {
         $credentials = $request->validated();
 
-        // ログイン成功時の処理
+        // 認証成功：セッション再生成、元の画面orトップページにリダイレクト
         if (Auth::attempt($credentials)) {
             $request->session()->regenerate();
             return redirect()->intended('/');
         }
 
-        // ログイン失敗時の処理
+        // 認証失敗：エラー表示＆入力内容を保持して再表示
         return back()->withErrors([
             'login' => 'ログイン情報が登録されていません',
         ])->withInput();

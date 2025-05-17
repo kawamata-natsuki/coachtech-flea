@@ -14,16 +14,16 @@ class RegisterController extends Controller
     {
         $user = $creator->create($request->all());
 
-        /** メール認証のトリガー */
+        // メール認証のトリガー
         event(new Registered($user));
 
-        /** 登録したユーザーで即ログイン */
+        // 登録したユーザーで即ログイン
         Auth::login($user);
 
-        /** セッション再生成（セキュリティ対策） */
+        // セッション再生成（セキュリティ対策）
         $request->session()->regenerate();
 
-        /* 新規登録後のリダイレクト先をプロフィール編集画面に変更 */
+        // 新規登録後のリダイレクト先をプロフィール編集画面に変更
         session(['profile_edit_first_time' => true]);
         return redirect('/mypage/profile');
     }

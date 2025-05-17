@@ -14,7 +14,7 @@ use Stripe\Checkout\Session;
 
 class OrderController extends Controller
 {
-    /** 商品購入画面の表示 */
+    // 商品購入画面の表示
     public function show(Request $request, Item $item)
     {
         $paymentMethods = PaymentMethodConstants::LABELS;
@@ -25,10 +25,10 @@ class OrderController extends Controller
         return view('items.purchase', compact('item', 'paymentMethods', 'user', 'selectedPaymentMethod'));
     }
 
-    /** 商品購入の処理 */
+    // 商品購入の処理
     public function store(PurchaseRequest $request, Item $item)
     {
-        /** すでに購入済かチェック */
+        // すでに購入済かチェック
         if (
             $item->item_status === ItemStatus::SOLD_OUT ||
             Order::where('item_id', $item->id)->exists()
@@ -36,7 +36,7 @@ class OrderController extends Controller
             return redirect()->route('purchase.invalid', ['item' => $item->id]);
         }
 
-        /** コンビニ支払いの価格が30万超えてたらエラーにする（Stripe仕様上の制約） */
+        // コンビニ支払いの価格が30万超えてたらエラーにする（Stripe仕様上の制約）
         if (
             $request->payment_method === 'convenience_store' &&
             $item->price > 300000
@@ -79,12 +79,12 @@ class OrderController extends Controller
     {
         $user = auth()->user();
 
-        /** 売り切れチェック */
+        // 売り切れチェック
         if ($item->item_status === ItemStatus::SOLD_OUT || Order::where('item_id', $item->id)->exists()) {
             return redirect()->route('purchase.invalid', ['item' => $item->id]);
         }
 
-        /** セッションチェック */
+        // セッションチェック
         if (!session()->has('purchase.payment_method')) {
             return redirect()->route('purchase.show', ['item' => $item->id])
                 ->withErrors(['payment' => 'セッションが切れています。もう一度支払い方法を選択してください。']);
@@ -107,7 +107,7 @@ class OrderController extends Controller
             'shipping_building' => $user->building,
         ]);
 
-        /** item_status を sold_out に更新 */
+        // item_status を sold_out に更新
         $item->update([
             'item_status' => ItemStatus::SOLD_OUT,
         ]);

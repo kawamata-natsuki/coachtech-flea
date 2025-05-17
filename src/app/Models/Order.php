@@ -19,7 +19,7 @@ class Order extends Model
         'shipping_building',
     ];
 
-    /** リレーション */
+    // リレーション
     public function item()
     {
         return $this->belongsTo(Item::class, 'item_id');

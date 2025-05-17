@@ -11,7 +11,7 @@ class Condition extends Model
 
     protected $fillable = ['name'];
 
-    /** リレーション */
+    // リレーション
     public function items()
     {
         return $this->hasMany(Item::class, 'condition_id');

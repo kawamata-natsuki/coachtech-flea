@@ -15,7 +15,7 @@ class ItemComment extends Model
         'content',
     ];
 
-    /** リレーション */
+    // リレーション
     public function item()
     {
         return $this->belongsTo(Item::class, 'item_id');

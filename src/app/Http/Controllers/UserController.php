@@ -23,7 +23,7 @@ class UserController extends Controller
 
         $request->validate($rules, $messages);
 
-        /** 更新処理 */
+        // 更新処理
         $user = auth()->user();
         $user->fill($request->only(['name', 'postal_code', 'address', 'building']));
 
@@ -36,7 +36,7 @@ class UserController extends Controller
             $user->profile_image = $path;
         }
 
-        /** base64を画像として保存 */
+        // base64を画像として保存
         if ($request->filled('cropped_image')) {
             if ($user->profile_image) {
                 Storage::disk('public')->delete($user->profile_image);
@@ -53,12 +53,12 @@ class UserController extends Controller
 
         $user->save();
 
-        /** 初回（会員登録直後）はトップページへ遷移 */
+        // 初回（会員登録直後）はトップページへ遷移
         if (session('profile_edit_first_time')) {
             session()->forget('profile_edit_first_time');
             return redirect('/')->with('success', 'プロフィールを登録しました');
         }
-        /** 2回目以降（通常のプロフィール更新）は編集画面のまま */
+        // 2回目以降（通常のプロフィール更新）は編集画面のまま
         return redirect()->route('profile.edit')->with('success', 'プロフィールを更新しました');
     }
 
@@ -79,14 +79,14 @@ class UserController extends Controller
         return view('user.profile-edit', compact('user'));
     }
 
-    /** 購入画面用の住所変更フォームの表示 */
+    // 購入画面用の住所変更フォームの表示
     public function editAddress(Item $item)
     {
         $user = auth()->user();
         return view('user.profile-address', compact('user', 'item'));
     }
 
-    /** 購入画面用の住所変更の保存処理 */
+    // 購入画面用の住所変更の保存処理
     public function updateAddress(Request $request, Item $item)
     {
         $rules = (new AddressRequest())->rules();

@@ -36,13 +36,13 @@ class CategoryConstants
     self::BABY_KIDS   => 'ベビー・キッズ',
   ];
 
-  /** カテゴリコードに対応する日本語ラベルを返す */
+  // カテゴリコードに対応する日本語ラベルを返す
   public static function label(string $code): string
   {
     return self::LABELS[$code] ?? '';
   }
 
-  /** 定義されているすべてのカテゴリコード一覧を返す */
+  // 定義されているすべてのカテゴリコード一覧を返す
   public static function all(): array
   {
     return array_keys(self::LABELS);

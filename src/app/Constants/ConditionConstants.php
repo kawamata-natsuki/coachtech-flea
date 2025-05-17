@@ -18,13 +18,13 @@ class ConditionConstants
     self::BAD   => '状態が悪い',
   ];
 
-  /** 状態コードに対応する日本語ラベルを返す */
+  // 状態コードに対応する日本語ラベルを返す
   public static function label(string $code): string
   {
     return self::LABELS[$code] ?? '';
   }
 
-  /** 定義されているすべての状態コード一覧を返す */
+  // 定義されているすべての状態コード一覧を返す
   public static function all(): array
   {
     return array_keys(self::LABELS);
