@@ -21,8 +21,9 @@ class CreateItemsTable extends Migration
             $table->timestamps();
 
             // 外部キー制約
+            // 出品商品の状態に使われている場合は、削除できない
             $table->foreign('condition_id')->references('id')->on('conditions')->onDelete('restrict');
-            // ユーザーアカウント削除したら、関連する出品商品も一緒に削除
+            // ユーザーアカウント削除時に、関連する出品商品も一緒に削除する
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });
     }

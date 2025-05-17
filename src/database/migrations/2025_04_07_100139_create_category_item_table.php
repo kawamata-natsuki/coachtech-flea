@@ -15,11 +15,13 @@ class CreateCategoryItemTable extends Migration
             $table->timestamps();
 
             // 外部キー制約
+            // 商品が削除されたら、関連するカテゴリの紐付けも一緒に削除される
             $table->foreign('item_id')->references('id')->on('items')->onDelete('cascade');
+            // カテゴリが削除されたら、関連する商品との紐付けも一緒に削除される
             $table->foreign('category_id')->references('id')->on('categories')->onDelete('cascade');
 
-            // 複合ユニーク制約（item_idとcategory_idの組み合わせが重複しない）
-            // 同じitemに同じcategoryを重複登録しない
+            // 複合ユニーク制約
+            // 同じ商品に同じカテゴリを重複して紐付けられない
             $table->unique(['item_id', 'category_id']);
         });
     }

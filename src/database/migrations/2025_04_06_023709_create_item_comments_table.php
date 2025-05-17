@@ -16,7 +16,9 @@ class CreateItemCommentsTable extends Migration
             $table->timestamps();
 
             // 外部キー制約
+            // 商品が削除されたら、関連するコメントも一緒に削除される
             $table->foreign('item_id')->references('id')->on('items')->onDelete('cascade');
+            // ユーザーが削除されたら、関連するコメントも一緒に削除される
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });
     }

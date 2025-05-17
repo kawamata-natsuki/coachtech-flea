@@ -10,8 +10,8 @@ class CreateConditionsTable extends Migration
     {
         Schema::create('conditions', function (Blueprint $table) {
             $table->id();
-            $table->string('name')->unique();
-            $table->string('code')->unique();
+            $table->string('name')->unique(); // 状態の表示名
+            $table->string('code')->unique(); // 状態のコード
             $table->timestamps();
         });
     }
