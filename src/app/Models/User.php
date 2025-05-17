@@ -32,6 +32,14 @@ class User extends Authenticatable implements MustVerifyEmail
         'is_admin' => 'boolean',
     ];
 
+    // 画像をURLに変換（$user->profile_image_url でアクセスできる）
+    public function getImageUrlAttribute()
+    {
+        return $this->profile_image
+            ? asset('storage/' . $this->profile_image)
+            : asset('images/icons/default-profile.svg');
+    }
+
     // リレーション
     public function favoriteItems()
     {
@@ -56,13 +64,5 @@ class User extends Authenticatable implements MustVerifyEmail
     public function orders()
     {
         return $this->hasMany(Order::class, 'user_id');
-    }
-
-    // 画像をURLに変換（$user->profile_image_url でアクセスできる）
-    public function getImageUrlAttribute()
-    {
-        return $this->profile_image
-            ? asset('storage/' . $this->profile_image)
-            : asset('images/icons/default-profile.svg');
     }
 }
