@@ -74,6 +74,7 @@ class ItemController extends Controller
         // 商品保存処理
         $item = new Item();
         $item->name = $request->input('name');
+        $item->brand = $request->input('brand');
         $item->description = $request->input('description');
         $item->item_image = $path ?? null;
         $item->condition_id = ConditionRepository::getIdByCode($request->input('condition_code'));
