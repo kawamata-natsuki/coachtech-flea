@@ -22,6 +22,7 @@ class ItemSeeder extends Seeder
         $conditionMap = Condition::all()->keyBy('code');
         $faker = Faker::create();
 
+        // テスト用の出品者/購入者を3人確保する
         $users = User::where('is_admin', false)->take(3)->get();
         if ($users->count() < 3) {
             $users = collect();
@@ -117,14 +118,18 @@ class ItemSeeder extends Seeder
             ]
         ];
 
+        // 出品者・購入者を順番に割り当てるためのインデックス
+        // → ダミーユーザー3人が均等に出品・購入できるように調整
         $sellerIndex = 0;
         $buyerIndex = 1;
 
         foreach ($itemsData as $data) {
-
+            // 出品者と購入者をローテーションで取得
             $seller = $users[$sellerIndex % 3];
             $buyer = $users[$buyerIndex % 3];
+
             $paymentMethodId = PaymentMethod::first()->id;
+            // 前半6商品だけを「売り切れ商品」として扱う
             $isSold = $sellerIndex < 6;
 
             // 状態（condition）取得
@@ -155,6 +160,7 @@ class ItemSeeder extends Seeder
 
             $item->categories()->attach($categories);
 
+            // 商品が売り切れ扱いの場合、注文データ（Order）も作成して購入済み状態にする
             if ($isSold) {
                 Order::create([
                     'user_id' => $buyer->id,
