@@ -29,16 +29,4 @@ class ConditionConstants
   {
     return array_keys(self::LABELS);
   }
-
-  /** 状態コードから conditions テーブルのIDを取得する */
-  public static function codeToId(string $code): int
-  {
-    return Condition::where('code', $code)->value('id');
-  }
-
-  /** conditions テーブルのIDから状態コードを取得する */
-  public static function idToCode(int $id): ?string
-  {
-    return Condition::find($id)?->code;
-  }
 }
