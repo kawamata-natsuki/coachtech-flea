@@ -23,25 +23,27 @@ class FortifyServiceProvider extends ServiceProvider
 
     public function boot(): void
     {
-        # 新規ユーザー登録
+        // 新規ユーザー登録
         Fortify::createUsersUsing(CreateNewUser::class);
 
-        # プロフィールの更新処理
+        // プロフィールの更新処理
         Fortify::updateUserProfileInformationUsing(UpdateUserProfileInformation::class);
 
-        # ユーザー登録画面の表示
+        // 新規ユーザー登録画面の表示
         Fortify::registerView(function () {
-            return View('auth.register');
+            return view('auth.register');
         });
 
-        # ログイン画面の表示
+        // ログイン画面の表示
         Fortify::loginView(function () {
             return view('auth.login');
         });
 
-        # ログイン試行の回数制限
+        // ログイン試行の回数制限（1分間に最大5回まで）
         RateLimiter::for('login', function (Request $request) {
-            $throttleKey = Str::transliterate(Str::lower($request->input(Fortify::name())) . '|' . $request->ip());
+            $throttleKey = Str::transliterate(Str::lower(
+                $request->input('email') . '|' . $request->ip()
+            ));
 
             return Limit::perMinute(5)->by($throttleKey);
         });
