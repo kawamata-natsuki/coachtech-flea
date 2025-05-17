@@ -33,7 +33,8 @@ class Item extends Model
     // 売り切れの判定
     public function isSoldOut(): bool
     {
-        return $this->item_status === ItemStatus::SOLD_OUT;
+        return $this->item_status === ItemStatus::SOLD_OUT
+            || $this->order()->exists();
     }
 
     // リレーション
