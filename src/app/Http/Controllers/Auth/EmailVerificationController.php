@@ -18,7 +18,7 @@ class EmailVerificationController extends Controller
     public function verify(EmailVerificationRequest $request)
     {
         $request->fulfill();
-        return redirect('/mypage/profile');
+        return redirect()->route('profile.edit');
     }
 
     /** 認証メール再送信 */
