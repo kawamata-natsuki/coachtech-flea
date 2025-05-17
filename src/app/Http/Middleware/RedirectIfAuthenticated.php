@@ -13,7 +13,7 @@ class RedirectIfAuthenticated
     {
         $guards = empty($guards) ? [null] : $guards;
 
-        // ログイン済みユーザーが /login や /register にアクセスしたら、/ にリダイレクトする
+        // ログインユーザーがログイン/登録ページにアクセスしたらホームへリダイレクト
         foreach ($guards as $guard) {
             if (Auth::guard($guard)->check()) {
                 return redirect(RouteServiceProvider::HOME);
