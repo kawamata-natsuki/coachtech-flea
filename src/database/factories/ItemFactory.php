@@ -8,11 +8,11 @@ use App\Models\Item;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
+/**
+ * Itemモデルのテスト・シーディング用ファクトリ
+ */
 class ItemFactory extends Factory
 {
-    /**
-     * Itemモデルのテスト・シーディング用ファクトリ
-     */
     protected $model = Item::class;
 
     public function definition()
