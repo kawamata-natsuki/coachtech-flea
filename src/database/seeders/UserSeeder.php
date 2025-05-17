@@ -11,6 +11,7 @@ class UserSeeder extends Seeder
 
     public function run()
     {
+        // 一般ユーザー3人を作成（出品・購入用）
         User::create([
             'name'          => '赤井　マリオ',
             'email'         => 'mario@example.com',
@@ -41,6 +42,8 @@ class UserSeeder extends Seeder
             'is_admin'      => false,
             'email_verified_at' => now(),
         ]);
+
+        // 管理者ユーザーを作成
         User::create([
             'name' => '管理者ユーザー',
             'email' => 'admin@example.com',
