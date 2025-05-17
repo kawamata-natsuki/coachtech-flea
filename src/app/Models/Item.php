@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Models\Condition;
 use App\Models\Category;
+use App\Models\Order;
 use App\Constants\ItemStatus;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -69,5 +70,10 @@ class Item extends Model
     public function comments()
     {
         return $this->hasMany(ItemComment::class, 'item_id');
+    }
+
+    public function order()
+    {
+        return $this->hasOne(Order::class, 'item_id');
     }
 }
