@@ -2,8 +2,8 @@
 
 namespace Database\Factories;
 
-use App\Constants\ConditionConstants;
 use App\Constants\ItemStatus;
+use App\Repositories\ConditionRepository;
 use App\Models\Item;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
@@ -11,9 +11,8 @@ use Illuminate\Database\Eloquent\Factories\Factory;
 class ItemFactory extends Factory
 {
     /**
-     * Factory for PHPUnit tests (Item model)
+     * Itemモデルのテスト・シーディング用ファクトリ
      */
-
     protected $model = Item::class;
 
     public function definition()
@@ -22,10 +21,10 @@ class ItemFactory extends Factory
             'name' => $this->faker->word(),
             'brand' => null,
             'description' => $this->faker->sentence(),
-            'price' => 1000,
+            'price' => $this->faker->numberBetween(500, 3000),
             'item_image' => 'dummy.jpg',
             'user_id' => User::factory(),
-            'condition_id' => ConditionConstants::codeToId(ConditionConstants::GOOD),
+            'condition_id' => ConditionRepository::getIdByCode('good'),
             'item_status' => ItemStatus::ON_SALE,
         ];
     }
