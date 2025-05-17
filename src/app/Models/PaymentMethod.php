@@ -14,14 +14,15 @@ class PaymentMethod extends Model
         'code',
     ];
 
-    // リレーション
-    public function orders()
-    {
-        return $this->hasMany(Order::class, 'payment_method_id');
-    }
-
+    /** 支払コードから payment_methods テーブルのid取得 */
     public static function getIdByCode(string $code): ?int
     {
         return static::where('code', $code)->value('id');
+    }
+
+    /** リレーション */
+    public function orders()
+    {
+        return $this->hasMany(Order::class, 'payment_method_id');
     }
 }
