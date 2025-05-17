@@ -6,20 +6,26 @@ use Illuminate\Http\Request;
 use App\Models\Item;
 use App\Models\Order;
 use App\Models\PaymentMethod;
+use App\Services\StripeService;
 use App\Constants\PaymentMethodConstants;
 use App\Constants\ItemStatus;
 use App\Http\Requests\PurchaseRequest;
-use Stripe\Stripe;
-use Stripe\Checkout\Session;
 
 class OrderController extends Controller
 {
+    protected StripeService $stripeService;
+
+    public function __construct(StripeService $stripeService)
+    {
+        $this->middleware('auth');
+        $this->stripeService = $stripeService;
+    }
+
     // 商品購入画面の表示
     public function show(Request $request, Item $item)
     {
         $paymentMethods = PaymentMethodConstants::LABELS;
         $user = auth()->user();
-
         $selectedPaymentMethod = $request->query('payment_method');
 
         return view('items.purchase', compact('item', 'paymentMethods', 'user', 'selectedPaymentMethod'));
@@ -28,11 +34,8 @@ class OrderController extends Controller
     // 商品購入の処理
     public function store(PurchaseRequest $request, Item $item)
     {
-        // すでに購入済かチェック
-        if (
-            $item->item_status === ItemStatus::SOLD_OUT ||
-            Order::where('item_id', $item->id)->exists()
-        ) {
+        // 購入済のチェック
+        if ($item->isSoldOut()) {
             return redirect()->route('purchase.invalid', ['item' => $item->id]);
         }
 
@@ -46,41 +49,21 @@ class OrderController extends Controller
             ]);
         }
 
-        Stripe::setApiKey(config('services.stripe.secret'));
+        // 支払いセッションを作成して、Stripeの支払い画面へリダイレクト
+        $url = $this->stripeService->createCheckoutSession($item, $request->payment_method);
 
-        $paymentMethodType = match ($request->payment_method) {
-            'credit_card' => 'card',
-            'convenience_store' => 'konbini',
-        };
+        session(['purchase.payment_method' => $request->payment_method]);
 
-        $session = Session::create([
-            'payment_method_types' => [$paymentMethodType],
-            'line_items' => [[
-                'price_data' => [
-                    'currency' => 'jpy',
-                    'product_data' => ['name' => $item->name],
-                    'unit_amount' => $item->price,
-                ],
-                'quantity' => 1,
-            ]],
-            'mode' => 'payment',
-            'success_url' => route('purchase.success', ['item' => $item->id]),
-            'cancel_url' => route('purchase.cancel', ['item' => $item->id]),
-        ]);
-
-        session([
-            'purchase.payment_method' => $request->payment_method,
-        ]);
-
-        return redirect($session->url);
+        return redirect($url);
     }
 
+    // 商品購入完了後の処理
     public function success(Request $request, Item $item)
     {
         $user = auth()->user();
 
         // 売り切れチェック
-        if ($item->item_status === ItemStatus::SOLD_OUT || Order::where('item_id', $item->id)->exists()) {
+        if ($item->isSoldOut()) {
             return redirect()->route('purchase.invalid', ['item' => $item->id]);
         }
 
@@ -90,6 +73,7 @@ class OrderController extends Controller
                 ->withErrors(['payment' => 'セッションが切れています。もう一度支払い方法を選択してください。']);
         }
 
+        // セッションに支払い方法がなければ、エラーで購入画面に戻す
         $code = session()->pull('purchase.payment_method');
         if (!$code) {
             return redirect()->route('purchase.show', ['item' => $item->id])
@@ -98,6 +82,7 @@ class OrderController extends Controller
                 ]);
         }
 
+        // DBに保存
         Order::create([
             'user_id' => $user->id,
             'item_id' => $item->id,
@@ -115,11 +100,13 @@ class OrderController extends Controller
         return view('items.purchase-success');
     }
 
+    // 購入キャンセル時の処理（Stripe画面から戻った場合）
     public function cancel(Request $request, Item $item)
     {
         return view('items.purchase-cancel', compact('item'));
     }
 
+    // 無効な購入リクエスト時の表示処理（売り切れや重複購入など）
     public function invalid(Request $request, Item $item)
     {
         return view('items.purchase-invalid', compact('item'));
