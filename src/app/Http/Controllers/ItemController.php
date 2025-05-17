@@ -8,25 +8,30 @@ use App\Constants\ItemStatus;
 use App\Http\Requests\ExhibitionRequest;
 use App\Repositories\CategoryRepository;
 use App\Repositories\ConditionRepository;
+use App\Repositories\ItemRepository;
 use App\Models\Item;
 use Illuminate\Http\Request;
 
 class ItemController extends Controller
 {
-    // 商品一覧画面の表示
+    public function __construct()
+    {
+        $this->middleware('auth')->only(['create', 'store']);
+    }
+
+    // 商品一覧画面の表示（タブ切り替え対応）
     public function index(Request $request)
     {
         $tab = $request->query('page', 'all');
         $keyword = $request->query('keyword');
         $user = auth()->user();
 
-        // メニュータブの「おすすめ」「マイリスト」切り替え
         if ($tab === 'mylist') {
             $items = $user
-                ? $this->getFavoriteItems($keyword, $user)
+                ? (new ItemRepository)->getFavoriteItems($keyword, $user)
                 : collect();
         } else {
-            $items = $this->getRecommendedItems($keyword);
+            $items = (new ItemRepository)->getRecommendedItems($keyword, $user?->id);
         }
         return view('items.index', compact('items', 'tab'));
     }
@@ -83,35 +88,5 @@ class ItemController extends Controller
         }
 
         return redirect()->route('items.index')->with('success', '商品を出品しました！');
-    }
-
-    // おすすめタブに表示する商品を取得する
-    private function getRecommendedItems($keyword)
-    {
-        return Item::withCount('favorites')
-            // ユーザーがログインしてる時だけ、自分の出品商品を除外
-            ->when(auth()->check(), fn($query) => $query->where('user_id', '!=', auth()->id()))
-            // 商品名を部分一致で検索(2文字以上)
-            ->when(mb_strlen($keyword) >= 2, fn($query) => $query->where('name', 'like', "%{$keyword}%"))
-            // 売り切れ商品を下に表示
-            ->orderByRaw("FIELD(item_status, 'on_sale', 'sold_out')")
-            // いいねの数が多い順に並び替え
-            ->orderByDesc('favorites_count')
-            // いいね数が同じなら、新しい順に並べる
-            ->orderByDesc('created_at')
-            ->get();
-    }
-
-    // マイリストに表示する商品を取得する
-    private function getFavoriteItems($keyword, $user)
-    {
-        return $user->favoriteItems()
-            ->where('items.user_id', '!=', $user->id)
-            ->when(mb_strlen($keyword) >= 2, fn($query) => $query->where('items.name', 'like', "%{$keyword}%"))
-            ->withCount('favorites')
-            ->orderByDesc('favorites_count')
-            ->orderByDesc('items.created_at')
-            ->distinct()
-            ->get();
     }
 }
