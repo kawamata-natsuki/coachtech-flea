@@ -2,8 +2,6 @@
 
 namespace App\Constants;
 
-use App\Models\Category;
-
 class CategoryConstants
 {
   public const FASHION     = 'fashion';
@@ -48,11 +46,5 @@ class CategoryConstants
   public static function all(): array
   {
     return array_keys(self::LABELS);
-  }
-
-  /** カテゴリコードから categories テーブルのIDを取得する　*/
-  public static function codesToIds(array $codes): array
-  {
-    return Category::whereIn('code', $codes)->pluck('id')->toArray();
   }
 }
