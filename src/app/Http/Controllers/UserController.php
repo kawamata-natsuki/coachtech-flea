@@ -10,8 +10,28 @@ use Illuminate\Support\Facades\Storage;
 
 class UserController extends Controller
 {
+    // マイページのプロフィール表示（出品商品・購入履歴を含む）
+    public function index(Request $request)
+    {
+        $user = auth()->user();
+        $page = $request->query('page', 'sell');
+        $sellingItems = $user->items;
+        $purchasedItems = $user->orders()->with('item')->get();
+
+        return view('user.profile', compact('user', 'page', 'sellingItems', 'purchasedItems'));
+    }
+
+    // プロフィール編集画面の表示
+    public function edit()
+    {
+        $user = auth()->user();
+        return view('user.profile-edit', compact('user'));
+    }
+
+    // プロフィール更新処理
     public function update(Request $request)
     {
+        // 複数のバリデーションルールとメッセージを統合して、バリデーション実行
         $rules = array_merge(
             (new AddressRequest())->rules(),
             (new ProfileRequest())->rules()
@@ -20,40 +40,15 @@ class UserController extends Controller
             (new AddressRequest())->messages(),
             (new ProfileRequest())->messages()
         );
-
         $request->validate($rules, $messages);
 
-        // 更新処理
+        // ユーザー情報を更新し、DBに保存
         $user = auth()->user();
         $user->fill($request->only(['name', 'postal_code', 'address', 'building']));
-
-        if ($request->hasFile('profile_image')) {
-            if ($user->profile_image) {
-                Storage::disk('public')->delete($user->profile_image);
-            }
-
-            $path = $request->file('profile_image')->store('profile_images', 'public');
-            $user->profile_image = $path;
-        }
-
-        // base64を画像として保存
-        if ($request->filled('cropped_image')) {
-            if ($user->profile_image) {
-                Storage::disk('public')->delete($user->profile_image);
-            }
-
-            $imageData = $request->input('cropped_image');
-            $imageData = preg_replace('/^data:image\/\w+;base64,/', '', $imageData);
-            $imageData = base64_decode($imageData);
-
-            $fileName = 'profile_images/' . uniqid() . '.jpg';
-            Storage::disk('public')->put($fileName, $imageData);
-            $user->profile_image = $fileName;
-        }
-
+        $this->handleProfileImageUpload($request, $user);
         $user->save();
 
-        // 初回（会員登録直後）はトップページへ遷移
+        // 初回（会員登録直後）はトップページへリダイレクト
         if (session('profile_edit_first_time')) {
             session()->forget('profile_edit_first_time');
             return redirect('/')->with('success', 'プロフィールを登録しました');
@@ -62,46 +57,61 @@ class UserController extends Controller
         return redirect()->route('profile.edit')->with('success', 'プロフィールを更新しました');
     }
 
-    public function index(Request $request)
-    {
-        $user = auth()->user();
-        $page = $request->query('page', 'sell');
-
-        $sellingItems = $user->items;
-        $purchasedItems = $user->orders()->with('item')->get();
-
-        return view('user.profile', compact('user', 'page', 'sellingItems', 'purchasedItems'));
-    }
-
-    public function edit()
-    {
-        $user = auth()->user();
-        return view('user.profile-edit', compact('user'));
-    }
-
-    // 購入画面用の住所変更フォームの表示
+    // 商品購入画面用の住所変更フォームを表示
     public function editAddress(Item $item)
     {
         $user = auth()->user();
         return view('user.profile-address', compact('user', 'item'));
     }
 
-    // 購入画面用の住所変更の保存処理
+    // 購入画面用の住所変更を保存する処理
     public function updateAddress(Request $request, Item $item)
     {
+        // 複数のバリデーションルールとメッセージを統合して、バリデーション実行
         $rules = (new AddressRequest())->rules();
         $messages = (new AddressRequest())->messages();
-
         unset($rules['name'], $messages['name.required']);
         $request->validate($rules, $messages);
 
+        // ユーザー住所情報を更新
         $user = auth()->user();
         $user->update($request->only(['postal_code', 'address', 'building']));
 
         auth()->user()->refresh();
 
+        // 元の購入画面に戻る（支払い方法選択状態を保持）
         return redirect()->route('purchase.show', [
             'item' => $item->id,
         ])->withInput($request->only('payment_method'))->with('success', '住所を更新しました');
+    }
+
+    // プロフィール画像のアップロード処理
+    private function handleProfileImageUpload(Request $request, $user)
+    {
+        // 通常の画像ファイルがアップロードされた場合
+        if ($request->hasFile('profile_image')) {
+            // 既存の画像があれば削除、新しい画像を保存してパスを設定
+            if ($user->profile_image) {
+                Storage::disk('public')->delete($user->profile_image);
+            }
+            $path = $request->file('profile_image')->store('profile_images', 'public');
+            $user->profile_image = $path;
+        }
+
+        // base64形式（Cropper.js等）の画像データがアップロードされた場合
+        if ($request->filled('cropped_image')) {
+            // 既存の画像があれば削除、base64データをデコードして画像として保存
+            if ($user->profile_image) {
+                Storage::disk('public')->delete($user->profile_image);
+            }
+
+            $imageData = base64_decode(
+                preg_replace('/^data:image\/\w+;base64,/', '', $request->input('cropped_image'))
+            );
+
+            $fileName = 'profile_images/' . uniqid() . '.jpg';
+            Storage::disk('public')->put($fileName, $imageData);
+            $user->profile_image = $fileName;
+        }
     }
 }
