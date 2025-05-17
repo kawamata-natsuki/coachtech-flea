@@ -6,13 +6,15 @@ use App\Models\Condition;
 
 class ConditionRepository
 {
+  /** 状態コードから conditions テーブルの ID を取得 */
   public static function getIdByCode(string $code): ?int
   {
     return Condition::where('code', $code)->value('id');
   }
 
-  public static function getCpdeById(int $id): ?string
+  /** conditions テーブルの ID から状態コードを取得 */
+  public static function getCodeById(int $id): ?string
   {
-    return Condition::fing($id)->code;
+    return Condition::find($id)?->code;
   }
 }
