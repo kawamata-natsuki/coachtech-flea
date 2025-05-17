@@ -15,8 +15,10 @@ class UserController extends Controller
     {
         $user = auth()->user();
         $page = $request->query('page', 'sell');
-        $sellingItems = $user->items;
-        $purchasedItems = $user->orders()->with('item')->get();
+        // 出品商品を新しい順に取得
+        $sellingItems = $user->items()->orderBy('created_at', 'desc')->get();
+        // 購入履歴も新しい順に取得
+        $purchasedItems = $user->orders()->with('item')->orderBy('created_at', 'desc')->get();
 
         return view('user.profile', compact('user', 'page', 'sellingItems', 'purchasedItems'));
     }
