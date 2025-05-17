@@ -17,7 +17,8 @@ class CreateUsersTable extends Migration
             $table->string('postal_code')->nullable();
             $table->string('address')->nullable();
             $table->string('building')->nullable();
-            $table->string('profile_image')->nullable(); // 画像はstorageに保存し、DBにはファイルパスのみ保持
+            // 画像ファイルはstorageに保存、DBにはパスのみ保持
+            $table->string('profile_image')->nullable();
             $table->boolean('is_admin')->default(false);
             $table->timestamps();
         });
