@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Item;
 use App\Models\Order;
-use App\Models\PaymentMethod;
+use App\Repositories\PaymentMethodRepository;
 use App\Services\StripeService;
 use App\Constants\PaymentMethodConstants;
 use App\Constants\ItemStatus;
@@ -86,7 +86,7 @@ class OrderController extends Controller
         Order::create([
             'user_id' => $user->id,
             'item_id' => $item->id,
-            'payment_method_id' => PaymentMethod::getIdByCode($code),
+            'payment_method_id' => (new PaymentMethodRepository)->getIdByCode($code),
             'shipping_postal_code' => $user->postal_code,
             'shipping_address' => $user->address,
             'shipping_building' => $user->building,
