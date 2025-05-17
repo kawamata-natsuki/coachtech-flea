@@ -6,10 +6,12 @@ use App\Models\Item;
 
 class ItemRepository
 {
-  // おすすめタブに表示する商品を取得する
+  // おすすめタブ用の商品一覧を取得
+  // - 自分以外の商品を対象にする
+  // - 2文字以上の検索ワードがあれば、部分一致で絞り込み
+  // - いいね数 → 新着順で並び替え（売り切れ商品は最後に表示）
   public function getRecommendedItems(?string $keyword, ?int $userId = null)
   {
-    // 自分以外の出品商品を対象に、検索ワードがあれば2文字以上の部分一致で絞り込み、いいね数→新着順で並び替え(売り切れ商品は最後に表示)
     return Item::withCount('favorites')
       ->when($userId, fn($query) => $query->where('user_id', '!=', $userId))
       ->when(mb_strlen($keyword) >= 2, fn($query) => $query->where('name', 'like', "%{$keyword}%"))
@@ -19,10 +21,12 @@ class ItemRepository
       ->get();
   }
 
-  // マイリストに表示する商品を取得する
+  // マイリストに表示する商品を取得
+  // - 自分が「いいね」した商品を対象にする
+  // - 2文字以上の検索ワードがあれば、部分一致で絞り込み
+  // - いいねした日時の降順で並び替え
   public function getFavoriteItems($keyword, $user)
   {
-    // 自分がいいねした商品の中から、検索ワードがあれば2文字以上の部分一致で絞り込み、いいねした順に並び替え
     return $user->favoriteItems()
       ->when(mb_strlen($keyword) >= 2, fn($query) => $query->where('items.name', 'like', "%{$keyword}%"))
       ->withCount('favorites')
