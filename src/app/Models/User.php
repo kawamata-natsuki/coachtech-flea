@@ -2,10 +2,8 @@
 
 namespace App\Models;
 
-use App\Enums\UserRole;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
@@ -30,7 +28,7 @@ class User extends Authenticatable implements MustVerifyEmail
     ];
 
     protected $casts = [
-        'email_verified_at' => 'datetime', // 認証処理で日時扱いに必要
+        'email_verified_at' => 'datetime',
         'is_admin' => 'boolean',
     ];
 
@@ -60,10 +58,11 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->hasMany(Order::class, 'user_id');
     }
 
-    // 画像をURLに変換
-    // ファイルアップロード時 $imagePath = $request->file('image')->store('items', 'public');
+    // 画像をURLに変換（$user->profile_image_url でアクセスできる）
     public function getImageUrlAttribute()
     {
-        return asset('storage/' . $this->profile_image);
+        return $this->profile_image
+            ? asset('storage/' . $this->profile_image)
+            : asset('images/icons/default-profile.svg');
     }
 }
