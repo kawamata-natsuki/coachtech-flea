@@ -10,7 +10,7 @@ use Illuminate\Auth\Events\Registered;
 
 class RegisterController extends Controller
 {
-    public function store(RegisterRequest $request, CreateNewUSer $creator)
+    public function store(RegisterRequest $request, CreateNewUser $creator)
     {
         $user = $creator->create($request->all());
 
@@ -25,6 +25,6 @@ class RegisterController extends Controller
 
         // 新規登録後のリダイレクト先をプロフィール編集画面に変更
         session(['profile_edit_first_time' => true]);
-        return redirect('/mypage/profile');
+        return redirect()->route('profile.edit');
     }
 }
