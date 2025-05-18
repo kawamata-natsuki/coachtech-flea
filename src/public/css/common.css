@@ -1,4 +1,6 @@
-/* ページ全体のレイアウト */
+/* ===============================
+    ページ全体のレイアウト
+   ===============================*/
 html,
 body {
   height: 100%;
@@ -375,19 +377,31 @@ button {
   cursor: pointer;
 }
 
+.search-form__button:active {
+  background-color: #fff;
+  color: #000;
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.2);
+  opacity: 0.8;
+}
+
 .header-nav__links {
   width: 100%;
   display: flex;
   align-items: center;
   justify-content: space-around;
   gap: 16px;
+  cursor: pointer;
 }
 
 .header-nav__item {
-  font-family: Inter;
   font-weight: 400;
   font-size: 24px;
   color: #FFF;
+  text-decoration: none;
+}
+
+.header-nav__item:active {
+  opacity: 0.6;
 }
 
 .header-nav__button {

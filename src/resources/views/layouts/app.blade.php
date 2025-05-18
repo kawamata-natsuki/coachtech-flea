@@ -10,7 +10,7 @@
   <link href="https://unpkg.com/cropperjs/dist/cropper.min.css" rel="stylesheet">
   <script src="https://unpkg.com/cropperjs/dist/cropper.min.js"></script>
   @yield('css')
-  <title>coachtech-flea</title>
+  <title>coachtechフリマ</title>
 </head>
 
 <body>
@@ -43,7 +43,7 @@
       @endauth
 
       @guest
-      @if (!request()->is('login') && !request()->is('register'))
+      @if (!request()->routeIs(['login', 'register']))
       <nav class="header-nav">
         <div class="header-nav__search">
           <form class="search-form" action="/" method="get">
