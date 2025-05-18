@@ -12,11 +12,11 @@ class LoginTest extends TestCase
     use RefreshDatabase;
     use AuthTestHelper;
 
-
+    /**
+     * メールアドレスが入力されていない場合、バリデーションメッセージが表示される
+     */
     public function test_login_fails_when_email_is_empty()
     {
-        // メールアドレスが入力されていない場合、バリデーションメッセージが表示される
-
         // ログインページを開いて、メールアドレスなしでログインを試みる
         $response = $this->get('/login');
         $response->assertStatus(200);
@@ -31,10 +31,11 @@ class LoginTest extends TestCase
         ]);
     }
 
+    /**
+     * パスワードが入力されていない場合、バリデーションメッセージが表示される
+     */
     public function test_login_fails_when_password_is_empty()
     {
-        // パスワードが入力されていない場合、バリデーションメッセージが表示される
-
         // ログインページを開いて、パスワードなしでログインを試みる
         $response = $this->get('/login');
         $response->assertStatus(200);
@@ -49,10 +50,11 @@ class LoginTest extends TestCase
         ]);
     }
 
+    /**
+     * 入力情報が間違っている場合、バリデーションメッセージが表示される
+     */
     public function test_login_fails_with_invalid_credentials()
     {
-        // 入力情報が間違っている場合、バリデーションメッセージが表示される
-
         // ログインページを開いて、誤った情報でログインを試みる
         $response = $this->get('/login');
         $response->assertStatus(200);
@@ -67,10 +69,11 @@ class LoginTest extends TestCase
         ]);
     }
 
+    /**
+     * 正しい情報が入力された場合、ログイン処理が実行される
+     */
     public function test_login_succeeds_with_valid_credentials()
     {
-        // 正しい情報が入力された場合、ログイン処理が実行される
-
         // ゲストユーザー作成
         $user = $this->createUser([
             'email' => 'test@example.com',
