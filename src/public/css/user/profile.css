@@ -33,6 +33,7 @@
 }
 
 .profile-page__name {
+  max-width: 100%;
   font-weight: 700;
   font-size: 36px;
   overflow-wrap: break-word;
@@ -110,13 +111,8 @@
 
 .profile-page__list {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: 70px;
-}
-
-.profile-page__list .item-card {
-  width: 100%;
-  max-width: 300px;
 }
 
 .profile-page__list .item-card__name {
@@ -209,7 +205,7 @@
   }
 
   .profile-page__list {
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(3, minmax(0, 1fr));
     gap: 40px;
   }
 
@@ -217,13 +213,7 @@
     font-size: 16px;
   }
 
-  .profile-page__list .item-card {
-    width: 100%;
-    max-width: 300px;
-  }
-
   .profile-page__list .item-card__name {
     font-size: 16px;
   }
-
 }
