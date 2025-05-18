@@ -11,10 +11,11 @@ class LogoutTest extends TestCase
     use RefreshDatabase;
     use AuthTestHelper;
 
+    /**
+     * ログアウトができる
+     */
     public function test_user_can_logout_successfully()
     {
-        // ログアウトができる
-
         // ログインユーザー作成、ログイン後にログアウトする
         $user = $this->loginUser();
 
