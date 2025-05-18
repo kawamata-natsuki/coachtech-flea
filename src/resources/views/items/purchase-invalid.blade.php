@@ -7,10 +7,10 @@
 @section('content')
 <div class="purchase-invalid-page">
   <div class="purchase-invalid-page__container">
-    <h1 class="purchase-invalid-page__title">購入手続きがキャンセルされました</h1>
+    <h1 class="purchase-invalid-page__title">購入手続きが無効になりました</h1>
     <p class="purchase-invalid-page__message">
-      この商品はすでに購入済み、または売り切れのため注文できません。<br>
-      他の商品をご覧いただくか、トップページにお戻りください。
+      この商品はすでに購入済み、または売り切れのため、ご注文いただけません。<br>
+      他の商品を探すか、トップページにお戻りください。
     </p>
 
     <div class="purchase-invalid-page__button">

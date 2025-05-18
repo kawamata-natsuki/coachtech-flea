@@ -7,6 +7,7 @@
 
 @section('content')
 <div class="item-purchase-page">
+  <h1 class="sr-only">購入内容のご確認</h1>
   <div class="item-purchase-page__container">
     <div class="item-purchase-page__wrapper">
 
@@ -18,7 +19,7 @@
             <img class="item-card__img" src="{{ asset('storage/' . $item->item_image) }}" alt="{{ $item->name }}">
           </div>
           <div class="item-purchase-page__item-summary">
-            <h1 class="item-purchase-page__item-name">{{ $item->name }}</h1>
+            <p class="item-purchase-page__item-name">{{ $item->name }}</p>
             <p class="item-purchase-page__item-price">
               <span class="item-purchase-page__price-unit">¥ </span>{{ number_format($item->price) }}
             </p>
