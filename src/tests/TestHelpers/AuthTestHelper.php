@@ -20,10 +20,7 @@ trait AuthTestHelper
       'password' => Hash::make($credentials['password']),
     ]);
 
-    $this->post('/login', [
-      'email' => $credentials['email'],
-      'password' => $credentials['password'],
-    ]);
+    $this->actingAs($user);
 
     return $user;
   }
