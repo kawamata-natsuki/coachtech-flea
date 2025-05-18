@@ -20,7 +20,9 @@ ARG GROUP_ID=1000
 
 # ユーザーとグループを作成
 RUN groupadd -f -g ${GROUP_ID} appgroup && \
-  id -u appuser &>/dev/null || useradd -u ${USER_ID} -g appgroup -m appuser
+  if ! id appuser &>/dev/null; then \
+  useradd -m -u ${USER_ID} -g appgroup appuser; \
+  fi
 
 USER appuser
 
