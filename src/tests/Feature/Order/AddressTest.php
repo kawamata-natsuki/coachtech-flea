@@ -6,6 +6,7 @@ use App\Constants\PaymentMethodConstants;
 use App\Models\PaymentMethod;
 use Database\Seeders\CategorySeeder;
 use Database\Seeders\ConditionSeeder;
+use Database\Seeders\PaymentMethodSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 use Tests\TestHelpers\AuthTestHelper;
@@ -24,13 +25,11 @@ class AddressTest extends TestCase
         parent::setUp();
         $this->seed(CategorySeeder::class);
         $this->seed(ConditionSeeder::class);
-        $this->paymentMethodCode = PaymentMethodConstants::CREDIT_CARD;
+        $this->seed(PaymentMethodSeeder::class);
 
         // テスト用の支払方法を登録
-        PaymentMethod::create([
-            'code' => PaymentMethodConstants::CREDIT_CARD,
-            'name' => PaymentMethodConstants::label(PaymentMethodConstants::CREDIT_CARD),
-        ]);
+        $this->seed(PaymentMethodSeeder::class);
+        $this->paymentMethodCode = PaymentMethodConstants::CREDIT_CARD;
     }
 
     /**
