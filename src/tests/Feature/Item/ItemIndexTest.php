@@ -7,12 +7,15 @@ use App\Models\Item;
 use App\Models\User;
 use Database\Seeders\ConditionSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
+use Tests\TestHelpers\AuthTestHelper;
+use Tests\TestHelpers\ItemTestHelper;
 
 class ItemIndexTest extends TestCase
 {
     use RefreshDatabase;
+    use AuthTestHelper;
+    use ItemTestHelper;
 
     protected function setUp(): void
     {
@@ -20,73 +23,81 @@ class ItemIndexTest extends TestCase
         $this->seed(ConditionSeeder::class);
     }
 
+    /**
+     * 全商品を取得できる
+     */
     public function test_all_items_are_displayed()
     {
-        // 事前に商品を複数作成
-        Item::factory()->create([
+        // 商品を複数作成
+        $this->createItem([
             'name' => 'testA',
             'item_image' => 'dummyA.jpg',
         ]);
-        Item::factory()->create([
+        $this->createItem([
             'name' => 'testB',
             'item_image' => 'dummyB.jpg',
         ]);
 
-        // 1. 商品ページを開く
+        // 商品ページを開く
         $response = $this->get('/');
         $response->assertStatus(200);
 
-        // 全商品を取得できる
+        // すべての商品が表示される
         $response->assertSee('testA');
         $response->assertSee('testB');
         $response->assertSee('storage/dummyA.jpg');
         $response->assertSee('storage/dummyB.jpg');
     }
 
+    /**
+     * 購入済み商品は「Sold」と表示される
+     */
     public function test_sold_label_is_displayed_for_purchased_items()
     {
-        // 事前に商品を複数作成
-        Item::factory()->create([
+        // 購入済の商品を作成
+        $this->createItem([
             'name' => 'testA',
             'item_status' => ItemStatus::SOLD_OUT,
         ]);
 
-        // 1. 商品ページを開く
+        // 商品ページを開く
         $response = $this->get('/');
         $response->assertStatus(200);
 
-        // 2. 購入済み商品を表示する
+        // 購入済み商品を表示する
         $response->assertSee('testA');
 
-        // 購入済み商品は「Sold」と表示される
+        // 購入済み商品に「Sold」のラベルが表示される
         $response->assertSee('item-card__sold-label');
     }
 
+    /**
+     * 自分が出品した商品は表示されない
+     */
     public function test_items_created_by_logged_in_user_are_not_displayed()
     {
-        // ログインユーザーを作成
-        /** @var \App\Models\User $user */
-        $user = User::factory()->create();
+        // ユーザーを2人作成（User1 = ログインユーザー、User2 = 他の出品者）
+        $user1 = $this->createUser();
+        $user2 = $this->createUser();
 
-        // ログインユーザーが出品した商品を作成
-        Item::factory()->create([
+        // User1が出品した商品を作成
+        $this->createItem([
             'name' => 'MyItem',
-            'user_id' => $user->id,
+            'user_id' => $user1->id,
         ]);
 
         // 他のユーザーが出品した商品を作成
         Item::factory()->create([
             'name' => 'OtherItem',
+            'user_id' => $user2->id,
         ]);
 
-        // 1. ユーザーにログインをする
-        $this->actingAs($user);
-
-        // 2. 商品ページを開く
+        // User1でログインして、商品ページを開く
+        $this->actingAs($user1);
         $response = $this->get('/');
         $response->assertStatus(200);
 
-        // 自分が出品した商品は表示されない
+        // 自分が出品した商品が一覧に表示されない
         $response->assertDontSee('MyItem');
         $response->assertSee('OtherItem');
     }
