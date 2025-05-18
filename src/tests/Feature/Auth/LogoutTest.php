@@ -16,13 +16,16 @@ class LogoutTest extends TestCase
      */
     public function test_user_can_logout_successfully()
     {
-        // ログインユーザー作成、ログイン後にログアウトする
+        // ログインユーザー作成
         $user = $this->loginUser();
 
+        // ログアウトする
         $response = $this->post('/logout');
-        $response->assertRedirect('/');
 
         // ログアウト処理が実行される
         $this->assertGuest();
+
+        // ログアウト後のリダイレクト先確認
+        $response->assertRedirect('/');
     }
 }
