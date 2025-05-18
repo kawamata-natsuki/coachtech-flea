@@ -36,7 +36,6 @@
           args:
             USER_ID: ${UID}
             GROUP_ID: ${GID}
-        user: "${UID}:${GID}"
 
       phpmyadmin:
         ports:
