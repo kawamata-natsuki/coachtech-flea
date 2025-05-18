@@ -134,7 +134,7 @@ class RegisterTest extends TestCase
             'name' => 'Tanaka Kaanata',
             'email' => 'test@example.com',
         ]);
-        $response->assertRedirect('/mypage/profile');
+        $response->assertRedirect(route('profile.edit'));
 
         // ログイン状態の確認
         $this->assertAuthenticated();
