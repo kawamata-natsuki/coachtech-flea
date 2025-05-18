@@ -60,7 +60,7 @@
             購入手続きへ
           </a>
           @else
-          <span class="purchase-button is-disabled">SOLD OUT</span>
+          <span class="is-disabled item-detail-page__purchase-button-submit">SOLD OUT</span>
           @endif
         </div>
 
