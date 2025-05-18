@@ -3,8 +3,6 @@
 namespace Tests\Feature;
 
 use App\Constants\ItemStatus;
-use App\Models\User;
-use App\Models\Item;
 use Database\Seeders\ConditionSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
