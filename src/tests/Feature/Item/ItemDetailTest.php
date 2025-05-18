@@ -7,15 +7,20 @@ use App\Constants\ConditionConstants;
 use App\Models\Item;
 use App\Models\ItemComment;
 use App\Models\User;
+use App\Repositories\CategoryRepository;
+use App\Repositories\ConditionRepository;
 use Database\Seeders\CategorySeeder;
 use Database\Seeders\ConditionSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
+use Tests\TestHelpers\AuthTestHelper;
+use Tests\TestHelpers\ItemTestHelper;
 
 class ItemDetailTest extends TestCase
 {
     use RefreshDatabase;
+    use AuthTestHelper;
+    use ItemTestHelper;
 
     protected function setUp(): void
     {
@@ -24,27 +29,30 @@ class ItemDetailTest extends TestCase
         $this->seed(CategorySeeder::class);
     }
 
+    /**
+     * 必要な情報が表示される（商品画像、商品名、ブランド名、価格、いいね数、コメント数、商品説明、商品情報（カテゴリ、商品の状態）、コメント数、コメントしたユーザー情報、コメント内容）
+     */
     public function test_item_detail_displays_required_information()
-    // 必要な情報が表示される（商品画像、商品名、ブランド名、価格、いいね数、コメント数、商品説明、商品情報（カテゴリ、商品の状態）、コメント数、コメントしたユーザー情報、コメント内容）
     {
         // ユーザーを複数作成
-        /** @var \App\Models\User $user */
-        $user1 = User::factory()->create();
-        $user2 = User::factory()->create();
-        $user3 = User::factory()->create();
+        $user1 = $this->createUser();
+        $user2 = $this->createUser();
+        $user3 = $this->createUser();
 
         // 商品データを作成
-        $item = Item::factory()->create([
+        $item = $this->createItem([
             'item_image' => 'dummy.jpg',
             'name' => 'test',
             'brand' => 'BRAND',
             'price' => 1000,
             'description' => 'This is test item.',
             'user_id' => $user1->id,
-            'condition_id' => ConditionConstants::codeToId(ConditionConstants::GOOD),
+            'condition_id' => ConditionRepository::getIdByCode(ConditionConstants::GOOD),
         ]);
 
-        $categoryIds = CategoryConstants::codesToIds([CategoryConstants::BOOK]);
+        // カテゴリを商品に紐づけ
+        $categoryCodes = [CategoryConstants::BOOK];
+        $categoryIds = CategoryRepository::getIdsByCodes($categoryCodes);
         $item->categories()->attach($categoryIds);
 
         // 作成した商品にいいねを追加（3ユーザー）
@@ -67,7 +75,7 @@ class ItemDetailTest extends TestCase
             ]);
         }
 
-        // 1. 商品詳細ページを開く
+        //  商品詳細ページを開く
         $response = $this->get(route('items.show', $item->id));
         $response->assertStatus(200);
 
@@ -82,7 +90,7 @@ class ItemDetailTest extends TestCase
         $response->assertSee(CategoryConstants::label(CategoryConstants::BOOK));
         $response->assertSee(ConditionConstants::label(ConditionConstants::GOOD));
         $response->assertSee('(4)'); // コメントの数
-        $response->assertSee('images/default-profile.svg'); // コメントしたユーザーのプロフィール画像
+        $response->assertSee('images/icons/default-profile.svg'); // コメントしたユーザーのプロフィール画像
         $response->assertSee($user1->name); // コメントしたユーザー名
         $response->assertDontSee($user2->name); // コメントしていないユーザー
         $response->assertDontSee($user3->name); // コメントしていないユーザー
@@ -92,21 +100,21 @@ class ItemDetailTest extends TestCase
         $response->assertSee('HELLO!');
     }
 
+    /**
+     * 複数選択されたカテゴリが表示されているか
+     */
     public function test_multiple_categories_are_displayed_in_item_detail()
-    // 複数選択されたカテゴリが表示されているか
     {
-        // ユーザー作成
-        $user = User::factory()->create();
-
-        // 商品データ作成
-        $item = Item::factory()->create();
+        // ログインユーザーと商品データを作成
+        $user = $this->loginUser();
+        $item = $this->createItem();
 
         // 複数カテゴリを紐づけ
         $categoryCodes = [CategoryConstants::BOOK, CategoryConstants::GAME];
-        $categoryIds = CategoryConstants::codesToIds($categoryCodes);
+        $categoryIds = CategoryRepository::getIdsByCodes($categoryCodes);
         $item->categories()->attach($categoryIds);
 
-        // 1. 商品詳細ページを開く
+        // 商品詳細ページを開く
         $response = $this->get(route('items.show', $item->id));
         $response->assertStatus(200);
 
