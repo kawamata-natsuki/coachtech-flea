@@ -3,15 +3,15 @@
 ## 環境構築
 1. リポジトリをクローン 
     ```bash
-    `git clone git@github.com:kawamata-natsuki/coachtech-flea.git`
+    git clone git@github.com:kawamata-natsuki/coachtech-flea.git
     ```
 2. `.env`ファイルの準備
     ```bash
-    `cp .env.docker.example .env`
+    cp .env.docker.example .env
     ```
     ※`.env`ファイルはDocker用の設定ファイルです。
       自分の環境に合わせて`.env`の`UID/GID`を設定してください。
-    ※Linux/macOSの場合、以下のコマンドで確認できます：
+    ※自分の UID / GID は以下のコマンドで確認できます：
       ```bash
       id -u  # UID
       id -g  # GID
@@ -20,21 +20,27 @@
 3. `docker-compose.override.yml`の作成
 
     ```bash
-    `touch docker-compose.override.yml`
+    touch docker-compose.override.yml
     ```
-    ※`docker-compose.override.yml`はGit管理対象外なので、各自の環境に合わせて作成してください。
+    ※`docker-compose.override.yml`はGit管理対象外なので、各自の環境に合わせて作成・調整してください。
     ```yaml
     services:
       nginx:
         ports:
-          - "8084:80"
+          - "8090:80" # ローカル環境でポートが競合する場合に各自調整
 
       php:
-        user: "${UID}:${GID}"
+        build:
+          context: ./docker/php
+          dockerfile: Dockerfile
+          args:
+            USER_ID: ${UID}　# ホスト側のユーザーID
+            GROUP_ID: ${GID}　# ホスト側のグループID
+        user: "${UID}:${GID}"　# ファイルの権限トラブル防止のため
 
       phpmyadmin:
         ports:
-          - 8085:80
+          - 8091:80　# phpMyAdmin のポートも競合しないよう変更
     ```
 
 4. Dockerイメージのビルドと起動
