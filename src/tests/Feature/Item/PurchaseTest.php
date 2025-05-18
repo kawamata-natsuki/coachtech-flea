@@ -2,17 +2,20 @@
 
 namespace Tests\Feature;
 
-use App\Models\Item;
+use App\Constants\PaymentMethodConstants;
 use App\Models\PaymentMethod;
-use App\Models\User;
 use Database\Seeders\CategorySeeder;
 use Database\Seeders\ConditionSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
+use Tests\TestHelpers\AuthTestHelper;
+use Tests\TestHelpers\ItemTestHelper;
 
 class PurchaseTest extends TestCase
 {
     use RefreshDatabase;
+    use AuthTestHelper;
+    use ItemTestHelper;
 
     protected string $paymentMethodCode;
 
@@ -22,33 +25,29 @@ class PurchaseTest extends TestCase
         $this->seed(ConditionSeeder::class);
         $this->seed(CategorySeeder::class);
 
-        $this->paymentMethodCode = 'credit_card';
+        $this->paymentMethodCode = PaymentMethodConstants::CREDIT_CARD;
 
         // テスト用の支払方法を登録
         PaymentMethod::create([
-            'code' => 'credit_card',
-            'name' => 'カード支払い',
+            'code' => PaymentMethodConstants::CREDIT_CARD,
+            'name' => PaymentMethodConstants::label(PaymentMethodConstants::CREDIT_CARD),
         ]);
     }
 
+    /**
+     * 「購入する」ボタンを押下すると購入が完了する
+     */
     public function test_user_can_purchase_item_successfully()
-    // 「購入する」ボタンを押下すると購入が完了する
     {
-        // ログインユーザーを作成する
-        /** @var \App\Models\User $user */
-        $user = User::factory()->create();
+        // ログインユーザーと商品データを作成
+        $user = $this->loginUser();
+        $item = $this->createItem();
 
-        // 商品データを作成
-        $item = Item::factory()->create();
-
-        // 1. ユーザーにログインする
-        $this->actingAs($user);
-
-        // 2. 商品購入画面を開く 
+        // 商品購入画面を開く 
         $response = $this->get(route('purchase.show', ['item' => $item->id]));
         $response->assertStatus(200);
 
-        // 3. 商品を選択して「購入する」ボタンを押下
+        // 商品を選択して「購入する」ボタンを押下
         $response = $this
             ->withSession(['purchase.payment_method' => $this->paymentMethodCode])
             ->get(route('purchase.success', ['item' => $item->id]));
@@ -65,24 +64,20 @@ class PurchaseTest extends TestCase
         ]);
     }
 
+    /**
+     * 購入した商品は商品一覧画面にて「sold」と表示される
+     */
     public function test_purchased_item_is_displayed_as_sold_on_item_list()
-    // 購入した商品は商品一覧画面にて「sold」と表示される
     {
-        // ログインユーザーを作成
-        /** @var \App\Models\User $user */
-        $user = User::factory()->create();
+        // ログインユーザーと商品データを作成
+        $user = $this->loginUser();
+        $item = $this->createItem();
 
-        // 商品データを作成
-        $item = Item::factory()->create();
-
-        // 1. ユーザーにログインする
-        $this->actingAs($user);
-
-        // 2. 商品購入画面を開く
+        // 商品購入画面を開く
         $response = $this->get(route('purchase.show', ['item' => $item->id]));
         $response->assertStatus(200);
 
-        // 3. 商品を選択して「購入する」ボタンを押下
+        // 商品を選択して「購入する」ボタンを押下
         $response = $this
             ->withSession(['purchase.payment_method' => $this->paymentMethodCode])
             ->get(route('purchase.success', ['item' => $item->id]));
@@ -98,7 +93,7 @@ class PurchaseTest extends TestCase
             'shipping_building' => $user->building,
         ]);
 
-        // 4. 商品一覧画面を表示する
+        // 商品一覧画面を表示する
         $response = $this->get('/');
         $response->assertStatus(200);
 
@@ -106,24 +101,20 @@ class PurchaseTest extends TestCase
         $response->assertSee('item-card__sold-label');
     }
 
+    /**
+     * 「プロフィール/購入した商品一覧」に追加されている
+     */
     public function test_purchased_item_is_listed_in_user_profile_purchases()
-    // 「プロフィール/購入した商品一覧」に追加されている
     {
-        // ログインユーザーを作成
-        /** @var \App\Models\User $user */
-        $user = User::factory()->create();
+        // ログインユーザーと商品データを作成
+        $user = $this->loginUser();
+        $item = $this->createItem();
 
-        // 商品データを作成
-        $item = Item::factory()->create();
-
-        // 1. ユーザーにログインする
-        $this->actingAs($user);
-
-        // 2. 商品購入画面を開く 
+        // 商品購入画面を開く 
         $response = $this->get(route('purchase.show', ['item' => $item->id]));
         $response->assertStatus(200);
 
-        // 3. 商品を選択して「購入する」ボタンを押下
+        // 商品を選択して「購入する」ボタンを押下
         $response = $this
             ->withSession(['purchase.payment_method' => $this->paymentMethodCode])
             ->get(route('purchase.success', ['item' => $item->id]));
@@ -139,7 +130,7 @@ class PurchaseTest extends TestCase
             'shipping_building' => $user->building,
         ]);
 
-        // 4. プロフィール画面を表示する
+        // プロフィール画面を表示する
         $response = $this->get(route('profile.index', ['page' => 'buy']));
         $response->assertStatus(200);
 
