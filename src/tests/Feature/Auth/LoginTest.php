@@ -2,14 +2,16 @@
 
 namespace Tests\Feature;
 
-use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Hash;
 use Tests\TestCase;
+use Tests\TestHelpers\AuthTestHelper;
 
 class LoginTest extends TestCase
 {
     use RefreshDatabase;
+    use AuthTestHelper;
+
 
     public function test_login_fails_when_email_is_empty()
     {
@@ -69,13 +71,13 @@ class LoginTest extends TestCase
     {
         // 正しい情報が入力された場合、ログイン処理が実行される
 
-        // ログインユーザー作成
-        $user = User::factory()->create([
+        // ゲストユーザー作成
+        $user = $this->createUser([
             'email' => 'test@example.com',
             'password' => Hash::make('password1234'),
         ]);
 
-        // ログインページを開いて、正しい情報でログインを試みる
+        // ログインページを開いて、正しい情報でログイン試行
         $response = $this->get('/login');
         $response->assertStatus(200);
         $response = $this->post('/login', [
