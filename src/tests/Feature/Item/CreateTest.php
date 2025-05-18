@@ -12,9 +12,6 @@ use Illuminate\Http\UploadedFile;
 use Tests\TestCase;
 use Tests\TestHelpers\AuthTestHelper;
 
-/**
- * 商品出品画面にて必要な情報が保存できること（カテゴリ、商品の状態、商品名、商品の説明、販売価格）
- */
 class CreateTest extends TestCase
 {
     use RefreshDatabase;
@@ -27,6 +24,9 @@ class CreateTest extends TestCase
         $this->seed(ConditionSeeder::class);
     }
 
+    /**
+     * 商品出品画面にて必要な情報が保存できること（カテゴリ、商品の状態、商品名、商品の説明、販売価格）
+     */
     public function test_user_can_register_item_information()
     {
         // ログインユーザーを作成
