@@ -7,12 +7,15 @@ use App\Models\User;
 use Database\Seeders\CategorySeeder;
 use Database\Seeders\ConditionSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
+use Tests\TestHelpers\AuthTestHelper;
+use Tests\TestHelpers\ItemTestHelper;
 
 class FavoriteTest extends TestCase
 {
     use RefreshDatabase;
+    use AuthTestHelper;
+    use ItemTestHelper;
 
     protected function setUp(): void
     {
@@ -21,18 +24,15 @@ class FavoriteTest extends TestCase
         $this->seed(CategorySeeder::class);
     }
 
+    /**
+     * いいねアイコンを押下することによって、いいねした商品として登録することができる。
+     */
     public function test_user_can_like_an_item()
-    // いいねアイコンを押下することによって、いいねした商品として登録することができる。
+    // 
     {
-        // ログインユーザーを作成
-        /** @var \App\Models\User $user */
-        $user = User::factory()->create();
-
-        // 商品データを作成
-        $item = Item::factory()->create();
-
-        // 1. ユーザーにログインする
-        $this->actingAs($user);
+        // ログインユーザーと商品データを作成
+        $user = $this->loginUser();
+        $item = $this->createItem();
 
         // 2. 商品詳細ページを開く
         $response = $this->get(route('items.show', ['item' => $item->id]));
@@ -48,28 +48,24 @@ class FavoriteTest extends TestCase
             'item_id' => $item->id,
         ]);
 
+        // いいねの数が1であることを確認
         $response = $this->get(route('items.show', $item->id));
+        $this->assertEquals(1, $item->fresh()->favorites()->count());
         $response->assertSeeText('1');
     }
 
     public function test_like_icon_changes_after_liking()
     // 追加済みのアイコンは色が変化する
     {
-        // ログインユーザーを作成
-        /** @var \App\Models\User $user */
-        $user = User::factory()->create();
+        // ログインユーザーと商品データを作成
+        $user = $this->loginUser();
+        $item = $this->createItem();
 
-        // 商品データを作成
-        $item = Item::factory()->create();
-
-        // 1. ユーザーにログインする
-        $this->actingAs($user);
-
-        // 2. 商品詳細ページを開く
+        // 商品詳細ページを開く
         $response = $this->get(route('items.show', ['item' => $item->id]));
         $response->assertStatus(200);
 
-        // 3. いいねアイコンを押下
+        // いいねアイコンを押下
         $response = $this->post(route('item.favorite.toggle', ['item' => $item->id]));
         $response->assertRedirect();
 
@@ -86,26 +82,20 @@ class FavoriteTest extends TestCase
         $response->assertStatus(200);
 
         // いいねアイコンが押下された状態では色が変化する
-        $response->assertSee('images/liked.svg');
+        $response->assertSee('images/icons/liked.svg');
     }
 
     public function test_user_can_unlike_an_item()
     // 再度いいねアイコンを押下することによって、いいねを解除することができる。
     {
-        // ログインユーザーを作成
-        /** @var \App\Models\User $user */
-        $user = User::factory()->create();
+        // ログインユーザーと商品データを作成
+        $user = $this->loginUser();
+        $item = $this->createItem();
 
-        // 商品データを作成
-        $item = Item::factory()->create();
-
-        // 1. ユーザーにログインする
-        $this->actingAs($user);
-
-        // 2. 商品詳細ページを開く 
+        // 商品詳細ページを開く 
         $response = $this->get(route('items.show', ['item' => $item->id]));
 
-        // 3. いいねアイコンを押下
+        // いいねアイコンを押す
         $response = $this->post(route('item.favorite.toggle', ['item' => $item->id]));
         $response->assertRedirect();
 
@@ -116,11 +106,14 @@ class FavoriteTest extends TestCase
         ]);
 
         // ユーザーをリフレッシュして、リレーションを最新化
-        // 再度商品詳細ページを開いて確認
+        // 再度商品詳細ページを開く
         $user->refresh();
         $response = $this->get(route('items.show', ['item' => $item->id]));
         $response->assertStatus(200);
-        $response->assertSee('images/liked.svg');
+
+        // いいねの数が1であることを確認
+        $response->assertSee('images/icons/liked.svg');
+        $this->assertEquals(1, $item->fresh()->favorites()->count());
         $response->assertSeeText('1');
 
         // 再度いいねアイコンを押下
@@ -129,11 +122,13 @@ class FavoriteTest extends TestCase
 
         // ユーザーをリフレッシュして、リレーションを最新化
         // 再度商品詳細ページを開いて確認
-        // いいねが解除され、いいね合計値が減少表示される
         $user->refresh();
         $response = $this->get(route('items.show', ['item' => $item->id]));
         $response->assertStatus(200);
-        $response->assertSee('images/like.svg');
+
+        // いいねが解除され、いいね合計値が減少表示される
+        $response->assertSee('images/icons/like.svg');
+        $this->assertEquals(0, $item->fresh()->favorites()->count());
         $response->assertSeeText('0');
     }
 }
