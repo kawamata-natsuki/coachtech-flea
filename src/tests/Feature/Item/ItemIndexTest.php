@@ -3,8 +3,6 @@
 namespace Tests\Feature;
 
 use App\Constants\ItemStatus;
-use App\Models\Item;
-use App\Models\User;
 use Database\Seeders\ConditionSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
@@ -87,7 +85,7 @@ class ItemIndexTest extends TestCase
         ]);
 
         // 他のユーザーが出品した商品を作成
-        Item::factory()->create([
+        $this->createItem([
             'name' => 'OtherItem',
             'user_id' => $user2->id,
         ]);

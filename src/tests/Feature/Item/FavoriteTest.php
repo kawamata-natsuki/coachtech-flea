@@ -2,8 +2,6 @@
 
 namespace Tests\Feature;
 
-use App\Models\Item;
-use App\Models\User;
 use Database\Seeders\CategorySeeder;
 use Database\Seeders\ConditionSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;

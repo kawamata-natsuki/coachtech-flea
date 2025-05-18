@@ -4,9 +4,7 @@ namespace Tests\Feature;
 
 use App\Constants\CategoryConstants;
 use App\Constants\ConditionConstants;
-use App\Models\Item;
 use App\Models\ItemComment;
-use App\Models\User;
 use App\Repositories\CategoryRepository;
 use App\Repositories\ConditionRepository;
 use Database\Seeders\CategorySeeder;
