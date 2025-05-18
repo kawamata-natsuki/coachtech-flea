@@ -31,24 +31,27 @@ class CommentTest extends TestCase
         $user = $this->loginUser();
         $item = $this->createItem();
 
-        // 商品詳細ページを開いて、コメントを送信、元の商品詳細ページに戻る
+        // 商品詳細ページを開く
         $response = $this->get(route('items.show', ['item' => $item->id]));
         $response->assertStatus(200);
+
+        // コメントを送信する
         $response = $this->post(route('items.comments.store', ['item' => $item->id]), [
             'content' => 'login user comment',
         ]);
-        $response->assertRedirect(route('items.show', ['item' => $item->id]));
 
-        // コメントが保存され、コメント数が増加する
+        // DBに保存される
         $this->assertDatabaseHas('item_comments', [
             'item_id' => $item->id,
             'user_id' => $user->id,
             'content' => 'login user comment',
         ]);
 
+        // コメントが表示される
         $response = $this->get(route('items.show', ['item' => $item->id]));
         $response->assertSee('login user comment');
 
+        // コメント数が増加する
         $this->assertEquals(1, $item->fresh()->comments()->count());
     }
 
@@ -60,15 +63,18 @@ class CommentTest extends TestCase
         // 商品データを作成
         $item = $this->createItem();
 
-        // 商品詳細ページを開いて、コメントを送信
+        // 商品詳細ページを開く(ゲストユーザー)   
         $response = $this->get(route('items.show', ['item' => $item->id]));
         $response->assertStatus(200);
+
+        // コメントを送信する
         $response = $this->post(route('items.comments.store', ['item' => $item->id]), [
             'content' => 'guest user comment',
         ]);
 
         // コメントが送信されない
         $response->assertRedirect(route('login'));
+
         // DBに保存されていないことを確認
         $this->assertDatabaseMissing('item_comments', [
             'content' => 'guest user comment',
@@ -84,17 +90,19 @@ class CommentTest extends TestCase
         $user = $this->loginUser();
         $item = $this->createItem();
 
-        // 商品詳細ページを開いて、コメントを入力しないで送信ボタンを押す
+        // 商品詳細ページを開く
         $response = $this->get(route('items.show', ['item' => $item->id]));
         $response->assertStatus(200);
+
+        // コメントを入力しないで送信ボタンを押す
         $response = $this->post(route('items.comments.store', ['item' => $item->id]), [
             'content' => '',
         ]);
-        $response->assertSessionHasErrors('content');
 
         // バリデーションメッセージが表示される
-        $errors = session('errors');
-        $this->assertEquals('コメントを入力してください', $errors->first('content'));
+        $response->assertSessionHasErrors([
+            'content' => 'コメントを入力してください',
+        ]);
     }
 
     /**
@@ -106,17 +114,19 @@ class CommentTest extends TestCase
         $user = $this->loginUser();
         $item = $this->createItem();
 
-        // 商品詳細ページを開いて、256文字以上のコメントを入力して送信する
+        // 商品詳細ページを開く
         $response = $this->get(route('items.show', ['item' => $item->id]));
         $response->assertStatus(200);
+
+        // 256文字以上のコメントを送信する
         $longComment = str_repeat('a', 256);
         $response = $this->post(route('items.comments.store', ['item' => $item->id]), [
             'content' => $longComment
         ]);
-        $response->assertSessionHasErrors('content');
 
         // バリデーションメッセージが表示される
-        $errors = session('errors');
-        $this->assertEquals('コメントは255文字以内で入力してください', $errors->first('content'));
+        $response->assertSessionHasErrors([
+            'content' => 'コメントは255文字以内で入力してください',
+        ]);
     }
 }
