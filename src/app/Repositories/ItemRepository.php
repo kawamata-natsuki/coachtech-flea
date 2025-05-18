@@ -22,12 +22,13 @@ class ItemRepository
   }
 
   // マイリストに表示する商品を取得
-  // - 自分が「いいね」した商品を対象にする
+  // - 自分以外の商品で「いいね」した商品を対象にする
   // - 2文字以上の検索ワードがあれば、部分一致で絞り込み
   // - いいねした日時の降順で並び替え
   public function getFavoriteItems($keyword, $user)
   {
     return $user->favoriteItems()
+      ->where('items.user_id', '!=', $user->id)
       ->when(mb_strlen($keyword) >= 2, fn($query) => $query->where('items.name', 'like', "%{$keyword}%"))
       ->withCount('favorites')
       ->orderBy('item_favorites.created_at', 'desc')
