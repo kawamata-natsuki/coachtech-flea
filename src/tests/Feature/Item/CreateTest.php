@@ -36,7 +36,7 @@ class CreateTest extends TestCase
         $response = $this->get(route('items.create'));
         $response->assertStatus(200);
 
-        // 出品商品のデータ
+        // 出品商品のデータを準備
         $file = UploadedFile::fake()->image('dummy.jpg');
         $data = [
             'name' => 'testItem',
@@ -47,12 +47,12 @@ class CreateTest extends TestCase
             'category_codes' => [CategoryConstants::BOOK],
         ];
 
-        // 商品を出品する
+        // 商品を出品、フラッシュメッセージとともに商品一覧ページへ戻る
         $response = $this->post(route('items.store'), $data);
         $response->assertRedirect(route('items.index'));
         $response->assertSessionHas('success');
 
-        // items テーブルに保存されていることを確認
+        // 各項目が正しく保存されている
         $this->assertDatabaseHas('items', [
             'name' => 'testItem',
             'price' => 1000,
