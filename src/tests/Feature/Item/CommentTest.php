@@ -53,6 +53,7 @@ class CommentTest extends TestCase
 
         // コメント数が増加する
         $this->assertEquals(1, $item->fresh()->comments()->count());
+        $response->assertSeeText('1');
     }
 
     /**
