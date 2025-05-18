@@ -34,13 +34,13 @@
           context: ./docker/php
           dockerfile: Dockerfile
           args:
-            USER_ID: ${UID}　# ホスト側のユーザーID
-            GROUP_ID: ${GID}　# ホスト側のグループID
-        user: "${UID}:${GID}"　# ファイルの権限トラブル防止のため
+            USER_ID: ${UID}
+            GROUP_ID: ${GID}
+        user: "${UID}:${GID}"
 
       phpmyadmin:
         ports:
-          - 8091:80　# phpMyAdmin のポートも競合しないよう変更
+          - 8091:80 # ローカル環境でポートが競合する場合に各自調整
     ```
 
 4. Dockerイメージのビルドと起動

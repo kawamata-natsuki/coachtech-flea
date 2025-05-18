@@ -1,6 +1,6 @@
 services:
   nginx:
-    image: nginx:latest
+    image: nginx:1.25
     ports:
       - "80:80"
     volumes:
@@ -10,7 +10,12 @@ services:
       - php
 
   php:
-    image: php:8.2-fpm
+    build:
+      context: ./docker/php
+      dockerfile: Dockerfile
+      args:
+        USER_ID: ${UID}
+        GROUP_ID: ${GID}
     volumes:
       - ./src:/var/www/
 
