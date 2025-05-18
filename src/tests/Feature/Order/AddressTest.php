@@ -28,7 +28,6 @@ class AddressTest extends TestCase
         $this->seed(PaymentMethodSeeder::class);
 
         // テスト用の支払方法を登録
-        $this->seed(PaymentMethodSeeder::class);
         $this->paymentMethodCode = PaymentMethodConstants::CREDIT_CARD;
     }
 
