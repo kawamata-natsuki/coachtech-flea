@@ -17,9 +17,11 @@ class LoginTest extends TestCase
      */
     public function test_login_fails_when_email_is_empty()
     {
-        // ログインページを開いて、メールアドレスなしでログインを試みる
+        // ログインページを開く
         $response = $this->get('/login');
         $response->assertStatus(200);
+
+        // メールアドレス入力なしでログイン試行
         $response = $this->post('/login', [
             'email' => '',
             'password' => 'password1234',
@@ -36,9 +38,11 @@ class LoginTest extends TestCase
      */
     public function test_login_fails_when_password_is_empty()
     {
-        // ログインページを開いて、パスワードなしでログインを試みる
+        // ログインページを開く
         $response = $this->get('/login');
         $response->assertStatus(200);
+
+        // パスワード入力なしでログイン試行
         $response = $this->post('/login', [
             'email' => 'test@example.com',
             'password' => '',
@@ -55,9 +59,11 @@ class LoginTest extends TestCase
      */
     public function test_login_fails_with_invalid_credentials()
     {
-        // ログインページを開いて、誤った情報でログインを試みる
+        // ログインページを開く
         $response = $this->get('/login');
         $response->assertStatus(200);
+
+        //誤った情報を入力してログイン試行
         $response = $this->post('/login', [
             'email' => 'notest@example.com',
             'password' => 'pass1234'
@@ -80,18 +86,20 @@ class LoginTest extends TestCase
             'password' => Hash::make('password1234'),
         ]);
 
-        // ログインページを開いて、正しい情報でログイン試行
+        // ログインページを開く
         $response = $this->get('/login');
         $response->assertStatus(200);
+
+        //正しい情報を入力してログイン試行
         $response = $this->post('/login', [
             'email' => 'test@example.com',
             'password' => 'password1234',
         ]);
 
-        // ログイン後のリダイレクト先を確認
-        $response->assertRedirect('/');
-
         // ログイン処理が実行される
         $this->assertAuthenticatedAs($user);
+
+        // ログイン後のリダイレクト先を確認
+        $response->assertRedirect('/');
     }
 }
