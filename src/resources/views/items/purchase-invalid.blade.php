@@ -15,7 +15,7 @@
 
     <div class="purchase-invalid-page__button">
       <a href="{{ route('items.index') }}" class="purchase-invalid-page__button--primary">
-        商品一覧に戻る
+        トップページへ戻る
       </a>
     </div>
   </div>
