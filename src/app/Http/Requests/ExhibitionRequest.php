@@ -24,7 +24,7 @@ class ExhibitionRequest extends FormRequest
             'category_codes.*' => ['required', 'distinct', Rule::in(CategoryConstants::all()), 'string'],
             'condition_code' => ['required', Rule::in(ConditionConstants::all()), 'string'],
             'price' => ['required', 'integer', 'min:0', 'max:9999999'],
-            'brand' => ['nullable', 'string', 'max:100']
+            'brand' => ['nullable', 'max:100', 'string']
         ];
     }
 
