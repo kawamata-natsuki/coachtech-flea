@@ -15,8 +15,8 @@
 }
 
 .register-page__heading {
-  padding-top: 0;
-  padding-bottom: 0;
+  padding-top: 24px;
+  padding-bottom: 48px;
 }
 
 .register-page__content {
@@ -100,6 +100,8 @@
   }
 
   .register-page__heading {
+    padding-top: 20px;
+    padding-bottom: 40px;
     font-size: 24px;
   }
 
