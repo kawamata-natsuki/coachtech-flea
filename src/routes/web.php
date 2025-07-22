@@ -3,11 +3,13 @@
 use App\Http\Controllers\Auth\EmailVerificationController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
+use App\Http\Controllers\ChatMessageController;
 use App\Http\Controllers\ItemController;
 use App\Http\Controllers\FavoriteController;
 use App\Http\Controllers\ItemCommentController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\ReviewController;
 use Illuminate\Support\Facades\Route;
 
 // -----------------------------------------------------
@@ -63,4 +65,13 @@ Route::middleware(['auth', 'verified'])->group(function () {
     // いいね・コメント機能
     Route::post('/item/{item}/favorite', [FavoriteController::class, 'toggle'])->name('item.favorite.toggle');
     Route::post('/items/{item}/comments', [ItemCommentController::class, 'store'])->name('items.comments.store');
+
+    // レビュー機能
+    Route::post('/orders/{order}/reviews', [ReviewController::class, 'store'])->name('reviews.store');
+
+    // 取引チャット機能
+    Route::get('/orders/{order}/chat', [ChatMessageController::class, 'index'])->name('chat.index');
+    Route::post('/orders/{order}/chat', [ChatMessageController::class, 'store'])->name('chat.store');
+    Route::put('/chat/{message}', [ChatMessageController::class, 'update'])->name('chat.update');
+    Route::delete('/chat/{message}', [ChatMessageController::class, 'destroy'])->name('chat.destroy');
 });
