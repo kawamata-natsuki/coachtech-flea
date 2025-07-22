@@ -16,6 +16,7 @@ class CreateOrdersTable extends Migration
             $table->string('shipping_postal_code'); // 送付先住所（郵便番号）
             $table->string('shipping_address'); // 送付先住所
             $table->string('shipping_building')->nullable(); // 送付先住所（建物名）
+            $table->string('order_status')->default('pending');
             $table->timestamps();
 
             // 外部キー制約
