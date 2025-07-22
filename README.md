@@ -60,10 +60,9 @@
 
 5. Laravel のセットアップ
 
-    PHP コンテナに入って、 Composer をインストールします：
+    Laravel の依存パッケージをインストールします：
     ```bash
-    docker-compose exec php bash
-    composer install
+    docker-compose exec php composer install
     ```
 <br>
 
