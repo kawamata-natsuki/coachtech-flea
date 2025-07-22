@@ -40,6 +40,18 @@ class User extends Authenticatable implements MustVerifyEmail
             : asset('images/icons/default-profile.svg');
     }
 
+    // ユーザーが受けたレビューの平均値（小数点あり）
+    public function averageRating()
+    {
+        return $this->reviewsReceived()->avg('rating');
+    }
+    // ユーザーが受けたレビューの平均値（四捨五入した整数）
+    public function roundedRating()
+    {
+        $avg = $this->averageRating();
+        return $avg !== null ? round($avg) : null;
+    }
+
     // リレーション
     public function favoriteItems()
     {
