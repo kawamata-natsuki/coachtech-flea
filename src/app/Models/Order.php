@@ -17,6 +17,7 @@ class Order extends Model
         'shipping_postal_code',
         'shipping_address',
         'shipping_building',
+        'order_status',
     ];
 
     // リレーション
@@ -33,5 +34,15 @@ class Order extends Model
     public function paymentMethod()
     {
         return $this->belongsTo(PaymentMethod::class, 'payment_method_id');
+    }
+
+    public function reviews()
+    {
+        return $this->hasMany(Review::class, 'order_id');
+    }
+
+    public function chatMessages()
+    {
+        return $this->hasMany(ChatMessage::class, 'order_id');
     }
 }
