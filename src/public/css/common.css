@@ -188,47 +188,43 @@ button {
   max-width: 100%;
   max-height: 100%;
   object-fit: contain;
-  display: block;
   transition: opacity 0.3s;
   border-radius: 4px;
 }
 
 /* SOLD状態の画像を暗くする */
 .item-card__img--sold {
-  filter: grayscale(20%) brightness(60%);
+  filter: grayscale(20%) brightness(50%);
 }
 
-.item-card__sold-label {
+/* 中央にSOLD OUT表示 */
+.item-card__sold-overlay {
   position: absolute;
-  top: 0;
-  left: 0;
-  width: 0;
-  height: 0;
-  border-top: 100px solid red;
-  border-right: 100px solid transparent;
-  z-index: 10;
-  pointer-events: none;
-}
-
-.item-card__sold-label::after {
-  content: 'SOLD';
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 141px;
-  height: 30px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: white;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: rgba(0, 0, 0, 0.7);
+  color: #fff;
+  font-size: clamp(0.9rem, 1.5vw, 1.2rem);
   font-weight: bold;
-  font-size: 20px;
-  transform: rotate(-45deg);
-  transform-origin: top left;
-  z-index: 11;
-  pointer-events: none;
-  margin-top: -25px;
-  margin-left: -25px;
+  padding: 6px 12px;
+  border-radius: 4px;
+  text-transform: uppercase;
+  z-index: 5;
+}
+
+/* チャット未読アイコン */
+.item-card__badge {
+  position: absolute;
+  top: 6px;
+  right: 6px;
+  background: red;
+  color: #fff;
+  font-size: 12px;
+  font-weight: bold;
+  padding: 2px 6px;
+  border-radius: 50%;
+  z-index: 15;
 }
 
 /* ===============================
