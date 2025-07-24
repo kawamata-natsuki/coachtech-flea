@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Constants\OrderStatusConstants;
 use App\Http\Requests\AddressRequest;
 use App\Http\Requests\ProfileRequest;
 use App\Models\Item;
@@ -15,12 +16,20 @@ class UserController extends Controller
     {
         $user = auth()->user();
         $page = $request->query('page', 'sell');
-        // 出品商品を新しい順に取得
+        // 出品商品（新しい順）
         $sellingItems = $user->items()->orderBy('created_at', 'desc')->get();
-        // 購入履歴も新しい順に取得
+
+        // 購入商品（新しい順）
         $purchasedItems = $user->orders()->with('item')->orderBy('created_at', 'desc')->get();
 
-        return view('user.profile', compact('user', 'page', 'sellingItems', 'purchasedItems'));
+        // 取引中の商品（order_statusが完了以外）
+        $tradingItems = $user->orders()
+            ->where('order_status', '!=', OrderStatusConstants::COMPLETED)
+            ->with('item')
+            ->orderBy('created_at', 'desc')
+            ->get();
+
+        return view('user.profile', compact('user', 'page', 'sellingItems', 'purchasedItems', 'tradingItems'));
     }
 
     // プロフィール編集画面の表示
