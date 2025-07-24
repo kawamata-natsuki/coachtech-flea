@@ -1,7 +1,7 @@
-@props(['item'])
+@props(['item', 'link' => null])
 
 <div class="item-card">
-  <a href="{{ route('items.show', ['item' => $item->id]) }}">
+  <a href="{{ $link ?? route('items.show', ['item' => $item->id]) }}">
     <!-- 商品画像 -->
     <x-item-image :item="$item" />
 
