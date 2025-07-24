@@ -20,6 +20,15 @@ class Order extends Model
         'order_status',
     ];
 
+    // 未読チャットをカウントする処理
+    public function getUnreadCountAttribute()
+    {
+        return $this->chatMessages()
+            ->where('user_id', '!=', auth()->id())
+            ->where('is_read', false)
+            ->count();
+    }
+
     // リレーション
     public function item()
     {
