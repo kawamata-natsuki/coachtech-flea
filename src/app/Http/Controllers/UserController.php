@@ -16,20 +16,63 @@ class UserController extends Controller
     {
         $user = auth()->user();
         $page = $request->query('page', 'sell');
+
         // 出品商品（新しい順）
-        $sellingItems = $user->items()->orderBy('created_at', 'desc')->get();
-
-        // 購入商品（新しい順）
-        $purchasedItems = $user->orders()->with('item')->orderBy('created_at', 'desc')->get();
-
-        // 取引中の商品（order_statusが完了以外）
-        $tradingItems = $user->orders()
-            ->where('order_status', '!=', OrderStatusConstants::COMPLETED)
-            ->with('item')
-            ->orderBy('created_at', 'desc')
+        $sellingItems = $user->items()
+            ->latest()
             ->get();
 
-        return view('user.profile', compact('user', 'page', 'sellingItems', 'purchasedItems', 'tradingItems'));
+        // 購入商品（新しい順）
+        $purchasedItems = $user->orders()
+            ->with('item')
+            ->latest()
+            ->get();
+
+        // 購入者の取引中の商品
+        $buyerTradingItems = $user->orders()
+            ->where('order_status', '!=', OrderStatusConstants::COMPLETED)
+            ->with(['item', 'chatMessages' => fn($q) => $q->latest()])
+            ->withCount([
+                'chatMessages as unread_count' => fn($q) => $q->where('is_read', 0)
+            ])
+            ->get();
+
+        // 出品者の取引中商品
+        $sellerTradingItems = $user->items()
+            ->whereHas('order', fn($q) => $q->where('order_status', '!=', OrderStatusConstants::COMPLETED))
+            ->with(['order.chatMessages' => fn($q) => $q->latest()])
+            ->get()
+            ->map(function ($item) {
+                // 出品者側の未読数を計算（必要に応じて）
+                $item->unread_count = $item->order
+                    ? $item->order->chatMessages->where('is_read', 0)->count()
+                    : 0;
+                return $item;
+            });
+
+        // 購入者・出品者をマージ
+        $tradingItems = $buyerTradingItems->merge($sellerTradingItems);
+
+        // 新着メッセージ順でソート
+        $tradingItems = $tradingItems->sortByDesc(
+            function ($entry) {
+                // $entryがOrderかItemかで処理を分ける
+                if ($entry instanceof \App\Models\Order) {
+                    return optional($entry->chatMessages->first())->created_at;
+                } elseif ($entry instanceof \App\Models\Item && $entry->order) {
+                    return optional($entry->order->chatMessages->first())->created_at;
+                }
+                return null;
+            }
+        );
+
+        return view('user.profile', compact(
+            'user',
+            'page',
+            'sellingItems',
+            'purchasedItems',
+            'tradingItems'
+        ));
     }
 
     // プロフィール編集画面の表示
