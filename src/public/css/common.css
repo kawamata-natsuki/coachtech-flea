@@ -184,6 +184,7 @@ button {
 }
 
 .item-card__img {
+  position: relative;
   display: block;
   max-width: 100%;
   max-height: 100%;
@@ -205,9 +206,10 @@ button {
   transform: translate(-50%, -50%);
   background-color: rgba(0, 0, 0, 0.7);
   color: #fff;
-  font-size: clamp(0.9rem, 1.5vw, 1.2rem);
-  font-weight: bold;
+  font-size: clamp(1rem, 1.7vw, 1.3rem);
+  font-weight: 900;
   padding: 6px 12px;
+  border: 2px solid #fff;
   border-radius: 4px;
   text-transform: uppercase;
   z-index: 5;
@@ -216,15 +218,19 @@ button {
 /* チャット未読アイコン */
 .item-card__badge {
   position: absolute;
-  top: 6px;
-  right: 6px;
+  top: 3px;
+  left: 3px;
   background: red;
   color: #fff;
-  font-size: 12px;
+  font-size: 20px;
   font-weight: bold;
-  padding: 2px 6px;
+  width: 40px;
+  height: 40px;
+  line-height: 40px;
+  text-align: center;
   border-radius: 50%;
-  z-index: 15;
+  z-index: 20;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
 }
 
 /* ===============================
