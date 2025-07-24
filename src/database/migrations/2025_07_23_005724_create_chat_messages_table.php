@@ -14,6 +14,7 @@ class CreateChatMessagesTable extends Migration
             $table->unsignedBigInteger('user_id');
             $table->text('message');
             $table->string('chat_image')->nullable();
+            $table->boolean('is_read')->default(false);
             $table->softDeletes();
             $table->timestamps();
 
