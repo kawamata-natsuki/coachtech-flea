@@ -33,6 +33,9 @@
           <li class="profile-page__tab {{ request('page') === 'buy' ? 'is-active' : '' }}">
             <a class="profile-page__link" href="{{ route('profile.index', ['page' => 'buy']) }}">購入した商品</a>
           </li>
+          <li class="profile-page__tab {{ request('page') === 'trading' ? 'is-active' : '' }}">
+            <a class="profile-page__link" href="{{ route('profile.index', ['page' => 'trading']) }}">取引中の商品</a>
+          </li>
         </ul>
       </div>
     </div>
@@ -59,6 +62,18 @@
       <div class="profile-page__list">
         @foreach ($purchasedItems as $order)
         <x-item-card :item="$order->item" />
+        @endforeach
+      </div>
+      @endif
+
+      <!-- 取引中の商品一覧 -->
+      @elseif ($page === 'trading')
+      @if ($tradingItems->isEmpty())
+      <p class="profile-page__empty">取引中の商品はありません。</p>
+      @else
+      <div class="profile-page__list">
+        @foreach ($tradingItems as $order)
+        <x-item-card :item="$order->item" :link="route('chat.index', $order->id)" />
         @endforeach
       </div>
       @endif
