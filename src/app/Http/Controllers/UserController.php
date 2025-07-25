@@ -17,64 +17,13 @@ class UserController extends Controller
         $user = auth()->user();
         $page = $request->query('page', 'sell');
 
-        // 出品商品（新しい順）
-        $sellingItems = $user->items()
-            ->latest()
-            ->get();
+        // 取引中商品取得
+        $sellingItems = $user->items()->latest()->get();
+        $purchasedItems = $user->orders()->with('item')->latest()->get();
+        $tradingItems = $user->tradingItems();
 
-        // 購入商品（新しい順）
-        $purchasedItems = $user->orders()
-            ->with('item')
-            ->latest()
-            ->get();
-
-        // 購入者の取引中の商品
-        $buyerTradingItems = $user->orders()
-            ->where('order_status', '!=', OrderStatusConstants::COMPLETED)
-            ->with(['item', 'chatMessages' => fn($q) => $q->latest()])
-            ->withCount([
-                'chatMessages as unread_count' => fn($q) => $q
-                    ->where('is_read', 0)
-                    ->where('user_id', '!=', $user->id)  // 自分の送信分は除外
-            ])
-            ->get();
-
-        // 出品者の取引中商品
-        $sellerTradingItems = $user->items()
-            ->whereHas('order', fn($q) => $q->where('order_status', '!=', OrderStatusConstants::COMPLETED))
-            ->with(['order.chatMessages' => fn($q) => $q->latest()])
-            ->get()
-            ->map(function ($item) use ($user) {
-                // 出品者側の未読数を計算（自分以外）
-                $item->unread_count = $item->order
-                    ? $item->order->chatMessages
-                    ->where('is_read', 0)
-                    ->where('user_id', '!=', $user->id) // 自分の送信分は除外
-                    ->count()
-                    : 0;
-                return $item;
-            });
-
-        // 購入者・出品者をマージ
-        $tradingItems = $buyerTradingItems->merge($sellerTradingItems);
-
-        // 全商品の未読数を合計
-        $totalUnreadCount = $tradingItems->sum(function ($entry) {
-            return $entry->unread_count ?? 0;
-        });
-
-        // 新着メッセージ順でソート
-        $tradingItems = $tradingItems->sortByDesc(
-            function ($entry) {
-                // $entryがOrderかItemかで処理を分ける
-                if ($entry instanceof \App\Models\Order) {
-                    return optional($entry->chatMessages->first())->created_at;
-                } elseif ($entry instanceof \App\Models\Item && $entry->order) {
-                    return optional($entry->order->chatMessages->first())->created_at;
-                }
-                return null;
-            }
-        );
+        // 全商品のチャット未読数を合計
+        $totalUnreadCount = $tradingItems->sum(fn($entry) => $entry->unread_count ?? 0);
 
         return view('user.profile', compact(
             'user',

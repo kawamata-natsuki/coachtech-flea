@@ -14,10 +14,7 @@ class ChatMessageController extends Controller
         $user = auth()->user();
 
         // 取引中の注文（サイドバー用）
-        $tradingOrders = $user->orders()
-            ->where('order_status', '!=', OrderStatusConstants::COMPLETED)
-            ->with('item')
-            ->get();
+        $tradingItems = $user->tradingItems();
 
         $order->load([
             'item',
@@ -32,14 +29,16 @@ class ChatMessageController extends Controller
             ->update(['is_read' => true]);
 
         // チャットの相手を取得
-        $chatPartner = auth()->id() === $order->user_id ? $order->item->user : $order->user;
+        $chatPartner = auth()->id() === $order->user_id
+            ? $order->item->user
+            : $order->user;
 
         return view('chat.index', [
             'order'    => $order,
             'buyer'    => $order->user,
             'seller'   => $order->item->user,
             'messages' => $order->chatMessages,
-            'tradingOrders'  => $tradingOrders,
+            'tradingItems'  => $tradingItems,
             'chatPartner' => $chatPartner,
             'item' => $order->item,
         ]);

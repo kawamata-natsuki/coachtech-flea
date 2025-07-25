@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use App\Constants\OrderStatusConstants;
+use App\Models\Order;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -52,7 +54,58 @@ class User extends Authenticatable implements MustVerifyEmail
         return $avg !== null ? round($avg) : null;
     }
 
-    // リレーション
+
+    /**
+     * 　購入した取引中の商品を取得
+     *
+     * - 完了状態 (COMPLETED) 以外の注文のみを取得
+     * - 商品(item)と、その注文に紐づくチャットメッセージ(chatMessages)を最新順で取得
+     * - 未読メッセージ数 (unread_count) をカウント
+     * - 自分が送信したメッセージは未読カウントから除外
+     */
+    public function buyingItems()
+    {
+        return $this->orders()
+            ->where('order_status', '!=', OrderStatusConstants::COMPLETED)
+            ->with(['item', 'chatMessages' => fn($q) => $q->latest()])
+            ->withCount([
+                'chatMessages as unread_count' => fn($q) => $q
+                    ->where('is_read', 0)
+                    ->where('user_id', '!=', $this->id)
+            ]);
+    }
+
+    /**
+     * 　出品した取引中の商品を取得
+     *
+     * - 完了状態 (COMPLETED) 以外の注文のみを取得
+     * - 商品(item)と、その注文に紐づくチャットメッセージ(chatMessages)を最新順で取得
+     * - 未読メッセージ数 (unread_count) をカウント
+     * - 自分が送信したメッセージは未読カウントから除外
+     */
+    public function sellingItems()
+    {
+        return Order::whereHas('item', fn($q) => $q->where('user_id', $this->id))
+            ->where('order_status', '!=', OrderStatusConstants::COMPLETED)
+            ->with(['item', 'chatMessages' => fn($q) => $q->latest()])
+            ->withCount([
+                'chatMessages as unread_count' => fn($q) => $q
+                    ->where('is_read', 0)
+                    ->where('user_id', '!=', $this->id)
+            ]);
+    }
+
+    // 取引中商品（購入＋出品）を統合（最新メッセージの時刻で降順）
+    public function tradingItems()
+    {
+        return $this->buyingItems()->get()->merge(
+            $this->sellingItems()->get()
+        )->sortByDesc(
+            fn($order) => optional($order->chatMessages->first())->created_at
+        );
+    }
+
+    // ===== リレーション =====
     public function favoriteItems()
     {
         return $this->belongsToMany(
