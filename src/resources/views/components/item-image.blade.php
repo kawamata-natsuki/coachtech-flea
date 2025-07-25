@@ -13,6 +13,8 @@
 
   <!-- 未読メッセージバッジ（取引中タブだけ表示） -->
   @if ($unreadCount > 0)
-  <span class="item-card__badge">{{ $unreadCount }}</span>
+  <span class="item-card__badge">
+    {{ $unreadCount > 99 ? '99+' : $unreadCount }}
+  </span>
   @endif
 </div>
