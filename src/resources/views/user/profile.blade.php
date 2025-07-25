@@ -34,7 +34,11 @@
             <a class="profile-page__link" href="{{ route('profile.index', ['page' => 'buy']) }}">購入した商品</a>
           </li>
           <li class="profile-page__tab {{ request('page') === 'trading' ? 'is-active' : '' }}">
-            <a class="profile-page__link" href="{{ route('profile.index', ['page' => 'trading']) }}">取引中の商品</a>
+            <a class="profile-page__link" href="{{ route('profile.index', ['page' => 'trading']) }}">取引中の商品
+              @if($totalUnreadCount > 0)
+              <span class="badge-unread">{{ $totalUnreadCount }}</span>
+              @endif
+            </a>
           </li>
         </ul>
       </div>
