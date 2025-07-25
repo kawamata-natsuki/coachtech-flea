@@ -94,6 +94,8 @@
 }
 
 .profile-page__link {
+  display: inline-flex;
+  align-items: center;
   font-weight: 700;
   font-size: 24px;
   color: #5F5F5F;
@@ -104,7 +106,7 @@
   display: inline-block;
   background: red;
   color: #fff;
-  font-size: 20px;
+  font-size: 16px;
   font-weight: bold;
   border-radius: 10px;
   padding: 0 6px;

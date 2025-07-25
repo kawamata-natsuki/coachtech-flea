@@ -221,11 +221,11 @@ button {
   left: 3px;
   background: red;
   color: #fff;
-  font-size: 20px;
+  font-size: 11px;
   font-weight: bold;
-  width: 40px;
-  height: 40px;
-  line-height: 40px;
+  width: 30px;
+  height: 30px;
+  line-height: 30px;
   text-align: center;
   border-radius: 50%;
   z-index: 20;
