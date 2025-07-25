@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Constants\OrderStatusConstants;
 use App\Http\Requests\ChatMessageRequest;
 use App\Models\ChatMessage;
 use App\Models\Order;
@@ -10,6 +11,14 @@ class ChatMessageController extends Controller
 {
     public function index(Order $order)
     {
+        $user = auth()->user();
+
+        // 取引中の注文（サイドバー用）
+        $tradingOrders = $user->orders()
+            ->where('order_status', '!=', OrderStatusConstants::COMPLETED)
+            ->with('item')
+            ->get();
+
         $order->load([
             'item',
             'user',
@@ -22,11 +31,17 @@ class ChatMessageController extends Controller
             ->where('is_read', false)
             ->update(['is_read' => true]);
 
+        // チャットの相手を取得
+        $chatPartner = auth()->id() === $order->user_id ? $order->item->user : $order->user;
+
         return view('chat.index', [
             'order'    => $order,
             'buyer'    => $order->user,
             'seller'   => $order->item->user,
-            'messages' => $order->chatMessages
+            'messages' => $order->chatMessages,
+            'tradingOrders'  => $tradingOrders,
+            'chatPartner' => $chatPartner,
+            'item' => $order->item,
         ]);
     }
 
