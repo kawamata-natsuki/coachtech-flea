@@ -33,7 +33,9 @@ class UserController extends Controller
             ->where('order_status', '!=', OrderStatusConstants::COMPLETED)
             ->with(['item', 'chatMessages' => fn($q) => $q->latest()])
             ->withCount([
-                'chatMessages as unread_count' => fn($q) => $q->where('is_read', 0)
+                'chatMessages as unread_count' => fn($q) => $q
+                    ->where('is_read', 0)
+                    ->where('user_id', '!=', $user->id)  // 自分の送信分は除外
             ])
             ->get();
 
@@ -42,16 +44,24 @@ class UserController extends Controller
             ->whereHas('order', fn($q) => $q->where('order_status', '!=', OrderStatusConstants::COMPLETED))
             ->with(['order.chatMessages' => fn($q) => $q->latest()])
             ->get()
-            ->map(function ($item) {
-                // 出品者側の未読数を計算（必要に応じて）
+            ->map(function ($item) use ($user) {
+                // 出品者側の未読数を計算（自分以外）
                 $item->unread_count = $item->order
-                    ? $item->order->chatMessages->where('is_read', 0)->count()
+                    ? $item->order->chatMessages
+                    ->where('is_read', 0)
+                    ->where('user_id', '!=', $user->id) // 自分の送信分は除外
+                    ->count()
                     : 0;
                 return $item;
             });
 
         // 購入者・出品者をマージ
         $tradingItems = $buyerTradingItems->merge($sellerTradingItems);
+
+        // 全商品の未読数を合計
+        $totalUnreadCount = $tradingItems->sum(function ($entry) {
+            return $entry->unread_count ?? 0;
+        });
 
         // 新着メッセージ順でソート
         $tradingItems = $tradingItems->sortByDesc(
@@ -71,7 +81,8 @@ class UserController extends Controller
             'page',
             'sellingItems',
             'purchasedItems',
-            'tradingItems'
+            'tradingItems',
+            'totalUnreadCount',
         ));
     }
 
