@@ -99,6 +99,22 @@
   color: #5F5F5F;
 }
 
+/* 未読アイコン */
+.badge-unread {
+  display: inline-block;
+  background: red;
+  color: #fff;
+  font-size: 20px;
+  font-weight: bold;
+  border-radius: 10px;
+  padding: 0 6px;
+  line-height: 30px;
+  min-width: 30px;
+  text-align: center;
+  vertical-align: middle;
+  margin-left: 6px;
+}
+
 /* 商品リスト */
 .profile-page__items {
   margin-top: 32px;
