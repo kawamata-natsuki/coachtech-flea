@@ -7,6 +7,7 @@ body {
   margin: 0;
   padding: 0;
   overflow-y: auto;
+  overflow-x: hidden;
 }
 
 *,
@@ -15,10 +16,8 @@ body {
   box-sizing: border-box;
 }
 
-a {
-  text-decoration: none;
-}
-
+a,
+a:visited,
 a:link,
 a:hover,
 a:active {
@@ -315,10 +314,13 @@ button {
    ===============================*/
 
 .header {
+  position: fixed;
+  top: 0;
+  left: 0;
   width: 100%;
-  /* 画面いっぱいに広げる */
   height: 82px;
   background-color: #000;
+  z-index: 1000;
 }
 
 .header__inner {
