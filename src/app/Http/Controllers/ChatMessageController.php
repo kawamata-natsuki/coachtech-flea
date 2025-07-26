@@ -55,9 +55,12 @@ class ChatMessageController extends Controller
             $data['chat_image'] = $request->file('chat_image')->store('chat_images', 'public');
         }
 
-        $order->chatMessages()->create($data);
+        $newMessage = $order->chatMessages()->create($data);
 
-        return back()->with('success', 'メッセージを送信しました。');
+        // 送信したメッセージ位置に移動
+        return redirect()
+            ->route('chat.index', ['order' => $order->id])
+            ->withFragment('message-' . $newMessage->id);
     }
 
     public function update(ChatMessageRequest $request, ChatMessage $message)
@@ -76,7 +79,10 @@ class ChatMessageController extends Controller
 
         $message->update($data);
 
-        return back()->with('success', 'メッセージを編集しました。');
+        // アンカー付きでリダイレクト
+        return redirect()
+            ->route('chat.index', ['order' => $message->order_id])
+            ->withFragment('message-' . $message->id);
     }
 
     public function destroy(ChatMessage $message)
