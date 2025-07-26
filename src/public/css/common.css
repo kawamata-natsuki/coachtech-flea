@@ -45,6 +45,12 @@ button {
   margin: 0 auto;
   padding: 0;
   flex-grow: 1;
+  transition: none;
+  margin-top: 82px;
+}
+
+.main.transition-enabled {
+  transition: margin-top 0.5s ease;
 }
 
 .content__heading {
@@ -131,6 +137,16 @@ button {
   flex-shrink: 0;
 }
 
+.flash-container {
+  position: fixed;
+  top: 82px;
+  left: 0;
+  width: 100%;
+  z-index: 9999;
+  text-align: center;
+  pointer-events: none;
+}
+
 .flash-message {
   width: 100%;
   min-height: 24px;
@@ -139,12 +155,18 @@ button {
   font-weight: 600;
   font-size: 16px;
   margin: 0;
-  opacity: 0;
-  visibility: hidden;
   background-color: transparent;
   color: transparent;
   border: none;
-  transition: opacity 0.3s ease;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.5s ease;
+}
+
+.flash-message.is-hidden {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
 }
 
 /* 表示される状態 */
