@@ -2,7 +2,7 @@
 
 namespace App\Constants;
 
-class OrderStatusConstants
+class OrderStatus
 {
   const PENDING   = 'pending';
   const COMPLETED = 'completed';
