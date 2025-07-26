@@ -74,4 +74,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::post('/orders/{order}/chat', [ChatMessageController::class, 'store'])->name('chat.store');
     Route::put('/chat/{message}', [ChatMessageController::class, 'update'])->name('chat.update');
     Route::delete('/chat/{message}', [ChatMessageController::class, 'destroy'])->name('chat.destroy');
+
+    // 取引完了
+    Route::put('/orders/{order}/complete', [OrderController::class, 'complete'])->name('order.complete');
 });
