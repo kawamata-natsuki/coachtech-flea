@@ -22,7 +22,8 @@
         </a>
       </div>
 
-      @if (!request()->routeIs(['verification.notice', 'profile.edit']))
+      @if (!request()->routeIs(['verification.notice'])
+      && !(request()->routeIs('profile.edit') && session('profile_edit_first_time')))
 
       @auth
       <nav class="header-nav">
