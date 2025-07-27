@@ -3,14 +3,10 @@
 namespace Database\Seeders;
 
 use App\Models\Category;
-use App\Models\Order;
-use App\Models\PaymentMethod;
 use App\Models\Item;
 use App\Models\User;
 use App\Models\Condition;
-use App\Constants\ConditionConstants;
 use App\Constants\ItemStatus;
-use Faker\Factory as Faker;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
@@ -20,9 +16,8 @@ class ItemSeeder extends Seeder
     public function run()
     {
         $conditionMap = Condition::all()->keyBy('code');
-        $faker = Faker::create();
 
-        // テスト用の出品者/購入者を3人確保する
+        // ダミーユーザー3人を用意
         $users = User::where('is_admin', false)->take(3)->get();
         if ($users->count() < 3) {
             $users = collect();
@@ -31,6 +26,7 @@ class ItemSeeder extends Seeder
             }
         }
 
+        // 商品データ
         $itemsData = [
             [
                 'name' => '腕時計',
@@ -108,32 +104,14 @@ class ItemSeeder extends Seeder
                 'item_image' => 'images/items/makeup-set.jpg',
                 'condition_code' => 'clean',
             ],
-            [
-                'name' => 'CARDCARDCARDCARDCARDCARDCARDCARDCARDCARD',
-                'brand' => 'BRANDBRANDBRANDBRANDBRANDBRANDBRANDBRANDBRANDBRANDBRANDBRANDBRANDBRANDBRANDBRANDBRANDBRANDBRANDBRAND',
-                'price' => 9999999,
-                'description' => '美品のトレカです！！美品のトレカです！！美品のトレカです！！美品のトレカです！！美品のトレカです！！美品のトレカです！！美品のトレカです！！美品のトレカです！！美品のトレカです！！美品のトレカです！！美品のトレカです！！美品のトレカです！！美品のトレカです！！美品のトレカです！！美品のトレカです！！美品のトレカです！！美品のトレカです！！美品のトレカです！！美品のトレカです！！美品のトレカです！！美品のトレカです！！美品のトレカです！！美品のトレカです！！美品のトレカです！！美品のトレカです！！！！！！！',
-                'item_image' => 'images/items/card-item.jpg',
-                'condition_code' => 'good',
-            ]
         ];
 
-        // 出品者・購入者を順番に割り当てるためのインデックス
-        // → ダミーユーザー3人が均等に出品・購入できるように調整
-        $sellerIndex = 0;
-        $buyerIndex = 1;
+        // 商品登録
+        foreach ($itemsData as $index => $data) {
+            // 出品者の割り当て
+            $seller = $index < 5 ? $users[0] : $users[1];
 
-        foreach ($itemsData as $data) {
-            // 出品者と購入者をローテーションで取得
-            $seller = $users[$sellerIndex % 3];
-            $buyer = $users[$buyerIndex % 3];
-
-            $paymentMethodId = PaymentMethod::first()->id;
-            // 前半6商品だけを「売り切れ商品」として扱う
-            $isSold = $sellerIndex < 6;
-
-            // 状態（condition）取得
-            $conditionCode = $data['condition_code'] ?? $faker->randomElement(ConditionConstants::all());
+            $conditionCode = $data['condition_code'];
             $conditionId = $conditionMap[$conditionCode]->id;
 
             // 画像保存
@@ -141,8 +119,7 @@ class ItemSeeder extends Seeder
             $content = file_get_contents(base_path('public/' . $data['item_image']));
             Storage::disk('public')->put($filename, $content);
 
-            // 商品登録
-            $item = Item::create([
+            Item::create([
                 'name'         => $data['name'],
                 'brand'        => $data['brand'] ?? null,
                 'price'        => $data['price'],
@@ -150,30 +127,10 @@ class ItemSeeder extends Seeder
                 'condition_id' => $conditionId,
                 'item_image'   => $filename,
                 'user_id'      => $seller->id,
-                'item_status'  => $isSold ? ItemStatus::SOLD_OUT : ItemStatus::ON_SALE,
-            ]);
-
-            // カテゴリを紐付け
-            $categories = isset($data['attach_all_categories']) && $data['attach_all_categories']
-                ? Category::pluck('id')
-                : Category::inRandomOrder()->take(rand(1, 3))->pluck('id');
-
-            $item->categories()->attach($categories);
-
-            // 商品が売り切れ扱いの場合、注文データ（Order）も作成して購入済み状態にする
-            if ($isSold) {
-                Order::create([
-                    'user_id' => $buyer->id,
-                    'item_id' => $item->id,
-                    'payment_method_id' => $paymentMethodId,
-                    'shipping_postal_code' => '123-4567',
-                    'shipping_address' => '東京都渋谷区1-1-1',
-                    'shipping_building' => 'テストビル101',
-                ]);
-            }
-
-            $sellerIndex++;
-            $buyerIndex++;
+                'item_status'  => ItemStatus::ON_SALE,
+            ])->categories()->attach(
+                Category::inRandomOrder()->take(rand(1, 3))->pluck('id')
+            );
         }
     }
 }
