@@ -3,12 +3,15 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\OrderCompletedMail;
 use App\Models\Item;
 use App\Models\Order;
 use App\Repositories\PaymentMethodRepository;
 use App\Services\StripeService;
 use App\Constants\PaymentMethodConstants;
 use App\Constants\ItemStatus;
+use App\Constants\OrderStatus;
 use App\Http\Requests\PurchaseRequest;
 
 class OrderController extends Controller
@@ -110,5 +113,24 @@ class OrderController extends Controller
     public function invalid(Request $request, Item $item)
     {
         return view('items.purchase-invalid', compact('item'));
+    }
+
+    // 取引完了の処理
+    public function complete(Order $order)
+    {
+        // 購入者しか実行できないようにチェック
+        if (auth()->id() !== $order->user_id) {
+            abort(403);
+        }
+
+        // 取引ステータスの更新
+        $order->update(['order_status' => OrderStatus::COMPLETED]);
+
+        // 出品者へメール通知
+        Mail::to($order->item->user->email)->send(new OrderCompletedMail($order));
+
+        return redirect()
+            ->route('chat.index', $order->id)
+            ->with('showReviewModal', true);
     }
 }
