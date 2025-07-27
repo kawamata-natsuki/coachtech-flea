@@ -1,9 +1,9 @@
 .profile-page {
-  padding-bottom: 100px;
+  min-height: calc(100vh - 82px);
 }
 
 .profile-page__container {
-  padding: 30px 70px;
+  padding: 20px 70px;
 }
 
 .profile-page__header {
@@ -169,7 +169,7 @@
 
 @media screen and (min-width: 768px) and (max-width: 850px) {
   .profile-page {
-    margin-bottom: 40px;
+    min-height: calc(100vh - 65px);
   }
 
   .profile-page__container {
@@ -190,18 +190,25 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content: center;
     gap: 16px;
   }
 
   .user-icon,
   .user-icon--default {
-    width: 100px;
-    height: 100px;
+    width: 130px;
+    height: 130px;
+    justify-content: center;
+  }
+
+  .profile-page__user-info {
+    gap: 8px;
+    padding-left: 0px;
   }
 
   .profile-page__name {
     font-weight: 600;
-    font-size: 22px;
+    font-size: 24px;
     margin-left: 0;
     text-align: center;
   }
