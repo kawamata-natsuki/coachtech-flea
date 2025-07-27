@@ -22,7 +22,7 @@
         </a>
       </div>
 
-      @if (!request()->routeIs(['verification.notice']))
+      @if (!request()->routeIs(['verification.notice', 'profile.edit']))
 
       @auth
       <nav class="header-nav">
