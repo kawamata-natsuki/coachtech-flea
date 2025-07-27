@@ -182,6 +182,13 @@ button {
   border-bottom: 1px solid #1a7f37;
 }
 
+/* エラー用スタイル */
+.flash-message--error.is-visible {
+  background-color: #ffe6e6;
+  color: #d93025;
+  border-bottom: 1px solid #d93025;
+}
+
 /* ===============================
     商品画像のデザイン
    ===============================*/
