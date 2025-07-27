@@ -33,6 +33,13 @@
   height: 175px;
 }
 
+.profile-page__user-info {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding-left: 40px;
+}
+
 .profile-page__name {
   max-width: 100%;
   font-weight: 700;
@@ -40,7 +47,20 @@
   overflow-wrap: break-word;
   word-break: break-word;
   white-space: normal;
-  margin-left: 40px;
+}
+
+.profile-page__rating {
+  font-size: 36px;
+  display: flex;
+  gap: 4px;
+}
+
+.star-filled {
+  color: #FFF048;
+}
+
+.star-empty {
+  color: #D9D9D9;
 }
 
 /* 編集リンク */
