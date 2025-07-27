@@ -55,14 +55,7 @@ class User extends Authenticatable implements MustVerifyEmail
     }
 
 
-    /**
-     * 　購入した取引中の商品を取得
-     *
-     * - 完了状態 (COMPLETED) 以外の注文のみを取得
-     * - 商品(item)と、その注文に紐づくチャットメッセージ(chatMessages)を最新順で取得
-     * - 未読メッセージ数 (unread_count) をカウント
-     * - 自分が送信したメッセージは未読カウントから除外
-     */
+    // 購入した取引中の商品を取得
     public function buyingItems()
     {
         return $this->orders()
@@ -75,14 +68,7 @@ class User extends Authenticatable implements MustVerifyEmail
             ]);
     }
 
-    /**
-     * 　出品した取引中の商品を取得
-     *
-     * - 完了状態 (COMPLETED) 以外の注文のみを取得
-     * - 商品(item)と、その注文に紐づくチャットメッセージ(chatMessages)を最新順で取得
-     * - 未読メッセージ数 (unread_count) をカウント
-     * - 自分が送信したメッセージは未読カウントから除外
-     */
+    // 出品した取引中の商品を取得
     public function sellingItems()
     {
         return Order::whereHas('item', fn($q) => $q->where('user_id', $this->id))
