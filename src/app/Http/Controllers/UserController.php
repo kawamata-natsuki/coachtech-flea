@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Storage;
 
 class UserController extends Controller
 {
-    // マイページのプロフィール表示（出品商品・購入履歴を含む）
+    // マイページのプロフィール表示
     public function index(Request $request)
     {
         $user = auth()->user();
