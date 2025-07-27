@@ -11,15 +11,35 @@
   <div class="profile-page__container">
 
     <div class="profile-page__header">
-      <!-- アイコン＋名前 -->
-      <x-user-icon :user="$user" wrapperClass="profile-page__user" imageClass="user-icon"
-        defaultClass="user-icon--default" nameClass="profile-page__name" />
+
+      <div class="profile-page__user">
+        <!-- アイコン -->
+        <img src="{{ $user->image_url }}"
+          class="user-icon {{ $user->profile_image ? '' : 'user-icon--default' }}"
+          alt="プロフィール画像">
+
+        <!-- ユーザー名＋レビュー -->
+        <div class="profile-page__user-info">
+          <p class="profile-page__name">
+            {{ $user->name }}
+          </p>
+          <div class="profile-page__rating">
+            @for ($i = 1; $i <= 5; $i++)
+              <span class="{{ $i <= $user->roundedRating() ? 'star-filled' : 'star-empty' }}">
+              ★
+              </span>
+              @endfor
+          </div>
+        </div>
+      </div>
+
       <!-- 編集リンク -->
       <div class="profile-page__edit-wrapper">
         <a class="button--outline-red profile-page__edit-link" href="{{ route('profile.edit') }}">
           プロフィールを編集
         </a>
       </div>
+
     </div>
 
     <!-- メニュータブ -->
