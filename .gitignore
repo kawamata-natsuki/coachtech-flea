@@ -20,9 +20,12 @@
 
 # Laravel storage
 /src/storage/*
+!/src/storage/.gitignore
 !/src/storage/framework
 !/src/storage/framework/cache
 !/src/storage/framework/sessions
-
+!/src/storage/framework/cache/.gitignore
+!/src/storage/framework/sessions/.gitignore
+!/src/storage/framework/views/.gitignore
 !/src/storage/logs
 !/src/storage/logs/.gitignore
