@@ -116,12 +116,8 @@ class ItemSeeder extends Seeder
 
             // 画像保存
             $filename = 'items/' . Str::uuid() . '.jpg';
-            $sourcePath = public_path($data['item_image']);
-            if (file_exists($sourcePath)) {
-                Storage::disk('public')->put($filename, file_get_contents($sourcePath));
-            } else {
-                dump("画像が見つかりません: $sourcePath");
-            }
+            $content = file_get_contents(base_path('public/' . $data['item_image']));
+            Storage::disk('public')->put($filename, $content);
 
             Item::create([
                 'name'         => $data['name'],
