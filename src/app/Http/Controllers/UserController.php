@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Constants\OrderStatusConstants;
 use App\Http\Requests\AddressRequest;
 use App\Http\Requests\ProfileRequest;
 use App\Models\Item;

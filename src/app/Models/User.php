@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-use App\Constants\OrderStatusConstants;
+use App\Constants\OrderStatus;
 use App\Models\Order;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -66,7 +66,7 @@ class User extends Authenticatable implements MustVerifyEmail
     public function buyingItems()
     {
         return $this->orders()
-            ->where('order_status', '!=', OrderStatusConstants::COMPLETED)
+            ->where('order_status', '!=', OrderStatus::COMPLETED)
             ->with(['item', 'chatMessages' => fn($q) => $q->latest()])
             ->withCount([
                 'chatMessages as unread_count' => fn($q) => $q
@@ -86,7 +86,7 @@ class User extends Authenticatable implements MustVerifyEmail
     public function sellingItems()
     {
         return Order::whereHas('item', fn($q) => $q->where('user_id', $this->id))
-            ->where('order_status', '!=', OrderStatusConstants::COMPLETED)
+            ->where('order_status', '!=', OrderStatus::COMPLETED)
             ->with(['item', 'chatMessages' => fn($q) => $q->latest()])
             ->withCount([
                 'chatMessages as unread_count' => fn($q) => $q
