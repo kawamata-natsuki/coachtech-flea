@@ -22,6 +22,8 @@
         </a>
       </div>
 
+      @if (!request()->routeIs(['verification.notice']))
+
       @auth
       <nav class="header-nav">
         <div class="header-nav__search">
@@ -60,11 +62,11 @@
       </nav>
       @endif
       @endguest
+      @endif
     </div>
   </header>
 
   @if (!request()->routeIs([
-  'verification.notice',
   'purchase.success',
   'purchase.cancel',
   'purchase.invalid',
