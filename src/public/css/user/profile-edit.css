@@ -1,26 +1,20 @@
-.login-page {
+.profile-edit-page {
   min-height: calc(100vh - 82px);
   display: flex;
   justify-content: center;
-  align-items: center;
-}
-
-.profile-edit-page {
-  display: flex;
-  justify-content: center;
-  padding-bottom: 100px;
+  align-items: flex-start;
+  padding: 48px 0;
 }
 
 .profile-edit-page__container {
   width: 100%;
-  max-width: 680px;
+  max-width: 800px;
   display: flex;
   flex-direction: column;
   align-items: center;
 }
 
 .profile-edit-page__heading {
-  padding-top: 12px;
   padding-bottom: 32px;
 }
 
@@ -32,8 +26,6 @@
 .profile-edit-page__form {
   display: flex;
   flex-direction: column;
-  width: 100%;
-  max-width: 680px;
 }
 
 .profile-edit-page__image-area {
@@ -113,6 +105,7 @@
   margin-bottom: 12px;
 }
 
+/* ボタンレイアウト */
 .profile-edit-page__button {
   width: 100%;
   margin-top: 40px;
