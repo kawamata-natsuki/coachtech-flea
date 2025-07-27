@@ -3,6 +3,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  box-sizing: border-box;
 }
 
 .login-page__container {
@@ -13,11 +14,6 @@
   align-items: center;
 }
 
-.login-page__heading {
-  padding-top: 0;
-  padding-bottom: 0;
-}
-
 .login-page__content {
   width: 100%;
   max-width: 680px;
@@ -26,21 +22,13 @@
 .login-page__form {
   display: flex;
   flex-direction: column;
-  width: 100%;
-  max-width: 680px;
+  gap: 48px;
 }
 
 .login-page__form-group {
   display: flex;
   flex-direction: column;
-  width: 100%;
-  max-width: 680px;
   margin-bottom: 12px;
-}
-
-.login-page__button {
-  width: 100%;
-  margin-top: 60px;
 }
 
 .login-page__button-submit {
@@ -81,20 +69,21 @@
 
 @media screen and (min-width: 768px) and (max-width: 850px) {
 
-  .login-page__heading {
-    font-size: 24px;
+  .login-page {
+    min-height: calc(100vh - 65px);
+  }
+
+  .login-page__container {
+    max-width: 90%;
+    margin: 30px auto;
   }
 
   .login-page__content {
-    max-width: 480px;
+    max-width: 560px;
   }
 
-  .login-page__label {
-    font-size: 16px;
-  }
-
-  .login-page__input::placeholder {
-    font-size: 12px;
+  .login-page__form {
+    gap: 24px;
   }
 
   .login-page__button {
@@ -102,8 +91,8 @@
   }
 
   .login-page__button-submit {
-    height: 40px;
-    font-size: 16px;
+    height: 48px;
+    font-size: 18px;
     font-weight: 600;
   }
 
@@ -112,7 +101,7 @@
   }
 
   .login-page__link--register {
-    font-size: 14px;
+    font-size: 16px;
   }
 
 }
