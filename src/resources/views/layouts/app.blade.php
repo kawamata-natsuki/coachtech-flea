@@ -77,8 +77,6 @@
       is-visible">
       {{ session('success') ?? session('error') }}
     </div>
-    @else
-    <div class="flash-message">&nbsp;</div>
     @endif
   </div>
   @endif
