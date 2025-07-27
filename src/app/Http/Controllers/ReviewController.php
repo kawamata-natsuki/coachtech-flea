@@ -3,12 +3,39 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\ReviewRequest;
+use App\Models\Review;
 use App\Models\Order;
 
 class ReviewController extends Controller
 {
     public function store(ReviewRequest $request, Order $order)
     {
-        // レビュー投稿
+        $reviewerId = auth()->id();
+
+        // 既にレビューが存在するか確認
+        $existing = Review::where('order_id', $order->id)
+            ->where('reviewer_id', $reviewerId)
+            ->first();
+        if ($existing) {
+            return redirect()
+                ->route('items.index')
+                ->with('error', 'この取引は既にレビュー済みです。');
+        }
+
+        // reviewee_id を判定
+        $revieweeId = ($reviewerId === $order->user_id)
+            ? $order->item->user_id   // 購入者→出品者をレビュー
+            : $order->user_id;        // 出品者→購入者をレビュー
+
+        // レビューを保存
+        Review::create([
+            'order_id'      => $order->id,
+            'reviewer_id'   => $reviewerId,
+            'reviewee_id'   => $revieweeId,
+            'rating'        => $request->input('rating'),
+        ]);
+
+        return redirect()->route('items.index')
+            ->with('success', 'レビューを投稿しました！');
     }
 }
