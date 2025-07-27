@@ -100,18 +100,23 @@
 
       function adjustMargin() {
         if (!mainContent) return;
+
+        // 画面幅でヘッダー高さを切り替え
+        const headerHeight = window.innerWidth <= 850 ? 65 : 82;
         const flashHeight = (flash && flash.classList.contains('is-visible')) ? flash.offsetHeight : 0;
-        mainContent.style.marginTop = (82 + flashHeight) + 'px';
+
+        mainContent.style.marginTop = (headerHeight + flashHeight) + 'px';
       }
 
-      // 初期描画で一瞬 margin-top はそのまま（CSSが130px）
-      // JSは描画が終わってから transition を有効化
       adjustMargin();
+
       setTimeout(() => {
         mainContent.classList.add('transition-enabled');
-      }, 100); // 0.1秒待つことでカクン対策
+      }, 100);
 
-      // フラッシュメッセージがあれば3秒後に消える
+      // リサイズ時にも再計算
+      window.addEventListener('resize', adjustMargin);
+
       if (flash && flash.classList.contains('is-visible')) {
         setTimeout(() => {
           flash.classList.remove('is-visible');
