@@ -1,3 +1,10 @@
+.login-page {
+  min-height: calc(100vh - 82px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 .profile-edit-page {
   display: flex;
   justify-content: center;
