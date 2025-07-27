@@ -110,6 +110,7 @@ use App\Constants\ConditionConstants;
 @section('js')
 <script>
   document.addEventListener('DOMContentLoaded', function() {
+    // 画像アップロード処理
     const dropArea = document.getElementById('drop-area');
     const input = document.getElementById('file-input');
     const preview = document.getElementById('preview');
@@ -168,6 +169,15 @@ use App\Constants\ConditionConstants;
       input.value = '';
       instruction.style.display = 'block';
     });
+
+    // **二重送信防止**
+    const form = document.querySelector('.create-form__form');
+    if (form) {
+      form.addEventListener('submit', (e) => {
+        const submitBtn = form.querySelector('button[type="submit"]');
+        if (submitBtn) submitBtn.disabled = true;
+      });
+    }
   });
 </script>
 @endsection
