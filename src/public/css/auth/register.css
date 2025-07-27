@@ -8,14 +8,13 @@
 
 .register-page__container {
   width: 100%;
-  max-width: 680px;
+  max-width: 800px;
   display: flex;
   flex-direction: column;
   align-items: center;
 }
 
 .register-page__heading {
-  padding-top: 24px;
   padding-bottom: 48px;
 }
 
@@ -27,25 +26,21 @@
 .register-form__form {
   display: flex;
   flex-direction: column;
-  width: 100%;
-  max-width: 680px;
 }
 
 .register-page__form-group {
   display: flex;
   flex-direction: column;
-  width: 100%;
-  max-width: 680px;
   margin-bottom: 12px;
 }
 
 .register-page__button {
-  width: 100%;
-  margin-top: 60px;
+  margin-top: 48px;
 }
 
 .register-page__button-submit {
   height: 65px;
+  font-weight: 700;
   font-size: 26px;
   border-radius: 5px;
 }
@@ -57,8 +52,10 @@
 
 .register-page__link--login {
   font-weight: 400;
-  font-size: 20px;
+  font-size: 22px;
   color: #0073CC;
+  text-decoration: none;
+  transition: color 0.2s ease, opacity 0.2s ease;
 }
 
 .register-page__link--login:hover {
@@ -72,22 +69,6 @@
   transition: transform 0.05s ease, opacity 0.05s ease;
 }
 
-.error-message::before {
-  content: '';
-  background-image: url('/images/icons/alert-red.svg');
-  background-size: contain;
-  background-repeat: no-repeat;
-  width: 16px;
-  height: 16px;
-  display: inline-block;
-  vertical-align: middle;
-  flex-shrink: 0;
-}
-
-.no-error::before {
-  display: none;
-}
-
 /* ===============================
       タブレット（768〜850px）対応
    =============================== */
@@ -96,17 +77,15 @@
 
   .register-page {
     min-height: calc(100vh - 65px);
-    padding: 48px 16px;
   }
 
-  .register-page__heading {
-    padding-top: 20px;
-    padding-bottom: 40px;
-    font-size: 24px;
+  .register-page__container {
+    max-width: 90%;
+    margin: 30px auto;
   }
 
   .register-page__content {
-    max-width: 480px;
+    max-width: 560px;
   }
 
   .register-page__form-group {
@@ -114,11 +93,7 @@
   }
 
   .register-page__label {
-    font-size: 16px;
-  }
-
-  .register-page__input::placeholder {
-    font-size: 12px;
+    font-size: 18px;
   }
 
   .register-page__button {
@@ -127,16 +102,16 @@
 
   .register-page__button-submit {
     height: 40px;
-    font-size: 16px;
+    font-size: 18px;
     font-weight: 600;
   }
 
   .register-page__link {
-    margin-top: 30px;
+    margin-top: 24px;
   }
 
   .register-page__link--login {
-    font-size: 14px;
+    font-size: 16px;
   }
 
 }
