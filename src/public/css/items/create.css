@@ -1,9 +1,10 @@
 .create-page {
+  min-height: calc(100vh - 82px);
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  padding: 5px 65px 100px 65px;
+  padding: 48px;
 }
 
 .create-page__container {
@@ -265,15 +266,19 @@
    =============================== */
 
 @media screen and (min-width: 768px) and (max-width: 850px) {
+  .create-page {
+    min-height: calc(100vh - 65px);
+    padding: 32px;
+  }
 
   .create-page__container {
-    max-width: 600px;
+    max-width: 650px;
   }
 
   .create-page__heading {
     font-weight: 600;
     font-size: 28px;
-    margin-bottom: 16px;
+    margin-bottom: 24px;
   }
 
   .create-page__label {

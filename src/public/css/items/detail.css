@@ -1,5 +1,6 @@
 .item-detail-page {
-  margin-bottom: 100px;
+  min-height: calc(100vh - 82px);
+  padding: 48px;
 }
 
 .item-detail-page__container {
@@ -350,6 +351,11 @@
    =============================== */
 
 @media screen and (min-width:768px) and (max-width:850px) {
+  .item-detail-page {
+    min-height: calc(100vh - 65px);
+    padding: 32px;
+  }
+
   .item-detail-page__container {
     padding: 12px 12px;
   }
