@@ -16,14 +16,6 @@
     メール認証を完了してください。
   </p>
 
-  <div class="verify-email-page__flash-wrapper">
-    @if (session('status') == 'verification-link-sent')
-    <p class="verify-email-page__flash-message">
-      認証メールを再送信しました。メールをご確認ください。
-    </p>
-    @endif
-  </div>
-
   <!-- 認証確認 -->
   <form class="verify-email-page__form verify-email-page__form--confirm"
     method="GET"
