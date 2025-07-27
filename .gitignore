@@ -20,7 +20,6 @@
 
 # Laravel storage
 /src/storage/*
-!/src/storage/app
 !/src/storage/framework
 !/src/storage/framework/cache
 !/src/storage/framework/sessions

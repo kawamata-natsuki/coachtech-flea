@@ -23,6 +23,7 @@
           <p class="profile-page__name">
             {{ $user->name }}
           </p>
+          @if ($user->roundedRating())
           <div class="profile-page__rating">
             @for ($i = 1; $i <= 5; $i++)
               <span class="{{ $i <= $user->roundedRating() ? 'star-filled' : 'star-empty' }}">
@@ -30,6 +31,7 @@
               </span>
               @endfor
           </div>
+          @endif
         </div>
       </div>
 

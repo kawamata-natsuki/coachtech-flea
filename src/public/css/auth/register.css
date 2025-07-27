@@ -1,9 +1,9 @@
 .register-page {
-  min-height: calc(100vh - 77px);
+  min-height: calc(100vh - 82px);
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 48px 16px;
+  padding: 16px;
 }
 
 .register-page__container {
