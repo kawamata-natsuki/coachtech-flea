@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Constants\OrderStatusConstants;
 use App\Http\Requests\ChatMessageRequest;
 use App\Models\ChatMessage;
 use App\Models\Order;
@@ -11,9 +10,35 @@ class ChatMessageController extends Controller
 {
     public function index(Order $order)
     {
-        $user = auth()->user();
+        // 未ログイン → ログイン画面へ
+        if (!auth()->check()) {
+            return redirect()->guest(route('login'));
+        }
 
-        // 取引中の注文（サイドバー用）
+        // 出品者・購入者以外はアクセス不可
+        if (auth()->id() !== $order->user_id && auth()->id() !== $order->item->user_id) {
+            abort(403, 'この取引にアクセスする権限がありません');
+        }
+
+        // メールリンク経由なら出品者のみ許可
+        if (request()->query('from_email') && auth()->id() !== $order->item->user_id) {
+            abort(403, '出品者しかアクセスできません');
+        }
+        if (request()->query('from_email') && auth()->id() === $order->item->user_id) {
+            // 出品者が既にレビューを投稿済みならトップページへ
+            $alreadyReviewed = $order->reviews()
+                ->where('reviewer_id', auth()->id())
+                ->exists();
+            if ($alreadyReviewed) {
+                return redirect()->route('items.index')
+                    ->with('error', 'この取引は既にレビュー済みです。');
+            }
+            // まだレビューしていなければモーダルを表示
+            session()->flash('showReviewModal', true);
+        }
+
+        // 取引データのロード処理
+        $user = auth()->user();
         $tradingItems = $user->tradingItems();
 
         $order->load([
