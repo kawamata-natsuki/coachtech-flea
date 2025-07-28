@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\AddressRequest;
 use App\Http\Requests\ProfileRequest;
 use App\Models\Item;
+use App\Models\Order;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
@@ -16,10 +17,22 @@ class UserController extends Controller
         $user = auth()->user();
         $page = $request->query('page', 'sell');
 
-        // 取引中商品取得
+        // 出品商品
         $sellingItems = $user->items()->latest()->get();
+
+        // 購入商品
         $purchasedItems = $user->orders()->with('item')->latest()->get();
-        $tradingItems = $user->tradingItems();
+
+        // 取引中商品取得
+        $tradingItems = Order::with(['item'])
+            ->tradingOrPendingReview()
+            ->where(function ($query) {
+                $query->where('user_id', auth()->id())
+                    ->orWhereHas('item', function ($q) {
+                        $q->where('user_id', auth()->id());
+                    });
+            })
+            ->get();
 
         // 全商品のチャット未読数を合計
         $totalUnreadCount = $tradingItems->sum(fn($entry) => $entry->unread_count ?? 0);
