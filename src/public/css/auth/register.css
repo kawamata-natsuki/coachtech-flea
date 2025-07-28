@@ -3,7 +3,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 16px;
+  padding: 32px;
 }
 
 .register-page__container {
@@ -31,15 +31,19 @@
 .register-page__form-group {
   display: flex;
   flex-direction: column;
-  margin-bottom: 12px;
+  margin-bottom: 8px;
+}
+
+.register-page__input {
+  height: 48px;
 }
 
 .register-page__button {
-  margin-top: 48px;
+  margin-top: 40px;
 }
 
 .register-page__button-submit {
-  height: 65px;
+  height: 60px;
   font-weight: 700;
   font-size: 26px;
   border-radius: 5px;
@@ -47,7 +51,7 @@
 
 .register-page__link {
   text-align: center;
-  margin-top: 40px;
+  margin-top: 32px;
 }
 
 .register-page__link--login {
