@@ -121,7 +121,7 @@
   color: #5F5F5F;
 }
 
-/* 未読アイコン */
+/* 未読アイコン(メニュータブ） */
 .badge-unread {
   display: inline-block;
   background: red;
