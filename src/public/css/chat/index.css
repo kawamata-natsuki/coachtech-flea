@@ -5,6 +5,9 @@
 
 .chat-page-sidebar {
   position: fixed;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
   top: 82px;
   left: 0;
   width: 260px;
@@ -84,6 +87,9 @@
 
 /* メインコンテンツ */
 .chat-page__container {
+  display: flex;
+  width: calc(100% - 260px);
+  flex-direction: column;
   flex: 1;
   background-color: #fff;
   margin-left: 260px;
@@ -115,6 +121,10 @@
 .chat-page__user {
   display: flex;
   align-items: center;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  vertical-align: middle;
 }
 
 .user-icon {
@@ -123,9 +133,16 @@
 }
 
 .user-name {
-  margin-left: 20px;
+  display: inline-block;
+  max-width: 400px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  vertical-align: middle;
+  margin: 0 6px 0 20px;
 }
 
+/* 取引完了ボタン */
 .transaction-completed {
   margin-right: 20px;
   background-color: #FF8282;
@@ -180,7 +197,7 @@
 }
 
 .chat-page__item-name {
-  max-width: 900px;
+  max-width: 850px;
   font-family: Inter;
   font-weight: 700;
   font-size: 48px;
@@ -206,6 +223,13 @@
 }
 
 /* チャット一覧 */
+.chat-page__empty-message {
+  text-align: center;
+  color: #888;
+  font-size: 24px;
+  padding: 180px 0;
+}
+
 .chat-page__message-item {
   display: flex;
   flex-direction: column;
@@ -215,15 +239,36 @@
   scroll-margin-top: 70px;
 }
 
+/* 自分のメッセージ */
 .my-message {
   margin-left: auto;
   align-items: flex-end;
 }
 
+.my-message .chat-page__message-image {
+  margin-left: auto;
+  text-align: right;
+}
+
+/* 相手のメッセージ */
+.partner-message .chat-page__message-image {
+  margin-right: auto;
+  text-align: left;
+}
+
+/* ユーザー名＋アイコン */
 .chat-page__message-user {
   display: flex;
   align-items: center;
   margin-bottom: 4px;
+  gap: 12px;
+}
+
+/* 自分のユーザー名＋アイコン */
+.my-message .chat-page__message-user {
+  display: flex;
+  flex-direction: row-reverse;
+  justify-content: flex-end;
   gap: 12px;
 }
 
@@ -246,49 +291,50 @@
 }
 
 .chat-page__message-name {
-  font-family: Inter;
   font-weight: 700;
   font-size: 20px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 180px;
+  display: inline-block;
 }
 
 /* メッセージテキスト */
+.chat-page__message-text-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  position: relative;
+}
+
 .chat-page__message-text {
   display: block;
   align-items: center;
-  padding: 10px 14px;
+  padding: 8px 12px;
   border-radius: 8px;
   background-color: #D9D9D9;
   word-wrap: break-word;
   width: 100%;
   min-width: 460px;
   max-width: 460px;
-  min-height: 60px;
+  line-height: 1.6;
   padding: 12px 16px;
   font-family: Inter;
   font-weight: 500;
   font-size: 20px;
 }
 
-.my-message .chat-page__message-user {
-  display: flex;
-  flex-direction: row-reverse;
-  justify-content: flex-end;
-  gap: 12px;
-}
-
 /* 編集・削除アクション */
-.chat-page__empty-message {
-  text-align: center;
-  color: #888;
-  font-size: 18px;
-  padding: 180px 0;
-}
-
-.chat-page__message-text-wrapper {
+.chat-page__message-actions,
+.chat-page__edit-actions {
   display: flex;
-  flex-direction: column;
-  gap: 8px;
-  position: relative;
+  justify-content: flex-end;
+  gap: 16px;
+  font-size: 14px;
+  color: #666;
+  cursor: pointer;
+  margin: 0 12px;
 }
 
 .js-message-edit-form {
@@ -305,16 +351,24 @@
   margin-top: 8px;
 }
 
+.chat-page__edit-actions {
+  justify-content: flex-end;
+  margin: 4px 0 0 0;
+}
+
+.chat-page__edit-form {
+  display: block;
+  width: 100%;
+}
+
+/* アイコン+ユーザー名＋テキスト＋画像＋編集・削除 */
 .chat-page__message-body {
   display: flex;
   flex-direction: column;
   gap: 8px;
 }
 
-.chat-page__message-image {
-  display: block;
-  margin-top: 8px;
-}
+/* チャットに投稿した画像 */
 
 .chat-message-img {
   display: block;
@@ -324,28 +378,6 @@
   height: auto;
   object-fit: contain;
   border-radius: 8px;
-  margin-top: 8px;
-}
-
-.chat-page__message-actions,
-.chat-page__edit-actions {
-  display: flex;
-  justify-content: flex-end;
-  gap: 16px;
-  font-size: 14px;
-  color: #666;
-  cursor: pointer;
-  margin: 0 12px;
-}
-
-.chat-page__edit-actions {
-  justify-content: flex-end;
-  margin: 4px 0 0 0;
-}
-
-.chat-page__edit-form {
-  display: block;
-  width: 100%;
 }
 
 .chat-page__message-input {
@@ -366,10 +398,6 @@
   min-height: 60px;
 }
 
-.chat-page__message-text,
-.chat-page__message-input {
-  min-height: 60px;
-}
 
 .chat-page__button-edit,
 .chat-page__button-delete,
@@ -406,6 +434,7 @@
 /* メッセージ送信フォーム */
 .chat-page__form {
   display: flex;
+  width: 100%;
   flex-direction: column;
   padding: 0 24px 16px 24px;
   background-color: #fff;
@@ -427,8 +456,16 @@
 
 .chat-page__form-body {
   display: flex;
+  width: 100%;
   align-items: flex-end;
   gap: 12px;
+}
+
+.chat-form__input-row {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .chat-form__input {
@@ -508,4 +545,255 @@
 .remove-preview-btn {
   top: -6px;
   right: -6px;
+}
+
+/* ===============================
+      タブレット（768〜850px）対応
+   =============================== */
+
+@media screen and (min-width:768px) and (max-width:850px) {
+  .chat-page {
+    min-height: calc(100vh - 65px);
+  }
+
+  /* サイドバー */
+  .chat-page-sidebar {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    top: 65px;
+    width: 180px;
+    height: calc(100vh - 65px);
+    padding: 20px;
+    text-align: center;
+  }
+
+  .chat-page-sidebar__title {
+    max-width: 150px;
+    justify-content: ;
+    text-align: center;
+    font-size: 20px;
+    font-weight: 400;
+  }
+
+  .chat-page-sidebar__list {
+    gap: 24px;
+    margin-top: 28px;
+  }
+
+  .chat-page-sidebar__item {
+    width: 150px;
+    height: 36px;
+  }
+
+  .chat-page-sidebar__item--link {
+    display: block;
+    width: 100%;
+    height: 100%;
+    padding: 0;
+    font-size: 20px;
+    line-height: 36px;
+  }
+
+  /* メインコンテンツ */
+  .chat-page__container {
+    flex: 1;
+    margin-left: 180px;
+  }
+
+  /* トップ */
+  .chat-page__container {
+    margin-left: 200px;
+    width: calc(100% - 180px);
+  }
+
+  .chat-page__header {
+    position: relative;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 12px;
+  }
+
+  .chat-page__heading {
+    max-width: 550px;
+    font-size: 20px;
+    line-height: 34px;
+  }
+
+  .user-icon {
+    width: 60px;
+    height: 60px;
+  }
+
+  .user-name {
+    max-width: 150px;
+    margin: 0 4px 0 12px;
+    font-size: 20px;
+  }
+
+  /* 取引完了ボタン */
+  .transaction-completed {
+    width: 130px;
+    height: 45px;
+    font-size: 16px;
+    margin: 0;
+  }
+
+  .chat-page__header::after {
+    left: -200px;
+  }
+
+  /* 商品情報 */
+  .chat-page__item {
+    padding: 24px 8px;
+    gap: 4px;
+  }
+
+  .chat-page__item-image {
+    flex: 0 0 150px;
+    padding-left: 16px;
+  }
+
+  .chat-page__item-info {
+    gap: 8px;
+    margin-left: 12px;
+  }
+
+  .chat-page__item-name {
+    max-width: 380px;
+    font-size: 26px;
+  }
+
+  .chat-page__item-price {
+    font-size: 32px;
+  }
+
+  .chat-page__item::after {
+    left: -200px;
+  }
+
+  /* チャット一覧 */
+  .chat-form-wrapper {
+    background-color: #fff;
+  }
+
+  .chat-page__message-item {
+    padding: 24px;
+    scroll-margin-top: 70px;
+  }
+
+  .chat-page__message-user {
+    gap: 8px;
+  }
+
+  .chat-page__message-icon {
+    width: 60px;
+    height: 60px;
+  }
+
+  .chat-page__message-icon--default {
+    width: 60px;
+    height: 60px;
+  }
+
+  .chat-page__message-name {
+    font-weight: 600;
+  }
+
+  .my-message .chat-page__message-user {
+    gap: 12px;
+  }
+
+  /* 編集・削除アクション */
+  .chat-page__empty-message {
+    font-size: 16px;
+    padding: 180px 0;
+  }
+
+  .chat-message-img {
+    max-width: 100px;
+    max-height: 100px;
+    margin-top: 0;
+  }
+
+  .chat-page__message-text {
+    padding: 8px 12px;
+    width: 100%;
+    min-width: 300px;
+    max-width: 300px;
+    line-height: 1.4;
+  }
+
+  .chat-page__message-input {
+    width: 100%;
+    min-width: 300px;
+    max-width: 300px;
+  }
+
+  /* メッセージ送信フォーム */
+  .chat-page__form {
+    width: 100%;
+    padding: 0 16px 12px 16px;
+    position: sticky;
+  }
+
+  .chat-page__form-body {
+    flex-direction: column;
+    margin-top: 8px;
+    gap: 8px;
+  }
+
+  .chat-form__input-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+  }
+
+  .chat-form__input {
+    width: 100%;
+    min-width: 340px;
+    max-width: 340px;
+    height: 44px;
+    padding: 4px 8px;
+    font-size: 18px;
+  }
+
+  /* 画像を追加ボタン */
+  .chat-form__image-label {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 44px;
+    padding: 0 8px;
+    font-size: 18px;
+  }
+
+  .chat-form__send-icon {
+    width: 50px;
+    height: 44px;
+  }
+
+  /* 画像プレビュー */
+  .chat-form__preview img {
+    display: none
+  }
+
+  .remove-btn {
+    display: none
+  }
+
+  .remove-preview-btn {
+    display: none
+  }
+
+  .chat-form__file-name {
+    font-size: 14px;
+    color: #333;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
 }

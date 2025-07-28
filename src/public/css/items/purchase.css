@@ -293,13 +293,19 @@
   }
 
   .item-purchase-page__select-wrapper {
-    margin-left: 20px;
+    display: block;
     width: 100%;
-    max-width: 300px;
+    max-width: none;
+    margin: 10px 0;
   }
 
   .item-purchase-page__select {
+    display: block;
+    min-width: 0;
+    max-width: 100%;
     font-size: 14px;
+    padding: 0 28px 0 8px;
+    box-sizing: border-box;
   }
 
   /* ▼アイコン */
