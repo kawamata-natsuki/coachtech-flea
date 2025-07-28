@@ -556,9 +556,7 @@ button {
     font-size: 12px;
   }
 
-  /* ===============================
-      商品画像のデザイン
-     ===============================*/
+  /* 商品画像のデザイン */
 
   .item-card__sold-overlay {
     position: absolute;
@@ -574,5 +572,23 @@ button {
     border-radius: 4px;
     text-transform: uppercase;
     z-index: 5;
+  }
+
+  /* チャット未読アイコン */
+  .item-card__badge {
+    position: absolute;
+    top: 5px;
+    left: 5px;
+    background: red;
+    color: #fff;
+    font-size: 12px;
+    font-weight: bold;
+    width: 28px;
+    height: 28px;
+    line-height: 28px;
+    text-align: center;
+    border-radius: 50%;
+    z-index: 20;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
   }
 }
