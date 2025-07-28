@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Constants\OrderStatus;
 use App\Http\Requests\ReviewRequest;
 use App\Models\Review;
 use App\Models\Order;
@@ -35,7 +36,12 @@ class ReviewController extends Controller
             'rating'        => $request->input('rating'),
         ]);
 
-        return redirect()->route('items.index')
+        // ステータスをCOMPLETEDに更新
+        if ($order->order_status === OrderStatus::COMPLETED_PENDING) {
+            $order->update(['order_status' => OrderStatus::COMPLETED]);
+        }
+
+        return redirect()->route('chat.index', ['order' => $order->id])
             ->with('success', 'レビューを投稿しました！');
     }
 }
