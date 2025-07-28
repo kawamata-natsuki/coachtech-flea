@@ -332,6 +332,10 @@
     padding: 32px 16px;
   }
 
+  .item-purchase-page__confirm {
+    margin: 12px 0;
+  }
+
   .item-purchase-page__confirm-label {
     font-size: 18px;
   }
