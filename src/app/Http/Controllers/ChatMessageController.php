@@ -10,7 +10,7 @@ class ChatMessageController extends Controller
 {
     public function index(Order $order)
     {
-        // 未ログイン → ログイン画面へ
+        // 未ログインならばログイン画面へ遷移
         if (!auth()->check()) {
             return redirect()->guest(route('login'));
         }
@@ -116,6 +116,7 @@ class ChatMessageController extends Controller
             abort(403);
         }
         $message->delete();
+
         return back()->with('success', 'メッセージを削除しました。');
     }
 }

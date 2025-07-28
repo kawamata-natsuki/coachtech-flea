@@ -46,7 +46,7 @@ class ReviewController extends Controller
         // ステータスを更新
         $reviewCount = Review::where('order_id', $order->id)->count();
 
-        // 最初のレビューがどちら側でも必ず COMPLETED_PENDING
+        // 最初のレビューが出品者・購入者どちらでも必ず COMPLETED_PENDING
         if ($reviewCount === 1) {
             $order->update(['order_status' => OrderStatus::COMPLETED_PENDING]);
         } elseif ($reviewCount >= 2) {
