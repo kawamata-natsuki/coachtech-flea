@@ -34,7 +34,7 @@
           imageClass="user-icon"
           defaultClass="user-icon--default"
           nameClass="user-name" />
-        <p> さんとの取引画面</p>
+        <p>さんとの取引画面</p>
       </h1>
 
       @auth
@@ -81,6 +81,7 @@
           : 'partner-message' }}"
           id="message-{{ $message->id }}">
 
+          <!-- アイコン+ユーザー名 -->
           <div class="chat-page__message-user">
             <x-user-icon :user="$message->user"
               wrapperClass="chat-page__message-user"
@@ -89,6 +90,7 @@
               nameClass="chat-page__message-name" />
           </div>
 
+          <!-- アイコン+ユーザー名＋テキスト＋画像＋編集・削除 -->
           <div class="chat-page__message-body">
             <div class="chat-page__message-text-wrapper">
               <div class="chat-page__message-text js-message-text">
@@ -152,25 +154,28 @@
             <p id="preview-name" style="font-size:12px; color:#666; margin-top:4px;"></p>
           </div>
 
-          <!-- メッセージ入力 -->
-          <input
-            type="text"
-            name="message"
-            id="chatMessage"
-            class="chat-form__input"
-            placeholder="取引メッセージを記入してください"
-            value="{{ old('message') }}">
+          <!-- 入力フォーム＋ボタン -->
+          <div class="chat-form__input-row">
+            <!-- メッセージ入力 -->
+            <input
+              type="text"
+              name="message"
+              id="chatMessage"
+              class="chat-form__input"
+              placeholder="取引メッセージを記入してください"
+              value="{{ old('message') }}">
 
-          <!-- 画像追加ボタン -->
-          <label class="chat-form__image-label">
-            <input type="file" name="chat_image" class="chat-form__image-input" hidden onchange="previewImage(this)">
-            画像を追加
-          </label>
+            <!-- 画像追加ボタン -->
+            <label class="chat-form__image-label">
+              <input type="file" name="chat_image" class="chat-form__image-input" hidden onchange="previewImage(this)">
+              画像を追加
+            </label>
 
-          <!-- 送信ボタン -->
-          <button type="submit" class="chat-form__send">
-            <img src="{{ asset('images/icons/paper-plane.jpg') }}" class="chat-form__send-icon" alt="送信">
-          </button>
+            <!-- 送信ボタン -->
+            <button type="submit" class="chat-form__send">
+              <img src="{{ asset('images/icons/paper-plane.jpg') }}" class="chat-form__send-icon" alt="送信">
+            </button>
+          </div>
         </div>
       </div>
     </form>
@@ -245,7 +250,7 @@
 
   function removePreview() {
     const input = document.querySelector('.chat-form__image-input');
-    input.value = ''; // ファイル選択をリセット
+    input.value = '';
     document.getElementById('image-preview').style.display = 'none';
     document.getElementById('preview-img').src = '';
     document.getElementById('preview-name').textContent = '';
@@ -294,13 +299,14 @@
   }
 </script>
 
-@if(session('showReviewModal'))
+@if (request()->has('review'))
 <script>
   document.addEventListener('DOMContentLoaded', () => {
     const modal = document.querySelector('#reviewModal');
     if (modal) {
       modal.style.display = 'block';
-      modal.classList.add('is-active'); // モーダルを表示
+      modal.classList.add('is-active');
+      history.replaceState({}, '', '?review=1'); // URLを固定（戻るで消えない）
     }
   });
 </script>
