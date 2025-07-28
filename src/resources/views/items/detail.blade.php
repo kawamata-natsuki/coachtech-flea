@@ -88,7 +88,7 @@
 
         <!-- コメント表示 -->
         <div class="item-detail-page__comment-section">
-          <h2 class="item-detail-page__comment-section-heading">コメント({{ $item->comments->count() }})</h2>
+          <h2 class="item-detail-page__comment-section-heading">コメント( {{ $item->comments->count() }} )</h2>
           @foreach ($item->comments as $comment)
           <div class="item-detail-page__comment">
             <div class="item-detail-page__comment-header">
