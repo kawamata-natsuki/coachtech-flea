@@ -31,6 +31,10 @@ class EmailVerificationController extends Controller
     // メール認証済みか確認してリダイレクト
     public function check()
     {
-        return redirect(auth()->user()?->hasVerifiedEmail() ? '/' : '/email/verify');
+        $user = auth()->user();
+
+        return optional($user)->hasVerifiedEmail()
+            ? redirect('/')
+            : redirect()->away('https://mailtrap.io/');
     }
 }
