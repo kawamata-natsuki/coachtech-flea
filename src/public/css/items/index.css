@@ -80,6 +80,7 @@
   }
 
   .items-page__tabs {
+    gap: 48px;
     margin-left: 50px;
     padding-bottom: 4px;
   }
