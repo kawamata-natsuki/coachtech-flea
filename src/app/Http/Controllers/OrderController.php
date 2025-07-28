@@ -123,14 +123,23 @@ class OrderController extends Controller
             abort(403);
         }
 
-        // 取引ステータスの更新
-        $order->update(['order_status' => OrderStatus::COMPLETED]);
+        // 取引ステータス「レビュー待ち状態」に更新
+        $order->update(['order_status' => OrderStatus::COMPLETED_PENDING]);
 
         // 出品者へメール通知
         Mail::to($order->item->user->email)->send(new OrderCompletedMail($order));
 
-        return redirect()
-            ->route('chat.index', $order->id)
-            ->with('showReviewModal', true);
+        // レビュー未投稿なら review=1 を付与
+        $alreadyReviewed = $order->reviews()
+            ->where('reviewer_id', auth()->id())
+            ->exists();
+
+        // リダイレクト先を決定
+        $params = ['order' => $order->id];
+        if (!$alreadyReviewed) {
+            $params['review'] = 1;
+        }
+
+        return redirect()->route('chat.index', $params);
     }
 }
