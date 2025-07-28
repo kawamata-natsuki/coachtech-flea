@@ -8,6 +8,7 @@ body {
   padding: 0;
   overflow-y: auto;
   overflow-x: hidden;
+  font-family: Inter;
 }
 
 *,
@@ -53,8 +54,8 @@ button {
   transition: margin-top 0.5s ease;
 }
 
+/* タイトル */
 .content__heading {
-  font-family: Inter;
   font-weight: 700;
   font-size: 36px;
   text-align: center;
@@ -241,6 +242,7 @@ button {
   border-radius: 4px;
   text-transform: uppercase;
   z-index: 5;
+  white-space: nowrap;
 }
 
 /* チャット未読アイコン */
@@ -362,7 +364,7 @@ button {
 }
 
 .header__logo {
-  padding: 20px 30px;
+  padding: 0 24px;
 }
 
 .header-nav {
@@ -462,8 +464,10 @@ button {
   .main {
     min-height: calc(100vh - 65px);
     max-width: 850px;
+    margin-top: 65px;
   }
 
+  /* ヘッダー */
   .header {
     height: 65px;
   }
@@ -510,6 +514,26 @@ button {
     font-size: 16px;
   }
 
+  .content__heading {
+    font-size: 28px;
+  }
+
+  .form__label {
+    font-size: 20px;
+    font-weight: 600;
+    margin-bottom: 8px;
+  }
+
+  .form__input {
+    height: 48px;
+    padding: 8px 16px;
+    font-size: 16px;
+  }
+
+  .form__input::placeholder {
+    font-size: 14px;
+  }
+
   .error-message {
     font-size: 12px;
     font-weight: 500;
@@ -522,6 +546,11 @@ button {
     height: 14px;
   }
 
+  .flash-container {
+    position: fixed;
+    top: 65px;
+  }
+
   .flash-message {
     padding: 8px 0;
     font-size: 12px;
@@ -531,16 +560,19 @@ button {
       商品画像のデザイン
      ===============================*/
 
-  .item-card__sold-label {
-    border-top: 75px solid red;
-    border-right: 75px solid transparent;
-  }
-
-  .item-card__sold-label::after {
-    width: 100px;
-    height: 24px;
-    font-size: 16px;
-    margin-top: -22px;
-    margin-left: -18px;
+  .item-card__sold-overlay {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: rgba(0, 0, 0, 0.7);
+    color: #fff;
+    font-size: clamp(1rem, 1.7vw, 1.3rem);
+    font-weight: 900;
+    padding: 6px 12px;
+    border: 2px solid #fff;
+    border-radius: 4px;
+    text-transform: uppercase;
+    z-index: 5;
   }
 }
