@@ -13,6 +13,13 @@ class ReviewController extends Controller
     {
         $reviewerId = auth()->id();
 
+        // 取引完了ボタンが押されていない場合はレビュー不可
+        if ($order->order_status === OrderStatus::PENDING) {
+            return redirect()
+                ->route('chat.index', ['order' => $order->id])
+                ->with('error', '購入者が取引完了するまでレビューできません。');
+        }
+
         // 既にレビューが存在するか確認
         $existing = Review::where('order_id', $order->id)
             ->where('reviewer_id', $reviewerId)
@@ -36,12 +43,17 @@ class ReviewController extends Controller
             'rating'        => $request->input('rating'),
         ]);
 
-        // ステータスをCOMPLETEDに更新
-        if ($order->order_status === OrderStatus::COMPLETED_PENDING) {
+        // ステータスを更新
+        $reviewCount = Review::where('order_id', $order->id)->count();
+
+        // 最初のレビューがどちら側でも必ず COMPLETED_PENDING
+        if ($reviewCount === 1) {
+            $order->update(['order_status' => OrderStatus::COMPLETED_PENDING]);
+        } elseif ($reviewCount >= 2) {
             $order->update(['order_status' => OrderStatus::COMPLETED]);
         }
 
-        return redirect()->route('chat.index', ['order' => $order->id])
+        return redirect()->route('items.index', ['order' => $order->id])
             ->with('success', 'レビューを投稿しました！');
     }
 }
