@@ -16,8 +16,8 @@ class ReviewController extends Controller
         // 既にレビューが存在するか確認
         $existing = Review::where('order_id', $order->id)
             ->where('reviewer_id', $reviewerId)
-            ->first();
-        if ($existing) {
+            ->exists();
+        if ($existing || $order->order_status === OrderStatus::COMPLETED) {
             return redirect()
                 ->route('items.index')
                 ->with('error', 'この取引は既にレビュー済みです。');
