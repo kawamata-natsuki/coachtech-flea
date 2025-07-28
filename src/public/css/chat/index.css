@@ -100,7 +100,7 @@
   background-color: #fff;
 }
 
-/* トップ */
+/* チャットページヘッダー */
 .chat-page__header {
   position: relative;
   width: 100%;
@@ -242,7 +242,7 @@
   scroll-margin-top: 70px;
 }
 
-/* 自分のメッセージ */
+/* 自分のメッセージ（右寄り） */
 .my-message {
   margin-left: auto;
   align-items: flex-end;
@@ -253,7 +253,7 @@
   text-align: right;
 }
 
-/* 相手のメッセージ */
+/* 相手のメッセージ（左寄り） */
 .partner-message .chat-page__message-image {
   margin-right: auto;
   text-align: left;
@@ -400,7 +400,6 @@
   resize: none;
   min-height: 60px;
 }
-
 
 .chat-page__button-edit,
 .chat-page__button-delete,
