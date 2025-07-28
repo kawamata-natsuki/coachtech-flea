@@ -62,7 +62,8 @@
 
     Laravel の依存パッケージをインストールします：
     ```bash
-    docker-compose exec php composer install
+    docker compose exec php bash
+    composer install
     ```
 <br>
 
@@ -74,6 +75,8 @@
 
     Laravel 用の環境設定ファイルを作成します：
     ```
+    exit
+    cd src
     cp .env.example .env
     ```
 
@@ -130,6 +133,7 @@
 8.  アプリケーションキーの生成
 
     ```bash
+    docker compose exec php bash
     php artisan key:generate
     ```
 <br>
