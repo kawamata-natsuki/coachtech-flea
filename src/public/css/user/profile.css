@@ -51,7 +51,8 @@
 .profile-page__rating {
   font-size: 36px;
   display: flex;
-  align-items: flex-start;
+  align-items: center;
+  justify-content: center;
   gap: 4px;
 }
 
@@ -173,7 +174,7 @@
   }
 
   .profile-page__container {
-    padding: 0 36px;
+    padding: 0 28px;
   }
 
   .profile-page__header {
