@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Constants\OrderStatus;
 use App\Models\PaymentMethod;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -27,6 +28,23 @@ class Order extends Model
             ->where('user_id', '!=', auth()->id())
             ->where('is_read', false)
             ->count();
+    }
+
+    // レビュー未完了のCOMPLETED注文を含める
+    public function scopeTradingOrPendingReview($query)
+    {
+        $userId = auth()->id();
+
+        return $query->where(function ($q) use ($userId) {
+            $q->where('order_status', OrderStatus::PENDING)
+                ->orWhere('order_status', OrderStatus::COMPLETED_PENDING)
+                ->orWhere(function ($sub) use ($userId) {
+                    $sub->where('order_status', OrderStatus::COMPLETED)
+                        ->whereDoesntHave('reviews', function ($reviewQuery) use ($userId) {
+                            $reviewQuery->where('reviewer_id', $userId);
+                        });
+                });
+        });
     }
 
     // リレーション
