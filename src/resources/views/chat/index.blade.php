@@ -25,7 +25,7 @@
     </ul>
   </aside>
 
-  <div class="chat-page__container">
+  <div class=" chat-page__container">
 
     <div class="chat-page__header">
       <h1 class="chat-page__heading content__heading">
@@ -38,7 +38,7 @@
       </h1>
 
       @auth
-      @if (auth()->id() === $order->user_id && $order->order_status !== \App\Constants\OrderStatus::COMPLETED)
+      @if (auth()->id() === $order->user_id && $order->order_status === \App\Constants\OrderStatus::PENDING)
       <form action="{{ route('order.complete', $order->id) }}" method="POST">
         @csrf
         @method('PUT')
@@ -299,6 +299,7 @@
   }
 </script>
 
+<!-- 購入者用（?review=1 のとき） -->
 @if (request()->has('review'))
 <script>
   document.addEventListener('DOMContentLoaded', () => {
@@ -306,7 +307,24 @@
     if (modal) {
       modal.style.display = 'block';
       modal.classList.add('is-active');
-      history.replaceState({}, '', '?review=1'); // URLを固定（戻るで消えない）
+      history.replaceState({}, '', '?review=1');
+    }
+  });
+</script>
+@endif
+
+<!-- 出品者用（COMPLETED_PENDING のとき） -->
+@if (
+auth()->id() === $order->item->user_id &&
+$order->order_status === \App\Constants\OrderStatus::COMPLETED_PENDING &&
+$order->reviews()->where('reviewer_id', $order->user_id)->exists()
+)
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const modal = document.querySelector('#reviewModal');
+    if (modal) {
+      modal.style.display = 'block';
+      modal.classList.add('is-active');
     }
   });
 </script>
