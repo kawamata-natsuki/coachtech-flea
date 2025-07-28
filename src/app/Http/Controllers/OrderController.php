@@ -123,6 +123,12 @@ class OrderController extends Controller
             abort(403);
         }
 
+        // PENDINGでなければ何もしない
+        if ($order->order_status !== OrderStatus::PENDING) {
+            return redirect()->route('chat.index', ['order' => $order->id])
+                ->with('error', '取引完了は一度だけ実行できます。');
+        }
+
         // 取引ステータス「レビュー待ち状態」に更新
         $order->update(['order_status' => OrderStatus::COMPLETED_PENDING]);
 
