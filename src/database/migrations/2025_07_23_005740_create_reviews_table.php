@@ -14,7 +14,7 @@ class CreateReviewsTable extends Migration
             $table->unsignedBigInteger('reviewer_id');
             $table->unsignedBigInteger('reviewee_id');
             $table->tinyInteger('rating'); // 星1〜5
-            $table->timestamps();
+            $table->timestamp('created_at')->useCurrent();
 
             // 複合ユニーク
             $table->unique(['order_id', 'reviewer_id']);
