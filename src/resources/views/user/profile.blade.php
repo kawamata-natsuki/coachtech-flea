@@ -101,19 +101,10 @@
       @else
       <div class="profile-page__list">
         @foreach ($tradingItems as $trade)
-        @if ($trade instanceof \App\Models\Order)
-        <!-- 購入者側：注文からitem_idを取得してチャットへ -->
         <x-item-card
           :item="$trade->item"
           :unreadCount="$trade->unread_count"
           :link="route('chat.index', ['order' => $trade->id])" />
-        @else
-        <!-- 出品者側：item.idを使ってチャットへ -->
-        <x-item-card
-          :item="$trade"
-          :unreadCount="$trade->unread_count"
-          :link="route('chat.index', ['order' => $trade->order->id])" />
-        @endif
         @endforeach
       </div>
       @endif
