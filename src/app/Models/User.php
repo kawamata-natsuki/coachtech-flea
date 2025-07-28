@@ -42,18 +42,20 @@ class User extends Authenticatable implements MustVerifyEmail
             : asset('images/icons/default-profile.svg');
     }
 
-    // ユーザーが受けたレビューの平均値（小数点あり）
-    public function averageRating()
+    // 取引が COMPLETED になったレビューの平均値（小数点あり）
+    public function completedReviews()
     {
-        return $this->reviewsReceived()->avg('rating');
+        return $this->hasMany(Review::class, 'reviewee_id')
+            ->whereHas('order', function ($q) {
+                $q->where('order_status', \App\Constants\OrderStatus::COMPLETED);
+            });
     }
     // ユーザーが受けたレビューの平均値（四捨五入した整数）
     public function roundedRating()
     {
-        $avg = $this->averageRating();
-        return $avg !== null ? round($avg) : null;
+        $avg = $this->completedReviews()->avg('rating');
+        return $avg ? round($avg) : null;
     }
-
 
     // 購入した取引中の商品を取得
     public function buyingItems()
